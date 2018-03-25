@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Sebastian Karasek, Matthias Koch</Authors>
+    <Company>Nuke.build</Company>
+    <Description>Docker extension for the cross-plattform automation system Nuke.</Description>
+    <Copyright>Copyright © Sebastian Karasek, Matthias Koch 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/nuke-build/docker/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/nuke-build/nuke/master/icon.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/nuke-build/docker</RepositoryUrl>
+    <PackageTags>build automation continuous-integration tools orchestration nuke.build docker</PackageTags>
+    <Product>Nuke.Docker</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nuke.Common" Version="0.3.2-reserved-keyword0001" />
+  </ItemGroup>
+
+</Project>

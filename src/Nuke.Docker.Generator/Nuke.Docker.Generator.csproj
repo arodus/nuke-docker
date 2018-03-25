@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Sebastian Karasek, Matthias Koch</Authors>
+    <Company>Nuke.build</Company>
+    <Description>Generator for the docker extension of Nuke.</Description>
+    <Copyright>https://github.com/nuke-build/docker/blob/master/LICENSE</Copyright>
+    <PackageLicenseUrl>https://github.com/nuke-build/docker/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/nuke-build/nuke/master/icon.png</PackageIconUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.7.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.3.2-reserved-keyword0004" />
+    <PackageReference Include="Octokit" Version="0.29.0" />
+    <PackageReference Include="YamlDotNet" Version="4.3.1" />
+  </ItemGroup>
+
+</Project>
