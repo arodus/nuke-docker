@@ -4,10 +4,12 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Docker
 {
+    [PublicAPI]
     public static class DockerSettingsExtensions
     {
         public static T SetCliSettings<T>(this T settings, Configure<CliSettings> configure)

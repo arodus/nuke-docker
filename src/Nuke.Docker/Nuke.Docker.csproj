@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.3.2-reserved-keyword0001" />
+    <PackageReference Include="Nuke.Common" Version="0.3.2-temp0027" />
   </ItemGroup>
 
 </Project>

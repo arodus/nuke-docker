@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.3.2-reserved-keyword0004" />
+    <PackageReference Include="Nuke.Common" Version="0.4.0-alpha0024" />
     <PackageReference Include="Nuke.CodeGeneration" Version="0.3.2-reserved-keyword0004" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
   </ItemGroup>

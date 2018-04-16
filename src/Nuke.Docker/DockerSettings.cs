@@ -3,14 +3,13 @@
 // https://github.com/nuke-build/docker/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Nuke.Core;
+using JetBrains.Annotations;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Docker
 {
+    [PublicAPI]
     [Serializable]
     public abstract class DockerSettings : ToolSettings
     {
@@ -23,21 +22,12 @@ namespace Nuke.Docker
 
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            var secretFieldInfo = typeof(Arguments).GetField("_secrets", BindingFlags.Instance | BindingFlags.NonPublic);
-            var argumentFieldInfo =
-                typeof(Arguments).GetField("_arguments", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (CliSettings != null)
+            {
+                arguments = CliSettings.CreateArguments().Concatenate(arguments);
+            }
 
-            var args = (LookupTable<string, string>) argumentFieldInfo.NotNull().GetValue(arguments);
-            var secrets = (List<string>) secretFieldInfo.NotNull().GetValue(arguments);
-
-            var newArgs = CliSettings == null ? new Arguments() : CliSettings.CreateArguments();
-            var newArgsArgs = (LookupTable<string, string>) argumentFieldInfo.GetValue(newArgs);
-            var newArgsSecrets = (List<string>) secretFieldInfo.GetValue(newArgs);
-
-            foreach (var arg in args) newArgsArgs.AddRange(arg.Key, arg.ToArray());
-            newArgsSecrets.AddRange(secrets);
-
-            return base.ConfigureArguments(newArgs);
+            return base.ConfigureArguments(arguments);
         }
     }
 }
