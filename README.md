@@ -5,14 +5,13 @@ Simply execute the docker CLI with Nuke.
 ## Unsupported commands
 
 - docker container cp
-- docker plugin install
-- docker plugin set
-- docker service scale
 - docker cp
 
 ## Roadmap
 
 - Support the unsupported commands.
+- Imporove argument types.
+- Improve positional argument description.
 
 ## License
 

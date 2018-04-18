@@ -17,7 +17,7 @@ class Build : NukeBuild
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
-    
+
     Target Clean => _ => _
             .Executes(() =>
             {
@@ -25,8 +25,31 @@ class Build : NukeBuild
                 EnsureCleanDirectory(OutputDirectory);
             });
 
-    Target Generate => _ => _
+
+    Target Restore => _ => _
         .DependsOn(Clean)
+        .Executes(() =>
+        {
+            DotNetRestore(s => DefaultDotNetRestore);
+        });
+
+
+    Target Compile => _ => _
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
+            DotNetBuild( x=>DefaultDotNetBuild.EnableNoRestore());
+        });
+
+    Target Test => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            DotNetTest(x => DefaultDotNetTest.EnableNoBuild().EnableNoRestore().SetResultsDirectory(OutputDirectory));
+        });
+
+    Target Generate => _ => _
+        .DependsOn(Compile)
         .Executes(() =>
         {
             var generatorProjectFile = SourceDirectory / "Nuke.Docker.Generator" / "Nuke.Docker.Generator.csproj";
@@ -35,15 +58,15 @@ class Build : NukeBuild
             var commandsToSkip = new[]
                                  {
                                      "docker_container_cp",
-                                     "docker_plugin_install",
-                                     "docker_plugin_set",
-                                     "docker_service_scale",
                                      "docker_cp"
                                  };
 
             DotNetRun(x => x.SetConfiguration(Configuration)
                 .SetWorkingDirectory(SolutionDirectory)
                 .SetProjectFile(generatorProjectFile)
+                .EnableNoBuild()
+                .EnableNoRestore()
+                .EnableNoLaunchProfile()
                 .SetApplicationArguments(
                     $"{metadataJsonFile} --skip={commandsToSkip.Aggregate(string.Empty, (current, next) => $"{current}+{next}").TrimStart(trimChar: '+')}"));
 
@@ -53,7 +76,7 @@ class Build : NukeBuild
 
     string DockerProject => SourceDirectory / "Nuke.Docker" / "Nuke.Docker.csproj";
 
-    Target Compile => _ => _
+    Target CompilePlugin => _ => _
         .DependsOn(Generate)
         .Executes(() =>
         {
@@ -62,7 +85,7 @@ class Build : NukeBuild
         });
 
     Target Pack => _ => _
-        .DependsOn(Compile)
+        .DependsOn(CompilePlugin)
         .Executes(() =>
         {
             DotNetPack(s => DefaultDotNetPack

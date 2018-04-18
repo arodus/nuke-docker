@@ -29,7 +29,7 @@ namespace Nuke.Docker.Generator
             foreach (var file in files)
             {
                 if (commandsToSkip.Contains(Path.GetFileNameWithoutExtension(file))) continue;
-                definitions.Add(ParseDefinition(File.ReadAllText(file),file));
+                definitions.Add(ParseDefinition(File.ReadAllText(file), file));
             }
 
             return definitions;
@@ -41,8 +41,9 @@ namespace Nuke.Docker.Generator
             using (var client = new HttpClient())
             {
                 // ReSharper disable AccessToDisposedClosure
-                return (await Task.WhenAll(definitions.Where(x => !commandsToSkip.Contains(x.Key.Replace(".yaml",string.Empty))).Select(x => DownloadDefinition(x.Value, client))))
-                    .Select(x => ParseDefinition(x.Value,x.Key)).ToList();
+                return (await Task.WhenAll(definitions.Where(x => !commandsToSkip.Contains(x.Key.Replace(".yaml", string.Empty)))
+                        .Select(x => DownloadDefinition(x.Value, client))))
+                    .Select(x => ParseDefinition(x.Value, x.Key)).ToList();
                 // ReSharper restore AccessToDisposedClosure
             }
         }
@@ -58,17 +59,17 @@ namespace Nuke.Docker.Generator
             return content.Where(x => !commandsToSkip.Contains(x.Name)).Select(x => new KeyValuePair<string, string>(x.Name, x.DownloadUrl));
         }
 
-        private static async Task<KeyValuePair<string,string>> DownloadDefinition(string url, HttpClient client)
+        private static async Task<KeyValuePair<string, string>> DownloadDefinition(string url, HttpClient client)
         {
             var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
-            var definitionYaml =  await response.Content.ReadAsStringAsync();
-            return new KeyValuePair<string, string>(url,definitionYaml);
+            var definitionYaml = await response.Content.ReadAsStringAsync();
+            return new KeyValuePair<string, string>(url, definitionYaml);
         }
 
         private static CommandDefinition ParseDefinition(string definitionYaml, string reference)
         {
-            var definiton =  new Deserializer().Deserialize<CommandDefinition>(definitionYaml);
+            var definiton = new Deserializer().Deserialize<CommandDefinition>(definitionYaml);
             definiton.ReferenceUrl = reference;
             return definiton;
         }

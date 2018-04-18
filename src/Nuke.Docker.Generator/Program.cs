@@ -16,15 +16,13 @@ namespace Nuke.Docker.Generator
         {
             var args = Environment.GetCommandLineArgs();
 
-            foreach(var arg in args){
-                Console.WriteLine(arg);
-            }
+            foreach (var arg in args) Console.WriteLine(arg);
 
             //Nuke dot net run fix
-            if (args.Length == 2 && args[1].Contains(' '))
+            if (args.Length == 2 && args[1].Contains(value: ' '))
             {
                 var newArgs = new List<string> { args[0] };
-                newArgs.AddRange(args[1].Trim('\"').Split(' ').ToList());
+                newArgs.AddRange(args[1].Trim(trimChar: '\"').Split(separator: ' ').ToList());
                 args = newArgs.ToArray();
             }
 
@@ -35,16 +33,22 @@ namespace Nuke.Docker.Generator
 
             Console.WriteLine(string.Empty);
             Console.WriteLine($"Generating docker nuke tools metadata from branch: {branch}");
-            Console.WriteLine($"Commands to skip:{skip.Aggregate(string.Empty,(current,next) => current += $" {next}")}");
+            Console.WriteLine($"Commands to skip:{skip.Aggregate(string.Empty, (current, next) => current += $" {next}")}");
             Console.WriteLine($"Output path: {outputPath}");
 
             var definitionsTask = DefinitionFetcher.GetCommandDefinitionsFromGitHub(branch, skip);
             definitionsTask.Wait();
 
-            var tool = DockerGenerator.GenerateTool(definitionsTask.Result);
+            var tool = DefinitionParser.GenerateTool(definitionsTask.Result);
 
             File.WriteAllText(outputPath,
-                JsonConvert.SerializeObject(tool, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented, DefaultValueHandling = DefaultValueHandling.Include}));
+                JsonConvert.SerializeObject(tool,
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        Formatting = Formatting.Indented,
+                        DefaultValueHandling = DefaultValueHandling.Include
+                    }));
 
             Console.WriteLine();
             Console.WriteLine("Generation finished.");

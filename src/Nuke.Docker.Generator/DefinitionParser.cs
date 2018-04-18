@@ -6,20 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
 using Nuke.Docker.Generator.Utility;
 
 namespace Nuke.Docker.Generator
 {
-    internal class DockerGenerator
+    internal class DefinitionParser
     {
         private readonly List<CommandDefinition> _commandDefinitions;
         private readonly Dictionary<string, List<string>> _enumerations = new Dictionary<string, List<string>>();
         private readonly Tool _tool;
 
-        private DockerGenerator(List<CommandDefinition> commandDefinitions)
+        private DefinitionParser(List<CommandDefinition> commandDefinitions)
         {
             _commandDefinitions = commandDefinitions;
             _tool = CreateTool(_commandDefinitions.Select(x => x.ReferenceUrl).ToList());
@@ -54,26 +53,29 @@ namespace Nuke.Docker.Generator
                                Help = definition.ShortDescription,
                                Tool = _tool
                            };
+
+                if (string.IsNullOrEmpty(task.Postfix)) continue;
+
                 var settingsClass = new SettingsClass
                                     {
                                         Tool = _tool,
                                         Task = task,
                                         BaseClass = definition.InheritedArguments.Any()
                                             ? definition.ParentName.ToPascalCase(separator: ' ') + "Settings"
-                                            : "DockerSettings",
+                                            : "DockerSettings"
                                     };
 
                 AddProperties(settingsClass, definition, out var definiteArgument);
 
                 task.DefiniteArgument = definiteArgument;
                 task.SettingsClass = settingsClass;
-                if (!string.IsNullOrEmpty(task.Postfix)) _tool.Tasks.Add(task);
+                _tool.Tasks.Add(task);
             }
         }
 
         private void AddProperties(DataClass settingsClass, CommandDefinition definition, out string definiteArgument)
         {
-            var usageParams = ParseUsage(definition.Usage);
+            var usageParams = UsageParser.Parse(definition.Usage);
             definiteArgument = string.Empty;
             foreach (var usageParam in usageParams)
             {
@@ -84,7 +86,7 @@ namespace Nuke.Docker.Generator
                     continue;
                 }
 
-                if (usageParam.TrimmedValue == "OPTIONS")
+                if (usageParam.RawValue == "[OPTIONS]")
                 {
                     definition.Arguments.ForEach(argument => { AddProperty(settingsClass, argument); });
                     continue;
@@ -92,12 +94,14 @@ namespace Nuke.Docker.Generator
 
                 settingsClass.Properties.Add(new Property
                                              {
-                                                 Name = usageParam.IsList ? usageParam.Name.ToPlural() : usageParam.Name,
+                                                 Name = usageParam.IsList || usageParam.IsDictionary ? usageParam.Name.ToPlural() : usageParam.Name,
                                                  DataClass = settingsClass,
                                                  Format = "{value}",
-                                                 Help = usageParam.RawValue.RemoveNewLines(),
-                                                 Type = usageParam.IsList ? "List<string>" : "string",
-                                                 Separator = usageParam.IsList ? ' ' : default(char?)
+                                                 Help = GetPositionalArgumentHelp(usageParam, definition),
+                                                 Type = usageParam.IsList ? "List<string>" :
+                                                     usageParam.IsDictionary ? "Dictionary<string,string>" : "string",
+                                                 Separator = usageParam.IsList ? ' ' : default(char?),
+                                                 ItemFormat = usageParam.IsDictionary ? "{key=value}" : null
                                              });
             }
 
@@ -137,7 +141,7 @@ namespace Nuke.Docker.Generator
 
         public static Tool GenerateTool(List<CommandDefinition> definitions)
         {
-            return new DockerGenerator(definitions).Generate();
+            return new DefinitionParser(definitions).Generate();
         }
 
         private static Tool CreateTool(List<string> references)
@@ -153,7 +157,8 @@ namespace Nuke.Docker.Generator
                                          "https://github.com/nuke-build/docker/blob/master/LICENSE"
                                      },
                            References = references,
-                           Help = "Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.",
+                           Help =
+                               "Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.",
                            OfficialUrl = "https://www.docker.com/",
                            CommonTaskProperties = new List<Property>
                                                   {
@@ -247,29 +252,6 @@ namespace Nuke.Docker.Generator
             return tool;
         }
 
-        private static IEnumerable<UsageParameter> ParseUsage([CanBeNull] string usage)
-        {
-            if (usage == null) return new List<UsageParameter>(capacity: 0);
-            var usageSplit = usage.Split(separator: '\r', count: '\n', options: StringSplitOptions.RemoveEmptyEntries)[0]
-                .Split(separator: ' ', options: StringSplitOptions.RemoveEmptyEntries);
-
-            var p = new List<UsageParameter>();
-
-            for (var i = 0; i < usageSplit.Length; i++)
-            {
-                var value = usageSplit[i];
-                while (i + 1 < usageSplit.Length && usageSplit[i + 1] == "|")
-                {
-                    value += usageSplit[i + 1] + usageSplit[i + 2];
-                    i += 2;
-                }
-
-                p.Add(new UsageParameter(value));
-            }
-
-            return p;
-        }
-
         private static string GetPostfix(CommandDefinition command)
         {
             var postfix = command.Command.Replace("docker", string.Empty).Trim();
@@ -278,17 +260,19 @@ namespace Nuke.Docker.Generator
 
         private static string GetNukeType(ArgumentDefinition argument)
         {
+            //Todo improve
             switch (argument.ValueType)
             {
                 case "string":
+                    return argument.ValueType;
                 case "bool":
                 case "int":
                 case "float":
                 case "decimal":
-                    return argument.ValueType;
+                    return argument.ValueType + "?";
                 case "int64":
                 case "bytes":
-                    return "long";
+                    return "long?";
                 case "list":
                 case "stringSlice":
                     return "List<string>";
@@ -328,35 +312,16 @@ namespace Nuke.Docker.Generator
                 : match.Groups[groupnum: 1].Value.Split(separator: '|').Select(x => x.Trim(trimChar: '"')).ToList();
         }
 
-        private struct UsageParameter
+        private static string GetPositionalArgumentHelp(UsageParameter usageParameter, CommandDefinition commandDefinition)
         {
-            public string RawValue { get; }
+            if (commandDefinition.Command == "docker secret create" && usageParameter.RawValue == "[file|-]")
+                return "Path to file to create the secret from.";
 
-            public bool IsArgument => RawValue.StartsWith(value: '[') || RawValue.All(char.IsUpper) || RawValue.Contains("|");
+            if (commandDefinition.Command == "docker config create" && usageParameter.RawValue == "[file|-]")
+                return "Path to file to create the config from.";
 
-            public bool IsOptional => RawValue.StartsWith(value: '[') && RawValue.EndsWith(value: ']') ||
-                                      RawValue.Contains("|") && RawValue.Contains("-");
-
-            public bool IsList => RawValue.StartsWith(value: '[') && RawValue.EndsWith(value: ']');
-            public string TrimmedValue => RawValue.TrimStart(trimChar: '[').TrimEnd(']', '.');
-
-            public string Name
-            {
-                get
-                {
-                    var value = TrimmedValue.Contains("|") ? TrimmedValue.Split("|")[0] : TrimmedValue;
-                    value = char.ToUpper(value[index: 0]) + value.Substring(startIndex: 1).ToLowerInvariant().Replace("[:", string.Empty)
-                                .Replace("[/", string.Empty);
-                    value = value.Trim('(', ')');
-
-                    return IsList ? value.ToPlural() : value;
-                }
-            }
-
-            public UsageParameter(string rawValue)
-            {
-                RawValue = rawValue;
-            }
+            if (usageParameter.RawValue == "PATH|URL|-") return "Path or url where the build context is located.";
+            return usageParameter.RawValue.RemoveNewLines();
         }
     }
 }

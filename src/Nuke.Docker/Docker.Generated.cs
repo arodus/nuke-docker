@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.3.2 [CommitSha: 17afea8c].
+// Generated with Nuke.CodeGeneration, Version: 0.4.0 [CommitSha: c27f4265].
 // Generated from https://github.com/arodus/nuke-docker/blob/master/.tmp/Docker.json.
 
 using JetBrains.Annotations;
@@ -1050,6 +1050,17 @@ namespace Nuke.Docker
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
+        static partial void PreProcess(DockerPluginInstallSettings toolSettings);
+        static partial void PostProcess(DockerPluginInstallSettings toolSettings);
+        /// <summary><p>Install a plugin</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
+        public static void DockerPluginInstall(Configure<DockerPluginInstallSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DockerPluginInstallSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
         static partial void PreProcess(DockerPluginLsSettings toolSettings);
         static partial void PostProcess(DockerPluginLsSettings toolSettings);
         /// <summary><p>List plugins</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
@@ -1078,6 +1089,17 @@ namespace Nuke.Docker
         public static void DockerPluginRm(Configure<DockerPluginRmSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginRmSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
+        static partial void PreProcess(DockerPluginSetSettings toolSettings);
+        static partial void PostProcess(DockerPluginSetSettings toolSettings);
+        /// <summary><p>Change settings for a plugin</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
+        public static void DockerPluginSet(Configure<DockerPluginSetSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DockerPluginSetSettings());
             PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
@@ -1353,6 +1375,17 @@ namespace Nuke.Docker
         public static void DockerServiceRollback(Configure<DockerServiceRollbackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceRollbackSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
+        static partial void PreProcess(DockerServiceScaleSettings toolSettings);
+        static partial void PostProcess(DockerServiceScaleSettings toolSettings);
+        /// <summary><p>Scale one or multiple replicated services</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
+        public static void DockerServiceScale(Configure<DockerServiceScaleSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DockerServiceScaleSettings());
             PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
@@ -1880,7 +1913,7 @@ namespace Nuke.Docker
         public virtual bool? NoStdin { get; internal set; }
         /// <summary><p>Proxy all received signals to the process</p></summary>
         public virtual bool? SigProxy { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -1918,11 +1951,11 @@ namespace Nuke.Docker
         /// <summary><p>Compress the build context using gzip</p></summary>
         public virtual bool? Compress { get; internal set; }
         /// <summary><p>Limit the CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit the CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -1941,9 +1974,9 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Set the networking mode for the RUN instructions during build</p></summary>
         public virtual string Network { get; internal set; }
         /// <summary><p>Do not use cache when building the image</p></summary>
@@ -1960,7 +1993,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Squash newly built layers into a single new layer</p></summary>
         public virtual bool? Squash { get; internal set; }
         /// <summary><p>Stream attaches to server to negotiate build context</p></summary>
@@ -1972,7 +2005,7 @@ namespace Nuke.Docker
         public virtual string Target { get; internal set; }
         /// <summary><p>Ulimit options</p></summary>
         public virtual string Ulimit { get; internal set; }
-        /// <summary><p>PATH|URL|-</p></summary>
+        /// <summary><p>Path or url where the build context is located.</p></summary>
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2046,9 +2079,9 @@ namespace Nuke.Docker
         public virtual string CheckpointDir { get; internal set; }
         /// <summary><p>Leave the container running after checkpoint</p></summary>
         public virtual bool? LeaveRunning { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>CHECKPOINT</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Checkpoint { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2074,7 +2107,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Use a custom checkpoint storage directory</p></summary>
         public virtual string CheckpointDir { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2098,9 +2131,9 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Use a custom checkpoint storage directory</p></summary>
         public virtual string CheckpointDir { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>CHECKPOINT</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Checkpoint { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2132,11 +2165,10 @@ namespace Nuke.Docker
         public virtual string Message { get; internal set; }
         /// <summary><p>Pause container during commit</p></summary>
         public virtual bool? Pause { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -2146,7 +2178,7 @@ namespace Nuke.Docker
               .Add("--message {value}", Message)
               .Add("--pause {value}", Pause)
               .Add("{value}", Container)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -2184,7 +2216,7 @@ namespace Nuke.Docker
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary><p>Template driver</p></summary>
         public virtual string TemplateDriver { get; internal set; }
-        /// <summary><p>CONFIG</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Config { get; internal set; }
         /// <summary><p>file|-</p></summary>
         public virtual string File { get; internal set; }
@@ -2214,9 +2246,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Print the information in a human friendly format</p></summary>
         public virtual bool? Pretty { get; internal set; }
-        /// <summary><p>CONFIG</p></summary>
-        public virtual string Config { get; internal set; }
-        /// <summary><p>[CONFIG...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -2225,7 +2255,6 @@ namespace Nuke.Docker
               .Add("config inspect")
               .Add("--format {value}", Format)
               .Add("--pretty {value}", Pretty)
-              .Add("{value}", Config)
               .Add("{value}", Configs, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2268,16 +2297,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONFIG</p></summary>
-        public virtual string Config { get; internal set; }
-        /// <summary><p>[CONFIG...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("config rm")
-              .Add("{value}", Config)
               .Add("{value}", Configs, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2317,7 +2343,7 @@ namespace Nuke.Docker
         public virtual bool? NoStdin { get; internal set; }
         /// <summary><p>Proxy all received signals to the process</p></summary>
         public virtual bool? SigProxy { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2350,11 +2376,10 @@ namespace Nuke.Docker
         public virtual string Message { get; internal set; }
         /// <summary><p>Pause container during commit</p></summary>
         public virtual bool? Pause { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -2364,7 +2389,7 @@ namespace Nuke.Docker
               .Add("--message {value}", Message)
               .Add("--pause {value}", Pause)
               .Add("{value}", Container)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -2401,21 +2426,21 @@ namespace Nuke.Docker
         /// <summary><p>Write the container ID to the file</p></summary>
         public virtual string Cidfile { get; internal set; }
         /// <summary><p>CPU count (Windows only)</p></summary>
-        public virtual long CpuCount { get; internal set; }
+        public virtual long? CpuCount { get; internal set; }
         /// <summary><p>CPU percent (Windows only)</p></summary>
-        public virtual long CpuPercent { get; internal set; }
+        public virtual long? CpuPercent { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -2485,7 +2510,7 @@ namespace Nuke.Docker
         /// <summary><p>Keep STDIN open even if not attached</p></summary>
         public virtual bool? Interactive { get; internal set; }
         /// <summary><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
-        public virtual long IoMaxbandwidth { get; internal set; }
+        public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary><p>Maximum IOps limit for the system drive (Windows only)</p></summary>
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary><p>IPv4 address (e.g., 172.30.100.104)</p></summary>
@@ -2497,7 +2522,7 @@ namespace Nuke.Docker
         /// <summary><p>Container isolation technology</p></summary>
         public virtual string Isolation { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Set meta data on a container</p></summary>
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
@@ -2518,13 +2543,13 @@ namespace Nuke.Docker
         /// <summary><p>Container MAC address (e.g., 92:d0:c6:0a:29:33)</p></summary>
         public virtual string MacAddress { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Tune container memory swappiness (0 to 100)</p></summary>
-        public virtual long MemorySwappiness { get; internal set; }
+        public virtual long? MemorySwappiness { get; internal set; }
         /// <summary><p>Attach a filesystem mount to the container</p></summary>
         public virtual string Mount { get; internal set; }
         /// <summary><p>Assign a name to the container</p></summary>
@@ -2548,7 +2573,7 @@ namespace Nuke.Docker
         /// <summary><p>PID namespace to use</p></summary>
         public virtual string Pid { get; internal set; }
         /// <summary><p>Tune container pids limit (set -1 for unlimited)</p></summary>
-        public virtual long PidsLimit { get; internal set; }
+        public virtual long? PidsLimit { get; internal set; }
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>Give extended privileges to this container</p></summary>
@@ -2570,7 +2595,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Signal to stop a container</p></summary>
         public virtual string StopSignal { get; internal set; }
         /// <summary><p>Timeout (in seconds) to stop a container</p></summary>
@@ -2604,11 +2629,10 @@ namespace Nuke.Docker
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         /// <summary><p>[COMMAND]</p></summary>
-        public virtual IReadOnlyList<string> Commands => CommandsInternal.AsReadOnly();
-        internal List<string> CommandsInternal { get; set; } = new List<string>();
+        public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
@@ -2713,7 +2737,7 @@ namespace Nuke.Docker
               .Add("--volumes-from {value}", VolumesFrom)
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
-              .Add("{value}", Commands, separator: ' ')
+              .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2729,7 +2753,7 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2767,9 +2791,9 @@ namespace Nuke.Docker
         public virtual string User { get; internal set; }
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>COMMAND</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
@@ -2805,7 +2829,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Write to a file, instead of STDOUT</p></summary>
         public virtual string Output { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2831,9 +2855,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Display total file sizes</p></summary>
         public virtual bool? Size { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -2842,7 +2864,6 @@ namespace Nuke.Docker
               .Add("container inspect")
               .Add("--format {value}", Format)
               .Add("--size {value}", Size)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2860,9 +2881,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Signal to send to the container</p></summary>
         public virtual string Signal { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -2870,7 +2889,6 @@ namespace Nuke.Docker
             arguments
               .Add("container kill")
               .Add("--signal {value}", Signal)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2898,7 +2916,7 @@ namespace Nuke.Docker
         public virtual bool? Timestamps { get; internal set; }
         /// <summary><p>Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)</p></summary>
         public virtual string Until { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -2967,16 +2985,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("container pause")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2992,17 +3007,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         /// <summary><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        public virtual IReadOnlyList<string> Private_portprotos => Private_portprotosInternal.AsReadOnly();
-        internal List<string> Private_portprotosInternal { get; set; } = new List<string>();
+        public virtual string PrivatePort { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("container port")
               .Add("{value}", Container)
-              .Add("{value}", Private_portprotos, separator: ' ')
+              .Add("{value}", PrivatePort)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -3041,13 +3055,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
+        /// <summary><p>NEW_NAME</p></summary>
+        public virtual string NewName { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("container rename NEW_NAME")
+              .Add("container rename")
               .Add("{value}", Container)
+              .Add("{value}", NewName)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -3064,9 +3081,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Seconds to wait for stop before killing the container</p></summary>
         public virtual int? Time { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -3074,7 +3089,6 @@ namespace Nuke.Docker
             arguments
               .Add("container restart")
               .Add("--time {value}", Time)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3096,9 +3110,7 @@ namespace Nuke.Docker
         public virtual bool? Link { get; internal set; }
         /// <summary><p>Remove the volumes associated with the container</p></summary>
         public virtual bool? Volumes { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -3108,7 +3120,6 @@ namespace Nuke.Docker
               .Add("--force {value}", Force)
               .Add("--link {value}", Link)
               .Add("--volumes {value}", Volumes)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3146,21 +3157,21 @@ namespace Nuke.Docker
         /// <summary><p>Write the container ID to the file</p></summary>
         public virtual string Cidfile { get; internal set; }
         /// <summary><p>CPU count (Windows only)</p></summary>
-        public virtual long CpuCount { get; internal set; }
+        public virtual long? CpuCount { get; internal set; }
         /// <summary><p>CPU percent (Windows only)</p></summary>
-        public virtual long CpuPercent { get; internal set; }
+        public virtual long? CpuPercent { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -3234,7 +3245,7 @@ namespace Nuke.Docker
         /// <summary><p>Keep STDIN open even if not attached</p></summary>
         public virtual bool? Interactive { get; internal set; }
         /// <summary><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
-        public virtual long IoMaxbandwidth { get; internal set; }
+        public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary><p>Maximum IOps limit for the system drive (Windows only)</p></summary>
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary><p>IPv4 address (e.g., 172.30.100.104)</p></summary>
@@ -3246,7 +3257,7 @@ namespace Nuke.Docker
         /// <summary><p>Container isolation technology</p></summary>
         public virtual string Isolation { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Set meta data on a container</p></summary>
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
@@ -3267,13 +3278,13 @@ namespace Nuke.Docker
         /// <summary><p>Container MAC address (e.g., 92:d0:c6:0a:29:33)</p></summary>
         public virtual string MacAddress { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Tune container memory swappiness (0 to 100)</p></summary>
-        public virtual long MemorySwappiness { get; internal set; }
+        public virtual long? MemorySwappiness { get; internal set; }
         /// <summary><p>Attach a filesystem mount to the container</p></summary>
         public virtual string Mount { get; internal set; }
         /// <summary><p>Assign a name to the container</p></summary>
@@ -3297,7 +3308,7 @@ namespace Nuke.Docker
         /// <summary><p>PID namespace to use</p></summary>
         public virtual string Pid { get; internal set; }
         /// <summary><p>Tune container pids limit (set -1 for unlimited)</p></summary>
-        public virtual long PidsLimit { get; internal set; }
+        public virtual long? PidsLimit { get; internal set; }
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>Give extended privileges to this container</p></summary>
@@ -3319,7 +3330,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Proxy received signals to the process</p></summary>
         public virtual bool? SigProxy { get; internal set; }
         /// <summary><p>Signal to stop a container</p></summary>
@@ -3355,11 +3366,10 @@ namespace Nuke.Docker
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         /// <summary><p>[COMMAND]</p></summary>
-        public virtual IReadOnlyList<string> Commands => CommandsInternal.AsReadOnly();
-        internal List<string> CommandsInternal { get; set; } = new List<string>();
+        public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
@@ -3467,7 +3477,7 @@ namespace Nuke.Docker
               .Add("--volumes-from {value}", VolumesFrom)
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
-              .Add("{value}", Commands, separator: ' ')
+              .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3493,9 +3503,7 @@ namespace Nuke.Docker
         public virtual string DetachKeys { get; internal set; }
         /// <summary><p>Attach container's STDIN</p></summary>
         public virtual bool? Interactive { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -3507,7 +3515,6 @@ namespace Nuke.Docker
               .Add("--checkpoint-dir {value}", CheckpointDir)
               .Add("--detach-keys {value}", DetachKeys)
               .Add("--interactive {value}", Interactive)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3559,9 +3566,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Seconds to wait for stop before killing it</p></summary>
         public virtual int? Time { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -3569,7 +3574,6 @@ namespace Nuke.Docker
             arguments
               .Add("container stop")
               .Add("--time {value}", Time)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3585,16 +3589,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>[ps</p></summary>
-        public virtual string Ps { get; internal set; }
+        /// <summary><p>OPTIONS]</p></summary>
+        public virtual string Options { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("container top OPTIONS]")
+              .Add("container top [ps")
               .Add("{value}", Container)
-              .Add("{value}", Ps)
+              .Add("{value}", Options)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -3609,16 +3613,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("container unpause")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3637,34 +3638,32 @@ namespace Nuke.Docker
         /// <summary><p>Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)</p></summary>
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit the CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit the CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetMems { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Restart policy to apply when a container exits</p></summary>
         public virtual string Restart { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -3685,7 +3684,6 @@ namespace Nuke.Docker
               .Add("--memory-reservation {value}", MemoryReservation)
               .Add("--memory-swap {value}", MemorySwap)
               .Add("--restart {value}", Restart)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3701,16 +3699,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("container wait")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3748,21 +3743,21 @@ namespace Nuke.Docker
         /// <summary><p>Write the container ID to the file</p></summary>
         public virtual string Cidfile { get; internal set; }
         /// <summary><p>CPU count (Windows only)</p></summary>
-        public virtual long CpuCount { get; internal set; }
+        public virtual long? CpuCount { get; internal set; }
         /// <summary><p>CPU percent (Windows only)</p></summary>
-        public virtual long CpuPercent { get; internal set; }
+        public virtual long? CpuPercent { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -3832,7 +3827,7 @@ namespace Nuke.Docker
         /// <summary><p>Keep STDIN open even if not attached</p></summary>
         public virtual bool? Interactive { get; internal set; }
         /// <summary><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
-        public virtual long IoMaxbandwidth { get; internal set; }
+        public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary><p>Maximum IOps limit for the system drive (Windows only)</p></summary>
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary><p>IPv4 address (e.g., 172.30.100.104)</p></summary>
@@ -3844,7 +3839,7 @@ namespace Nuke.Docker
         /// <summary><p>Container isolation technology</p></summary>
         public virtual string Isolation { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Set meta data on a container</p></summary>
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
@@ -3865,13 +3860,13 @@ namespace Nuke.Docker
         /// <summary><p>Container MAC address (e.g., 92:d0:c6:0a:29:33)</p></summary>
         public virtual string MacAddress { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Tune container memory swappiness (0 to 100)</p></summary>
-        public virtual long MemorySwappiness { get; internal set; }
+        public virtual long? MemorySwappiness { get; internal set; }
         /// <summary><p>Attach a filesystem mount to the container</p></summary>
         public virtual string Mount { get; internal set; }
         /// <summary><p>Assign a name to the container</p></summary>
@@ -3895,7 +3890,7 @@ namespace Nuke.Docker
         /// <summary><p>PID namespace to use</p></summary>
         public virtual string Pid { get; internal set; }
         /// <summary><p>Tune container pids limit (set -1 for unlimited)</p></summary>
-        public virtual long PidsLimit { get; internal set; }
+        public virtual long? PidsLimit { get; internal set; }
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>Give extended privileges to this container</p></summary>
@@ -3917,7 +3912,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Signal to stop a container</p></summary>
         public virtual string StopSignal { get; internal set; }
         /// <summary><p>Timeout (in seconds) to stop a container</p></summary>
@@ -3951,11 +3946,10 @@ namespace Nuke.Docker
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         /// <summary><p>[COMMAND]</p></summary>
-        public virtual IReadOnlyList<string> Commands => CommandsInternal.AsReadOnly();
-        internal List<string> CommandsInternal { get; set; } = new List<string>();
+        public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
@@ -4060,7 +4054,7 @@ namespace Nuke.Docker
               .Add("--volumes-from {value}", VolumesFrom)
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
-              .Add("{value}", Commands, separator: ' ')
+              .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4087,7 +4081,7 @@ namespace Nuke.Docker
         public virtual ResolveImage ResolveImage { get; internal set; }
         /// <summary><p>Send registry authentication details to Swarm agents</p></summary>
         public virtual bool? WithRegistryAuth { get; internal set; }
-        /// <summary><p>STACK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4113,7 +4107,7 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4181,9 +4175,9 @@ namespace Nuke.Docker
         public virtual string User { get; internal set; }
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>COMMAND</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
@@ -4219,7 +4213,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Write to a file, instead of STDOUT</p></summary>
         public virtual string Output { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4249,7 +4243,7 @@ namespace Nuke.Docker
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary><p>Only show numeric IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4306,11 +4300,11 @@ namespace Nuke.Docker
         /// <summary><p>Compress the build context using gzip</p></summary>
         public virtual bool? Compress { get; internal set; }
         /// <summary><p>Limit the CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit the CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -4329,9 +4323,9 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Set the networking mode for the RUN instructions during build</p></summary>
         public virtual string Network { get; internal set; }
         /// <summary><p>Do not use cache when building the image</p></summary>
@@ -4348,7 +4342,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Squash newly built layers into a single new layer</p></summary>
         public virtual bool? Squash { get; internal set; }
         /// <summary><p>Stream attaches to server to negotiate build context</p></summary>
@@ -4360,7 +4354,7 @@ namespace Nuke.Docker
         public virtual string Target { get; internal set; }
         /// <summary><p>Ulimit options</p></summary>
         public virtual string Ulimit { get; internal set; }
-        /// <summary><p>PATH|URL|-</p></summary>
+        /// <summary><p>Path or url where the build context is located.</p></summary>
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4420,7 +4414,7 @@ namespace Nuke.Docker
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary><p>Only show numeric IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4453,8 +4447,7 @@ namespace Nuke.Docker
         /// <summary><p>file|URL|-</p></summary>
         public virtual string File { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4462,7 +4455,7 @@ namespace Nuke.Docker
               .Add("--change {value}", Change)
               .Add("--message {value}", Message)
               .Add("{value}", File)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4479,9 +4472,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Format the output using the given Go template</p></summary>
         public virtual string Format { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
-        public virtual string Image { get; internal set; }
-        /// <summary><p>[IMAGE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -4489,7 +4480,6 @@ namespace Nuke.Docker
             arguments
               .Add("image inspect")
               .Add("--format {value}", Format)
-              .Add("{value}", Image)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4542,8 +4532,7 @@ namespace Nuke.Docker
         /// <summary><p>Only show numeric IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4554,7 +4543,7 @@ namespace Nuke.Docker
               .Add("--format {value}", Format)
               .Add("--no-trunc {value}", NoTrunc)
               .Add("--quiet {value}", Quiet)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4603,7 +4592,7 @@ namespace Nuke.Docker
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>NAME[:TAG|@DIGEST]</p></summary>
-        public virtual string Nametag { get; internal set; }
+        public virtual string Name { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4611,7 +4600,7 @@ namespace Nuke.Docker
               .Add("--all-tags {value}", AllTags)
               .Add("--disable-content-trust {value}", DisableContentTrust)
               .Add("--platform {value}", Platform)
-              .Add("{value}", Nametag)
+              .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4628,11 +4617,14 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Skip image signing</p></summary>
         public virtual bool? DisableContentTrust { get; internal set; }
+        /// <summary><p>NAME[:TAG]</p></summary>
+        public virtual string Name { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("image push NAME[:TAG]")
+              .Add("image push")
               .Add("--disable-content-trust {value}", DisableContentTrust)
+              .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4651,9 +4643,7 @@ namespace Nuke.Docker
         public virtual bool? Force { get; internal set; }
         /// <summary><p>Do not delete untagged parents</p></summary>
         public virtual bool? NoPrune { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
-        public virtual string Image { get; internal set; }
-        /// <summary><p>[IMAGE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -4662,7 +4652,6 @@ namespace Nuke.Docker
               .Add("image rm")
               .Add("--force {value}", Force)
               .Add("--no-prune {value}", NoPrune)
-              .Add("{value}", Image)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4680,9 +4669,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Write to a file, instead of STDOUT</p></summary>
         public virtual string Output { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
-        public virtual string Image { get; internal set; }
-        /// <summary><p>[IMAGE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -4690,7 +4677,6 @@ namespace Nuke.Docker
             arguments
               .Add("image save")
               .Add("--output {value}", Output)
-              .Add("{value}", Image)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4706,10 +4692,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p>SOURCE_IMAGE[:TAG]</p></summary>
+        public virtual string SourceImage { get; internal set; }
+        /// <summary><p>TARGET_IMAGE[:TAG]</p></summary>
+        public virtual string TargetImage { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("image tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]")
+              .Add("image tag")
+              .Add("{value}", SourceImage)
+              .Add("{value}", TargetImage)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4737,8 +4729,7 @@ namespace Nuke.Docker
         /// <summary><p>Only show numeric IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4749,7 +4740,7 @@ namespace Nuke.Docker
               .Add("--format {value}", Format)
               .Add("--no-trunc {value}", NoTrunc)
               .Add("--quiet {value}", Quiet)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4772,8 +4763,7 @@ namespace Nuke.Docker
         /// <summary><p>file|URL|-</p></summary>
         public virtual string File { get; internal set; }
         /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual IReadOnlyList<string> Repositorytags => RepositorytagsInternal.AsReadOnly();
-        internal List<string> RepositorytagsInternal { get; set; } = new List<string>();
+        public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4781,7 +4771,7 @@ namespace Nuke.Docker
               .Add("--change {value}", Change)
               .Add("--message {value}", Message)
               .Add("{value}", File)
-              .Add("{value}", Repositorytags, separator: ' ')
+              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4824,8 +4814,6 @@ namespace Nuke.Docker
         /// <summary><p>Return JSON for specified type</p></summary>
         public virtual string Type { get; internal set; }
         /// <summary><p>NAME|ID</p></summary>
-        public virtual string Name { get; internal set; }
-        /// <summary><p>[NAME|ID...]</p></summary>
         public virtual IReadOnlyList<string> Names => NamesInternal.AsReadOnly();
         internal List<string> NamesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -4835,7 +4823,6 @@ namespace Nuke.Docker
               .Add("--format {value}", Format)
               .Add("--size {value}", Size)
               .Add("--type {value}", Type)
-              .Add("{value}", Name)
               .Add("{value}", Names, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4853,9 +4840,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Signal to send to the container</p></summary>
         public virtual string Signal { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -4863,7 +4848,6 @@ namespace Nuke.Docker
             arguments
               .Add("kill")
               .Add("--signal {value}", Signal)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4910,8 +4894,7 @@ namespace Nuke.Docker
         /// <summary><p>Username</p></summary>
         public virtual string Username { get; internal set; }
         /// <summary><p>[SERVER]</p></summary>
-        public virtual IReadOnlyList<string> Servers => ServersInternal.AsReadOnly();
-        internal List<string> ServersInternal { get; set; } = new List<string>();
+        public virtual string Server { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -4919,7 +4902,7 @@ namespace Nuke.Docker
               .Add("--password {value}", Password)
               .Add("--password-stdin {value}", PasswordStdin)
               .Add("--username {value}", Username)
-              .Add("{value}", Servers, separator: ' ')
+              .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4935,13 +4918,12 @@ namespace Nuke.Docker
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>[SERVER]</p></summary>
-        public virtual IReadOnlyList<string> Servers => ServersInternal.AsReadOnly();
-        internal List<string> ServersInternal { get; set; } = new List<string>();
+        public virtual string Server { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("logout")
-              .Add("{value}", Servers, separator: ' ')
+              .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4968,7 +4950,7 @@ namespace Nuke.Docker
         public virtual bool? Timestamps { get; internal set; }
         /// <summary><p>Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)</p></summary>
         public virtual string Until { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -4995,7 +4977,7 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>COMMAND</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5025,16 +5007,19 @@ namespace Nuke.Docker
         internal List<string> OsFeaturesInternal { get; set; } = new List<string>();
         /// <summary><p>Set architecture variant</p></summary>
         public virtual string Variant { get; internal set; }
-        /// <summary><p>MANIFEST</p></summary>
+        /// <summary><p>MANIFEST_LIST</p></summary>
+        public virtual string ManifestList { get; internal set; }
+        /// <summary><p></p></summary>
         public virtual string Manifest { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("manifest annotate MANIFEST_LIST")
+              .Add("manifest annotate")
               .Add("--arch {value}", Arch)
               .Add("--os {value}", Os)
               .Add("--os-features {value}", OsFeatures)
               .Add("--variant {value}", Variant)
+              .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5050,16 +5035,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>MANIFEST</p></summary>
-        public virtual string Manifest { get; internal set; }
-        /// <summary><p>[MANIFEST...]</p></summary>
+        /// <summary><p>MANFEST_LIST</p></summary>
+        public virtual string ManfestList { get; internal set; }
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Manifests => ManifestsInternal.AsReadOnly();
         internal List<string> ManifestsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("manifest create MANFEST_LIST")
-              .Add("{value}", Manifest)
+              .Add("manifest create")
+              .Add("{value}", ManfestList)
               .Add("{value}", Manifests, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5080,9 +5065,8 @@ namespace Nuke.Docker
         /// <summary><p>Output additional info including layers and platform</p></summary>
         public virtual bool? Verbose { get; internal set; }
         /// <summary><p>[MANIFEST_LIST]</p></summary>
-        public virtual IReadOnlyList<string> Manifest_lists => Manifest_listsInternal.AsReadOnly();
-        internal List<string> Manifest_listsInternal { get; set; } = new List<string>();
-        /// <summary><p>MANIFEST</p></summary>
+        public virtual string ManifestList { get; internal set; }
+        /// <summary><p></p></summary>
         public virtual string Manifest { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5090,7 +5074,7 @@ namespace Nuke.Docker
               .Add("manifest inspect")
               .Add("--insecure {value}", Insecure)
               .Add("--verbose {value}", Verbose)
-              .Add("{value}", Manifest_lists, separator: ' ')
+              .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5110,12 +5094,15 @@ namespace Nuke.Docker
         public virtual bool? Insecure { get; internal set; }
         /// <summary><p>Remove the local manifest list after push</p></summary>
         public virtual bool? Purge { get; internal set; }
+        /// <summary><p>MANIFEST_LIST</p></summary>
+        public virtual string ManifestList { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("manifest push MANIFEST_LIST")
+              .Add("manifest push")
               .Add("--insecure {value}", Insecure)
               .Add("--purge {value}", Purge)
+              .Add("{value}", ManifestList)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5161,9 +5148,9 @@ namespace Nuke.Docker
         /// <summary><p>Add a link-local address for the container</p></summary>
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
-        /// <summary><p>NETWORK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Network { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5229,7 +5216,7 @@ namespace Nuke.Docker
         /// <summary><p>Subnet in CIDR format that represents a network segment</p></summary>
         public virtual IReadOnlyList<string> Subnet => SubnetInternal.AsReadOnly();
         internal List<string> SubnetInternal { get; set; } = new List<string>();
-        /// <summary><p>NETWORK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Network { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5268,9 +5255,9 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Force the container to disconnect from a network</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>NETWORK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Network { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5297,9 +5284,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Verbose output for diagnostics</p></summary>
         public virtual bool? Verbose { get; internal set; }
-        /// <summary><p>NETWORK</p></summary>
-        public virtual string Network { get; internal set; }
-        /// <summary><p>[NETWORK...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -5308,7 +5293,6 @@ namespace Nuke.Docker
               .Add("network inspect")
               .Add("--format {value}", Format)
               .Add("--verbose {value}", Verbose)
-              .Add("{value}", Network)
               .Add("{value}", Networks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5378,16 +5362,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>NETWORK</p></summary>
-        public virtual string Network { get; internal set; }
-        /// <summary><p>[NETWORK...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("network rm")
-              .Add("{value}", Network)
               .Add("{value}", Networks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5421,16 +5402,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>NODE</p></summary>
-        public virtual string Node { get; internal set; }
-        /// <summary><p>[NODE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("node demote")
-              .Add("{value}", Node)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5451,18 +5429,15 @@ namespace Nuke.Docker
         /// <summary><p>Print the information in a human friendly format</p></summary>
         public virtual bool? Pretty { get; internal set; }
         /// <summary><p>self|NODE</p></summary>
-        public virtual string Self { get; internal set; }
-        /// <summary><p>[NODE...]</p></summary>
-        public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
-        internal List<string> NodesInternal { get; set; } = new List<string>();
+        public virtual IReadOnlyList<string> Selves => SelvesInternal.AsReadOnly();
+        internal List<string> SelvesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("node inspect")
               .Add("--format {value}", Format)
               .Add("--pretty {value}", Pretty)
-              .Add("{value}", Self)
-              .Add("{value}", Nodes, separator: ' ')
+              .Add("{value}", Selves, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5504,16 +5479,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>NODE</p></summary>
-        public virtual string Node { get; internal set; }
-        /// <summary><p>[NODE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("node promote")
-              .Add("{value}", Node)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5568,9 +5540,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Force remove a node from the swarm</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>NODE</p></summary>
-        public virtual string Node { get; internal set; }
-        /// <summary><p>[NODE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -5578,7 +5548,6 @@ namespace Nuke.Docker
             arguments
               .Add("node rm")
               .Add("--force {value}", Force)
-              .Add("{value}", Node)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5604,7 +5573,7 @@ namespace Nuke.Docker
         internal List<string> LabelRmInternal { get; set; } = new List<string>();
         /// <summary><p>Role of the node ("worker"|"manager")</p></summary>
         public virtual Role Role { get; internal set; }
-        /// <summary><p>NODE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Node { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5629,16 +5598,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("pause")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5674,14 +5640,17 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Compress the context using gzip</p></summary>
         public virtual bool? Compress { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Plugin { get; internal set; }
+        /// <summary><p>PLUGIN-DATA-DIR</p></summary>
+        public virtual string PluginDataDir { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("plugin create PLUGIN-DATA-DIR")
+              .Add("plugin create")
               .Add("--compress {value}", Compress)
               .Add("{value}", Plugin)
+              .Add("{value}", PluginDataDir)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5698,7 +5667,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Force the disable of an active plugin</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5722,7 +5691,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>HTTP client timeout (in seconds)</p></summary>
         public virtual int? Timeout { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -5746,9 +5715,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Format the output using the given Go template</p></summary>
         public virtual string Format { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
-        public virtual string Plugin { get; internal set; }
-        /// <summary><p>[PLUGIN...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -5756,8 +5723,44 @@ namespace Nuke.Docker
             arguments
               .Add("plugin inspect")
               .Add("--format {value}", Format)
-              .Add("{value}", Plugin)
               .Add("{value}", Plugins, separator: ' ')
+              .Add("{value}", GetCliSettings(), customValue: true);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DockerPluginInstallSettings
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerPluginInstallSettings : DockerSettings
+    {
+        /// <summary><p>Path to the Docker executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p>Local name for plugin</p></summary>
+        public virtual string Alias { get; internal set; }
+        /// <summary><p>Do not enable the plugin on install</p></summary>
+        public virtual bool? Disable { get; internal set; }
+        /// <summary><p>Skip image verification</p></summary>
+        public virtual bool? DisableContentTrust { get; internal set; }
+        /// <summary><p>Grant all permissions necessary to run the plugin</p></summary>
+        public virtual bool? GrantAllPermissions { get; internal set; }
+        /// <summary><p></p></summary>
+        public virtual string Plugin { get; internal set; }
+        /// <summary><p>[KEY=VALUE...]</p></summary>
+        public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
+        internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("plugin install")
+              .Add("--alias {value}", Alias)
+              .Add("--disable {value}", Disable)
+              .Add("--disable-content-trust {value}", DisableContentTrust)
+              .Add("--grant-all-permissions {value}", GrantAllPermissions)
+              .Add("{value}", Plugin)
+              .Add("{value}", KeyValues, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5804,11 +5807,14 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Skip image signing</p></summary>
         public virtual bool? DisableContentTrust { get; internal set; }
+        /// <summary><p>PLUGIN[:TAG]</p></summary>
+        public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("plugin push PLUGIN[:TAG]")
+              .Add("plugin push")
               .Add("--disable-content-trust {value}", DisableContentTrust)
+              .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5825,9 +5831,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Force the removal of an active plugin</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
-        public virtual string Plugin { get; internal set; }
-        /// <summary><p>[PLUGIN...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -5835,8 +5839,32 @@ namespace Nuke.Docker
             arguments
               .Add("plugin rm")
               .Add("--force {value}", Force)
-              .Add("{value}", Plugin)
               .Add("{value}", Plugins, separator: ' ')
+              .Add("{value}", GetCliSettings(), customValue: true);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DockerPluginSetSettings
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerPluginSetSettings : DockerSettings
+    {
+        /// <summary><p>Path to the Docker executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p></p></summary>
+        public virtual string Plugin { get; internal set; }
+        /// <summary><p>KEY=VALUE</p></summary>
+        public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
+        internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("plugin set")
+              .Add("{value}", Plugin)
+              .Add("{value}", KeyValues, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5857,11 +5885,10 @@ namespace Nuke.Docker
         public virtual bool? GrantAllPermissions { get; internal set; }
         /// <summary><p>Do not check if specified remote plugin matches existing plugin image</p></summary>
         public virtual bool? SkipRemoteCheck { get; internal set; }
-        /// <summary><p>PLUGIN</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Plugin { get; internal set; }
         /// <summary><p>[REMOTE]</p></summary>
-        public virtual IReadOnlyList<string> Remotes => RemotesInternal.AsReadOnly();
-        internal List<string> RemotesInternal { get; set; } = new List<string>();
+        public virtual string Remote { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -5870,7 +5897,7 @@ namespace Nuke.Docker
               .Add("--grant-all-permissions {value}", GrantAllPermissions)
               .Add("--skip-remote-check {value}", SkipRemoteCheck)
               .Add("{value}", Plugin)
-              .Add("{value}", Remotes, separator: ' ')
+              .Add("{value}", Remote)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5885,17 +5912,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
         /// <summary><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        public virtual IReadOnlyList<string> Private_portprotos => Private_portprotosInternal.AsReadOnly();
-        internal List<string> Private_portprotosInternal { get; set; } = new List<string>();
+        public virtual string PrivatePort { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("port")
               .Add("{value}", Container)
-              .Add("{value}", Private_portprotos, separator: ' ')
+              .Add("{value}", PrivatePort)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5959,7 +5985,7 @@ namespace Nuke.Docker
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>NAME[:TAG|@DIGEST]</p></summary>
-        public virtual string Nametag { get; internal set; }
+        public virtual string Name { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -5967,7 +5993,7 @@ namespace Nuke.Docker
               .Add("--all-tags {value}", AllTags)
               .Add("--disable-content-trust {value}", DisableContentTrust)
               .Add("--platform {value}", Platform)
-              .Add("{value}", Nametag)
+              .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5984,11 +6010,14 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Skip image signing</p></summary>
         public virtual bool? DisableContentTrust { get; internal set; }
+        /// <summary><p>NAME[:TAG]</p></summary>
+        public virtual string Name { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("push NAME[:TAG]")
+              .Add("push")
               .Add("--disable-content-trust {value}", DisableContentTrust)
+              .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -6003,13 +6032,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
+        /// <summary><p>NEW_NAME</p></summary>
+        public virtual string NewName { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("rename NEW_NAME")
+              .Add("rename")
               .Add("{value}", Container)
+              .Add("{value}", NewName)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -6026,9 +6058,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Seconds to wait for stop before killing the container</p></summary>
         public virtual int? Time { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6036,7 +6066,6 @@ namespace Nuke.Docker
             arguments
               .Add("restart")
               .Add("--time {value}", Time)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6058,9 +6087,7 @@ namespace Nuke.Docker
         public virtual bool? Link { get; internal set; }
         /// <summary><p>Remove the volumes associated with the container</p></summary>
         public virtual bool? Volumes { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6070,7 +6097,6 @@ namespace Nuke.Docker
               .Add("--force {value}", Force)
               .Add("--link {value}", Link)
               .Add("--volumes {value}", Volumes)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6090,9 +6116,7 @@ namespace Nuke.Docker
         public virtual bool? Force { get; internal set; }
         /// <summary><p>Do not delete untagged parents</p></summary>
         public virtual bool? NoPrune { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
-        public virtual string Image { get; internal set; }
-        /// <summary><p>[IMAGE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6101,7 +6125,6 @@ namespace Nuke.Docker
               .Add("rmi")
               .Add("--force {value}", Force)
               .Add("--no-prune {value}", NoPrune)
-              .Add("{value}", Image)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6139,21 +6162,21 @@ namespace Nuke.Docker
         /// <summary><p>Write the container ID to the file</p></summary>
         public virtual string Cidfile { get; internal set; }
         /// <summary><p>CPU count (Windows only)</p></summary>
-        public virtual long CpuCount { get; internal set; }
+        public virtual long? CpuCount { get; internal set; }
         /// <summary><p>CPU percent (Windows only)</p></summary>
-        public virtual long CpuPercent { get; internal set; }
+        public virtual long? CpuPercent { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
@@ -6227,7 +6250,7 @@ namespace Nuke.Docker
         /// <summary><p>Keep STDIN open even if not attached</p></summary>
         public virtual bool? Interactive { get; internal set; }
         /// <summary><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
-        public virtual long IoMaxbandwidth { get; internal set; }
+        public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary><p>Maximum IOps limit for the system drive (Windows only)</p></summary>
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary><p>IPv4 address (e.g., 172.30.100.104)</p></summary>
@@ -6239,7 +6262,7 @@ namespace Nuke.Docker
         /// <summary><p>Container isolation technology</p></summary>
         public virtual string Isolation { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Set meta data on a container</p></summary>
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
@@ -6260,13 +6283,13 @@ namespace Nuke.Docker
         /// <summary><p>Container MAC address (e.g., 92:d0:c6:0a:29:33)</p></summary>
         public virtual string MacAddress { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Tune container memory swappiness (0 to 100)</p></summary>
-        public virtual long MemorySwappiness { get; internal set; }
+        public virtual long? MemorySwappiness { get; internal set; }
         /// <summary><p>Attach a filesystem mount to the container</p></summary>
         public virtual string Mount { get; internal set; }
         /// <summary><p>Assign a name to the container</p></summary>
@@ -6290,7 +6313,7 @@ namespace Nuke.Docker
         /// <summary><p>PID namespace to use</p></summary>
         public virtual string Pid { get; internal set; }
         /// <summary><p>Tune container pids limit (set -1 for unlimited)</p></summary>
-        public virtual long PidsLimit { get; internal set; }
+        public virtual long? PidsLimit { get; internal set; }
         /// <summary><p>Set platform if server is multi-platform capable</p></summary>
         public virtual string Platform { get; internal set; }
         /// <summary><p>Give extended privileges to this container</p></summary>
@@ -6312,7 +6335,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary><p>Size of /dev/shm</p></summary>
-        public virtual long ShmSize { get; internal set; }
+        public virtual long? ShmSize { get; internal set; }
         /// <summary><p>Proxy received signals to the process</p></summary>
         public virtual bool? SigProxy { get; internal set; }
         /// <summary><p>Signal to stop a container</p></summary>
@@ -6348,11 +6371,10 @@ namespace Nuke.Docker
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         /// <summary><p>[COMMAND]</p></summary>
-        public virtual IReadOnlyList<string> Commands => CommandsInternal.AsReadOnly();
-        internal List<string> CommandsInternal { get; set; } = new List<string>();
+        public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
@@ -6460,7 +6482,7 @@ namespace Nuke.Docker
               .Add("--volumes-from {value}", VolumesFrom)
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
-              .Add("{value}", Commands, separator: ' ')
+              .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6478,9 +6500,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Write to a file, instead of STDOUT</p></summary>
         public virtual string Output { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
-        public virtual string Image { get; internal set; }
-        /// <summary><p>[IMAGE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6488,7 +6508,6 @@ namespace Nuke.Docker
             arguments
               .Add("save")
               .Add("--output {value}", Output)
-              .Add("{value}", Image)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6516,7 +6535,7 @@ namespace Nuke.Docker
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary><p>Only displays with at least x stars</p></summary>
         public virtual int? Stars { get; internal set; }
-        /// <summary><p>TERM</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Term { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -6568,11 +6587,10 @@ namespace Nuke.Docker
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary><p>Template driver</p></summary>
         public virtual string TemplateDriver { get; internal set; }
-        /// <summary><p>SECRET</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Secret { get; internal set; }
-        /// <summary><p>[file|-]</p></summary>
-        public virtual IReadOnlyList<string> Files => FilesInternal.AsReadOnly();
-        internal List<string> FilesInternal { get; set; } = new List<string>();
+        /// <summary><p>Path to file to create the secret from.</p></summary>
+        public virtual string File { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -6581,7 +6599,7 @@ namespace Nuke.Docker
               .Add("--label {value}", Label)
               .Add("--template-driver {value}", TemplateDriver)
               .Add("{value}", Secret)
-              .Add("{value}", Files, separator: ' ')
+              .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -6600,9 +6618,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Print the information in a human friendly format</p></summary>
         public virtual bool? Pretty { get; internal set; }
-        /// <summary><p>SECRET</p></summary>
-        public virtual string Secret { get; internal set; }
-        /// <summary><p>[SECRET...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6611,7 +6627,6 @@ namespace Nuke.Docker
               .Add("secret inspect")
               .Add("--format {value}", Format)
               .Add("--pretty {value}", Pretty)
-              .Add("{value}", Secret)
               .Add("{value}", Secrets, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6654,16 +6669,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>SECRET</p></summary>
-        public virtual string Secret { get; internal set; }
-        /// <summary><p>[SECRET...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("secret rm")
-              .Add("{value}", Secret)
               .Add("{value}", Secrets, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6755,9 +6767,9 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary><p>Limit CPUs</p></summary>
-        public virtual decimal LimitCpu { get; internal set; }
+        public virtual decimal? LimitCpu { get; internal set; }
         /// <summary><p>Limit Memory</p></summary>
-        public virtual long LimitMemory { get; internal set; }
+        public virtual long? LimitMemory { get; internal set; }
         /// <summary><p>Logging driver for service</p></summary>
         public virtual string LogDriver { get; internal set; }
         /// <summary><p>Logging driver options</p></summary>
@@ -6786,9 +6798,9 @@ namespace Nuke.Docker
         /// <summary><p>Number of tasks</p></summary>
         public virtual int? Replicas { get; internal set; }
         /// <summary><p>Reserve CPUs</p></summary>
-        public virtual decimal ReserveCpu { get; internal set; }
+        public virtual decimal? ReserveCpu { get; internal set; }
         /// <summary><p>Reserve Memory</p></summary>
-        public virtual long ReserveMemory { get; internal set; }
+        public virtual long? ReserveMemory { get; internal set; }
         /// <summary><p>Restart when condition is met ("none"|"on-failure"|"any") (default "any")</p></summary>
         public virtual RestartCondition RestartCondition { get; internal set; }
         /// <summary><p>Delay between restart attempts (ns|us|ms|s|m|h) (default 5s)</p></summary>
@@ -6802,7 +6814,7 @@ namespace Nuke.Docker
         /// <summary><p>Action on rollback failure ("pause"|"continue") (default "pause")</p></summary>
         public virtual RollbackFailureAction RollbackFailureAction { get; internal set; }
         /// <summary><p>Failure rate to tolerate during a rollback (default 0)</p></summary>
-        public virtual float RollbackMaxFailureRatio { get; internal set; }
+        public virtual float? RollbackMaxFailureRatio { get; internal set; }
         /// <summary><p>Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) (default 5s)</p></summary>
         public virtual string RollbackMonitor { get; internal set; }
         /// <summary><p>Rollback order ("start-first"|"stop-first") (default "stop-first")</p></summary>
@@ -6822,7 +6834,7 @@ namespace Nuke.Docker
         /// <summary><p>Action on update failure ("pause"|"continue"|"rollback") (default "pause")</p></summary>
         public virtual UpdateFailureAction UpdateFailureAction { get; internal set; }
         /// <summary><p>Failure rate to tolerate during an update (default 0)</p></summary>
-        public virtual float UpdateMaxFailureRatio { get; internal set; }
+        public virtual float? UpdateMaxFailureRatio { get; internal set; }
         /// <summary><p>Duration after each task update to monitor for failure (ns|us|ms|s|m|h) (default 5s)</p></summary>
         public virtual string UpdateMonitor { get; internal set; }
         /// <summary><p>Update order ("start-first"|"stop-first") (default "stop-first")</p></summary>
@@ -6835,11 +6847,10 @@ namespace Nuke.Docker
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>IMAGE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Image { get; internal set; }
         /// <summary><p>[COMMAND]</p></summary>
-        public virtual IReadOnlyList<string> Commands => CommandsInternal.AsReadOnly();
-        internal List<string> CommandsInternal { get; set; } = new List<string>();
+        public virtual string Command { get; internal set; }
         /// <summary><p>[ARG...]</p></summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
@@ -6911,7 +6922,7 @@ namespace Nuke.Docker
               .Add("--with-registry-auth {value}", WithRegistryAuth)
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
-              .Add("{value}", Commands, separator: ' ')
+              .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6931,9 +6942,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Print the information in a human friendly format</p></summary>
         public virtual bool? Pretty { get; internal set; }
-        /// <summary><p>SERVICE</p></summary>
-        public virtual string Service { get; internal set; }
-        /// <summary><p>[SERVICE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -6942,7 +6951,6 @@ namespace Nuke.Docker
               .Add("service inspect")
               .Add("--format {value}", Format)
               .Add("--pretty {value}", Pretty)
-              .Add("{value}", Service)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7043,9 +7051,7 @@ namespace Nuke.Docker
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary><p>Only display task IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>SERVICE</p></summary>
-        public virtual string Service { get; internal set; }
-        /// <summary><p>[SERVICE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -7057,7 +7063,6 @@ namespace Nuke.Docker
               .Add("--no-resolve {value}", NoResolve)
               .Add("--no-trunc {value}", NoTrunc)
               .Add("--quiet {value}", Quiet)
-              .Add("{value}", Service)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7073,16 +7078,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>SERVICE</p></summary>
-        public virtual string Service { get; internal set; }
-        /// <summary><p>[SERVICE...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("service rm")
-              .Add("{value}", Service)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7102,7 +7104,7 @@ namespace Nuke.Docker
         public virtual bool? Detach { get; internal set; }
         /// <summary><p>Suppress progress output</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>SERVICE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Service { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -7111,6 +7113,28 @@ namespace Nuke.Docker
               .Add("--detach {value}", Detach)
               .Add("--quiet {value}", Quiet)
               .Add("{value}", Service)
+              .Add("{value}", GetCliSettings(), customValue: true);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DockerServiceScaleSettings
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerServiceScaleSettings : DockerSettings
+    {
+        /// <summary><p>Path to the Docker executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p>SERVICE=REPLICAS</p></summary>
+        public virtual IReadOnlyDictionary<string, string> ServiceReplicas => ServiceReplicasInternal.AsReadOnly();
+        internal Dictionary<string,string> ServiceReplicasInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("service scale")
+              .Add("{value}", ServiceReplicas, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7219,9 +7243,9 @@ namespace Nuke.Docker
         public virtual IReadOnlyList<string> LabelRm => LabelRmInternal.AsReadOnly();
         internal List<string> LabelRmInternal { get; set; } = new List<string>();
         /// <summary><p>Limit CPUs</p></summary>
-        public virtual decimal LimitCpu { get; internal set; }
+        public virtual decimal? LimitCpu { get; internal set; }
         /// <summary><p>Limit Memory</p></summary>
-        public virtual long LimitMemory { get; internal set; }
+        public virtual long? LimitMemory { get; internal set; }
         /// <summary><p>Logging driver for service</p></summary>
         public virtual string LogDriver { get; internal set; }
         /// <summary><p>Logging driver options</p></summary>
@@ -7256,9 +7280,9 @@ namespace Nuke.Docker
         /// <summary><p>Number of tasks</p></summary>
         public virtual int? Replicas { get; internal set; }
         /// <summary><p>Reserve CPUs</p></summary>
-        public virtual decimal ReserveCpu { get; internal set; }
+        public virtual decimal? ReserveCpu { get; internal set; }
         /// <summary><p>Reserve Memory</p></summary>
-        public virtual long ReserveMemory { get; internal set; }
+        public virtual long? ReserveMemory { get; internal set; }
         /// <summary><p>Restart when condition is met ("none"|"on-failure"|"any")</p></summary>
         public virtual RestartCondition RestartCondition { get; internal set; }
         /// <summary><p>Delay between restart attempts (ns|us|ms|s|m|h)</p></summary>
@@ -7274,7 +7298,7 @@ namespace Nuke.Docker
         /// <summary><p>Action on rollback failure ("pause"|"continue")</p></summary>
         public virtual RollbackFailureAction RollbackFailureAction { get; internal set; }
         /// <summary><p>Failure rate to tolerate during a rollback</p></summary>
-        public virtual float RollbackMaxFailureRatio { get; internal set; }
+        public virtual float? RollbackMaxFailureRatio { get; internal set; }
         /// <summary><p>Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h)</p></summary>
         public virtual string RollbackMonitor { get; internal set; }
         /// <summary><p>Rollback order ("start-first"|"stop-first")</p></summary>
@@ -7297,7 +7321,7 @@ namespace Nuke.Docker
         /// <summary><p>Action on update failure ("pause"|"continue"|"rollback")</p></summary>
         public virtual UpdateFailureAction UpdateFailureAction { get; internal set; }
         /// <summary><p>Failure rate to tolerate during an update</p></summary>
-        public virtual float UpdateMaxFailureRatio { get; internal set; }
+        public virtual float? UpdateMaxFailureRatio { get; internal set; }
         /// <summary><p>Duration after each task update to monitor for failure (ns|us|ms|s|m|h)</p></summary>
         public virtual string UpdateMonitor { get; internal set; }
         /// <summary><p>Update order ("start-first"|"stop-first")</p></summary>
@@ -7310,7 +7334,7 @@ namespace Nuke.Docker
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary><p>Working directory inside the container</p></summary>
         public virtual string Workdir { get; internal set; }
-        /// <summary><p>SERVICE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Service { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -7440,7 +7464,7 @@ namespace Nuke.Docker
         public virtual ResolveImage ResolveImage { get; internal set; }
         /// <summary><p>Send registry authentication details to Swarm agents</p></summary>
         public virtual bool? WithRegistryAuth { get; internal set; }
-        /// <summary><p>STACK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -7494,7 +7518,7 @@ namespace Nuke.Docker
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary><p>Only display task IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>STACK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -7520,16 +7544,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>STACK</p></summary>
-        public virtual string Stack { get; internal set; }
-        /// <summary><p>[STACK...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Stacks => StacksInternal.AsReadOnly();
         internal List<string> StacksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("stack rm")
-              .Add("{value}", Stack)
               .Add("{value}", Stacks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7551,7 +7572,7 @@ namespace Nuke.Docker
         public virtual string Format { get; internal set; }
         /// <summary><p>Only display IDs</p></summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>STACK</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -7585,9 +7606,7 @@ namespace Nuke.Docker
         public virtual string DetachKeys { get; internal set; }
         /// <summary><p>Attach container's STDIN</p></summary>
         public virtual bool? Interactive { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -7599,7 +7618,6 @@ namespace Nuke.Docker
               .Add("--checkpoint-dir {value}", CheckpointDir)
               .Add("--detach-keys {value}", DetachKeys)
               .Add("--interactive {value}", Interactive)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7651,9 +7669,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Seconds to wait for stop before killing it</p></summary>
         public virtual int? Time { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -7661,7 +7677,6 @@ namespace Nuke.Docker
             arguments
               .Add("stop")
               .Add("--time {value}", Time)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7757,7 +7772,7 @@ namespace Nuke.Docker
         /// <summary><p>Number of log entries between Raft snapshots</p></summary>
         public virtual int? SnapshotInterval { get; internal set; }
         /// <summary><p>Task history retention limit</p></summary>
-        public virtual long TaskHistoryLimit { get; internal set; }
+        public virtual long? TaskHistoryLimit { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -7793,14 +7808,14 @@ namespace Nuke.Docker
         /// <summary><p>Rotate join token</p></summary>
         public virtual bool? Rotate { get; internal set; }
         /// <summary><p>(worker|manager)</p></summary>
-        public virtual string worker { get; internal set; }
+        public virtual string Worker { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("swarm join-token")
               .Add("--quiet {value}", Quiet)
               .Add("--rotate {value}", Rotate)
-              .Add("{value}", worker)
+              .Add("{value}", Worker)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7924,7 +7939,7 @@ namespace Nuke.Docker
         /// <summary><p>Number of log entries between Raft snapshots</p></summary>
         public virtual int? SnapshotInterval { get; internal set; }
         /// <summary><p>Task history retention limit</p></summary>
-        public virtual long TaskHistoryLimit { get; internal set; }
+        public virtual long? TaskHistoryLimit { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -8073,10 +8088,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p>SOURCE_IMAGE[:TAG]</p></summary>
+        public virtual string SourceImage { get; internal set; }
+        /// <summary><p>TARGET_IMAGE[:TAG]</p></summary>
+        public virtual string TargetImage { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]")
+              .Add("tag")
+              .Add("{value}", SourceImage)
+              .Add("{value}", TargetImage)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8091,16 +8112,16 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Container { get; internal set; }
-        /// <summary><p>[ps</p></summary>
-        public virtual string Ps { get; internal set; }
+        /// <summary><p>OPTIONS]</p></summary>
+        public virtual string Options { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("top OPTIONS]")
+              .Add("top [ps")
               .Add("{value}", Container)
-              .Add("{value}", Ps)
+              .Add("{value}", Options)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8133,14 +8154,14 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>[IMAGE[:TAG]...]</p></summary>
-        public virtual IReadOnlyList<string> Imagetags => ImagetagsInternal.AsReadOnly();
-        internal List<string> ImagetagsInternal { get; set; } = new List<string>();
+        /// <summary><p>IMAGE[:TAG]</p></summary>
+        public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
+        internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("trust inspect IMAGE[:TAG]")
-              .Add("{value}", Imagetags, separator: ' ')
+              .Add("trust inspect")
+              .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8173,7 +8194,7 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>NAME</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -8196,7 +8217,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Name for the loaded key</p></summary>
         public virtual string Name { get; internal set; }
-        /// <summary><p>KEYFILE</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Keyfile { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -8220,11 +8241,14 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Do not prompt for confirmation</p></summary>
         public virtual bool? Yes { get; internal set; }
+        /// <summary><p>IMAGE[:TAG]</p></summary>
+        public virtual string Image { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("trust revoke IMAGE[:TAG]")
+              .Add("trust revoke")
               .Add("--yes {value}", Yes)
+              .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8275,23 +8299,19 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>Path to the signer's public key file</p></summary>
-        public virtual IReadOnlyList<string> Key => KeyInternal.AsReadOnly();
-        internal List<string> KeyInternal { get; set; } = new List<string>();
-        /// <summary><p>NAME</p></summary>
+        /// <summary><p>OPTIONS</p></summary>
+        public virtual string Options { get; internal set; }
+        /// <summary><p></p></summary>
         public virtual string Name { get; internal set; }
-        /// <summary><p>REPOSITORY</p></summary>
-        public virtual string Repository { get; internal set; }
-        /// <summary><p>[REPOSITORY...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("trust signer add")
-              .Add("--key {value}", Key)
+              .Add("{value}", Options)
               .Add("{value}", Name)
-              .Add("{value}", Repository)
               .Add("{value}", Repositories, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8309,11 +8329,9 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Do not prompt for confirmation before removing the most recent signer</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>NAME</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Name { get; internal set; }
-        /// <summary><p>REPOSITORY</p></summary>
-        public virtual string Repository { get; internal set; }
-        /// <summary><p>[REPOSITORY...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -8322,7 +8340,6 @@ namespace Nuke.Docker
               .Add("trust signer remove")
               .Add("--force {value}", Force)
               .Add("{value}", Name)
-              .Add("{value}", Repository)
               .Add("{value}", Repositories, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8338,16 +8355,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("unpause")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8366,34 +8380,32 @@ namespace Nuke.Docker
         /// <summary><p>Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)</p></summary>
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
-        public virtual long CpuPeriod { get; internal set; }
+        public virtual long? CpuPeriod { get; internal set; }
         /// <summary><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
-        public virtual long CpuQuota { get; internal set; }
+        public virtual long? CpuQuota { get; internal set; }
         /// <summary><p>Limit the CPU real-time period in microseconds</p></summary>
-        public virtual long CpuRtPeriod { get; internal set; }
+        public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary><p>Limit the CPU real-time runtime in microseconds</p></summary>
-        public virtual long CpuRtRuntime { get; internal set; }
+        public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary><p>CPU shares (relative weight)</p></summary>
-        public virtual long CpuShares { get; internal set; }
+        public virtual long? CpuShares { get; internal set; }
         /// <summary><p>Number of CPUs</p></summary>
-        public virtual decimal Cpus { get; internal set; }
+        public virtual decimal? Cpus { get; internal set; }
         /// <summary><p>CPUs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetCpus { get; internal set; }
         /// <summary><p>MEMs in which to allow execution (0-3, 0,1)</p></summary>
         public virtual string CpusetMems { get; internal set; }
         /// <summary><p>Kernel memory limit</p></summary>
-        public virtual long KernelMemory { get; internal set; }
+        public virtual long? KernelMemory { get; internal set; }
         /// <summary><p>Memory limit</p></summary>
-        public virtual long Memory { get; internal set; }
+        public virtual long? Memory { get; internal set; }
         /// <summary><p>Memory soft limit</p></summary>
-        public virtual long MemoryReservation { get; internal set; }
+        public virtual long? MemoryReservation { get; internal set; }
         /// <summary><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
-        public virtual long MemorySwap { get; internal set; }
+        public virtual long? MemorySwap { get; internal set; }
         /// <summary><p>Restart policy to apply when a container exits</p></summary>
         public virtual string Restart { get; internal set; }
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -8414,7 +8426,6 @@ namespace Nuke.Docker
               .Add("--memory-reservation {value}", MemoryReservation)
               .Add("--memory-swap {value}", MemorySwap)
               .Add("--restart {value}", Restart)
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8451,7 +8462,7 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>COMMAND</p></summary>
+        /// <summary><p></p></summary>
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -8483,8 +8494,7 @@ namespace Nuke.Docker
         public virtual IReadOnlyDictionary<string, string> Opt => OptInternal.AsReadOnly();
         internal Dictionary<string,string> OptInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p>[VOLUME]</p></summary>
-        public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
-        internal List<string> VolumesInternal { get; set; } = new List<string>();
+        public virtual string Volume { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -8493,7 +8503,7 @@ namespace Nuke.Docker
               .Add("--label {value}", Label)
               .Add("--name {value}", Name)
               .Add("--opt {value}", Opt, "{key}:{value}")
-              .Add("{value}", Volumes, separator: ' ')
+              .Add("{value}", Volume)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8510,9 +8520,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Format the output using the given Go template</p></summary>
         public virtual string Format { get; internal set; }
-        /// <summary><p>VOLUME</p></summary>
-        public virtual string Volume { get; internal set; }
-        /// <summary><p>[VOLUME...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -8520,7 +8528,6 @@ namespace Nuke.Docker
             arguments
               .Add("volume inspect")
               .Add("--format {value}", Format)
-              .Add("{value}", Volume)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8589,9 +8596,7 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Force the removal of one or more volumes</p></summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>VOLUME</p></summary>
-        public virtual string Volume { get; internal set; }
-        /// <summary><p>[VOLUME...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -8599,7 +8604,6 @@ namespace Nuke.Docker
             arguments
               .Add("volume rm")
               .Add("--force {value}", Force)
-              .Add("{value}", Volume)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8615,16 +8619,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>CONTAINER</p></summary>
-        public virtual string Container { get; internal set; }
-        /// <summary><p>[CONTAINER...]</p></summary>
+        /// <summary><p></p></summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("wait")
-              .Add("{value}", Container)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8694,7 +8695,7 @@ namespace Nuke.Docker
         public static DockerAttachSettings ResetDetachKeys(this DockerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -8712,7 +8713,7 @@ namespace Nuke.Docker
         public static DockerAttachSettings ResetNoStdin(this DockerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoStdin = default(bool);
+            toolSettings.NoStdin = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerAttachSettings.NoStdin"/>.</em></p><p>Do not attach STDIN</p></summary>
@@ -8754,7 +8755,7 @@ namespace Nuke.Docker
         public static DockerAttachSettings ResetSigProxy(this DockerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SigProxy = default(bool);
+            toolSettings.SigProxy = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerAttachSettings.SigProxy"/>.</em></p><p>Proxy all received signals to the process</p></summary>
@@ -8783,7 +8784,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerAttachSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerAttachSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerAttachSettings SetContainer(this DockerAttachSettings toolSettings, string container)
         {
@@ -8791,12 +8792,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerAttachSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerAttachSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerAttachSettings ResetContainer(this DockerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -9002,7 +9003,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCgroupParent(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -9020,7 +9021,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCompress(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Compress = default(bool);
+            toolSettings.Compress = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Compress"/>.</em></p><p>Compress the build context using gzip</p></summary>
@@ -9051,7 +9052,7 @@ namespace Nuke.Docker
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.CpuPeriod"/>.</em></p><p>Limit the CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerBuildSettings SetCpuPeriod(this DockerBuildSettings toolSettings, long cpuPeriod)
+        public static DockerBuildSettings SetCpuPeriod(this DockerBuildSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -9062,14 +9063,14 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCpuPeriod(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.CpuQuota"/>.</em></p><p>Limit the CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerBuildSettings SetCpuQuota(this DockerBuildSettings toolSettings, long cpuQuota)
+        public static DockerBuildSettings SetCpuQuota(this DockerBuildSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -9080,14 +9081,14 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCpuQuota(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerBuildSettings SetCpuShares(this DockerBuildSettings toolSettings, long cpuShares)
+        public static DockerBuildSettings SetCpuShares(this DockerBuildSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -9098,7 +9099,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCpuShares(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
@@ -9116,7 +9117,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCpusetCpus(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -9134,7 +9135,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetCpusetMems(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -9152,7 +9153,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetDisableContentTrust(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -9194,7 +9195,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetFile(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.File = default(string);
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
@@ -9212,7 +9213,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetForceRm(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ForceRm = default(bool);
+            toolSettings.ForceRm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.ForceRm"/>.</em></p><p>Always remove intermediate containers</p></summary>
@@ -9254,7 +9255,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetIidfile(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Iidfile = default(string);
+            toolSettings.Iidfile = null;
             return toolSettings;
         }
         #endregion
@@ -9272,7 +9273,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetIsolation(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
@@ -9339,7 +9340,7 @@ namespace Nuke.Docker
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerBuildSettings SetMemory(this DockerBuildSettings toolSettings, long memory)
+        public static DockerBuildSettings SetMemory(this DockerBuildSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -9350,14 +9351,14 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetMemory(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerBuildSettings SetMemorySwap(this DockerBuildSettings toolSettings, long memorySwap)
+        public static DockerBuildSettings SetMemorySwap(this DockerBuildSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -9368,7 +9369,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetMemorySwap(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
@@ -9386,7 +9387,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetNetwork(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -9404,7 +9405,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetNoCache(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoCache = default(bool);
+            toolSettings.NoCache = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.NoCache"/>.</em></p><p>Do not use cache when building the image</p></summary>
@@ -9446,7 +9447,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetPlatform(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -9464,7 +9465,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetPull(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pull = default(bool);
+            toolSettings.Pull = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Pull"/>.</em></p><p>Always attempt to pull a newer version of the image</p></summary>
@@ -9506,7 +9507,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetQuiet(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Quiet"/>.</em></p><p>Suppress the build output and print image ID on success</p></summary>
@@ -9548,7 +9549,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetRm(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Rm"/>.</em></p><p>Remove intermediate containers after a successful build</p></summary>
@@ -9639,7 +9640,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerBuildSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerBuildSettings SetShmSize(this DockerBuildSettings toolSettings, long shmSize)
+        public static DockerBuildSettings SetShmSize(this DockerBuildSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -9650,7 +9651,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetShmSize(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -9668,7 +9669,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetSquash(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Squash = default(bool);
+            toolSettings.Squash = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Squash"/>.</em></p><p>Squash newly built layers into a single new layer</p></summary>
@@ -9710,7 +9711,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetStream(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stream = default(bool);
+            toolSettings.Stream = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerBuildSettings.Stream"/>.</em></p><p>Stream attaches to server to negotiate build context</p></summary>
@@ -9812,7 +9813,7 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetTarget(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Target = default(string);
+            toolSettings.Target = null;
             return toolSettings;
         }
         #endregion
@@ -9830,12 +9831,12 @@ namespace Nuke.Docker
         public static DockerBuildSettings ResetUlimit(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
         #region Path
-        /// <summary><p><em>Sets <see cref="DockerBuildSettings.Path"/>.</em></p><p>PATH|URL|-</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerBuildSettings.Path"/>.</em></p><p>Path or url where the build context is located.</p></summary>
         [Pure]
         public static DockerBuildSettings SetPath(this DockerBuildSettings toolSettings, string path)
         {
@@ -9843,12 +9844,12 @@ namespace Nuke.Docker
             toolSettings.Path = path;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerBuildSettings.Path"/>.</em></p><p>PATH|URL|-</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerBuildSettings.Path"/>.</em></p><p>Path or url where the build context is located.</p></summary>
         [Pure]
         public static DockerBuildSettings ResetPath(this DockerBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Path = default(string);
+            toolSettings.Path = null;
             return toolSettings;
         }
         #endregion
@@ -9882,7 +9883,7 @@ namespace Nuke.Docker
         public static DockerCheckpointCreateSettings ResetCheckpointDir(this DockerCheckpointCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CheckpointDir = default(string);
+            toolSettings.CheckpointDir = null;
             return toolSettings;
         }
         #endregion
@@ -9900,7 +9901,7 @@ namespace Nuke.Docker
         public static DockerCheckpointCreateSettings ResetLeaveRunning(this DockerCheckpointCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LeaveRunning = default(bool);
+            toolSettings.LeaveRunning = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCheckpointCreateSettings.LeaveRunning"/>.</em></p><p>Leave the container running after checkpoint</p></summary>
@@ -9929,7 +9930,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerCheckpointCreateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCheckpointCreateSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointCreateSettings SetContainer(this DockerCheckpointCreateSettings toolSettings, string container)
         {
@@ -9937,17 +9938,17 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCheckpointCreateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCheckpointCreateSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointCreateSettings ResetContainer(this DockerCheckpointCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
         #region Checkpoint
-        /// <summary><p><em>Sets <see cref="DockerCheckpointCreateSettings.Checkpoint"/>.</em></p><p>CHECKPOINT</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCheckpointCreateSettings.Checkpoint"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointCreateSettings SetCheckpoint(this DockerCheckpointCreateSettings toolSettings, string checkpoint)
         {
@@ -9955,12 +9956,12 @@ namespace Nuke.Docker
             toolSettings.Checkpoint = checkpoint;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCheckpointCreateSettings.Checkpoint"/>.</em></p><p>CHECKPOINT</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCheckpointCreateSettings.Checkpoint"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointCreateSettings ResetCheckpoint(this DockerCheckpointCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Checkpoint = default(string);
+            toolSettings.Checkpoint = null;
             return toolSettings;
         }
         #endregion
@@ -9986,12 +9987,12 @@ namespace Nuke.Docker
         public static DockerCheckpointLsSettings ResetCheckpointDir(this DockerCheckpointLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CheckpointDir = default(string);
+            toolSettings.CheckpointDir = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerCheckpointLsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCheckpointLsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointLsSettings SetContainer(this DockerCheckpointLsSettings toolSettings, string container)
         {
@@ -9999,12 +10000,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCheckpointLsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCheckpointLsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointLsSettings ResetContainer(this DockerCheckpointLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -10030,12 +10031,12 @@ namespace Nuke.Docker
         public static DockerCheckpointRmSettings ResetCheckpointDir(this DockerCheckpointRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CheckpointDir = default(string);
+            toolSettings.CheckpointDir = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerCheckpointRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCheckpointRmSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointRmSettings SetContainer(this DockerCheckpointRmSettings toolSettings, string container)
         {
@@ -10043,17 +10044,17 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCheckpointRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCheckpointRmSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointRmSettings ResetContainer(this DockerCheckpointRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
         #region Checkpoint
-        /// <summary><p><em>Sets <see cref="DockerCheckpointRmSettings.Checkpoint"/>.</em></p><p>CHECKPOINT</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCheckpointRmSettings.Checkpoint"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointRmSettings SetCheckpoint(this DockerCheckpointRmSettings toolSettings, string checkpoint)
         {
@@ -10061,12 +10062,12 @@ namespace Nuke.Docker
             toolSettings.Checkpoint = checkpoint;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCheckpointRmSettings.Checkpoint"/>.</em></p><p>CHECKPOINT</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCheckpointRmSettings.Checkpoint"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCheckpointRmSettings ResetCheckpoint(this DockerCheckpointRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Checkpoint = default(string);
+            toolSettings.Checkpoint = null;
             return toolSettings;
         }
         #endregion
@@ -10092,7 +10093,7 @@ namespace Nuke.Docker
         public static DockerCommitSettings ResetAuthor(this DockerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Author = default(string);
+            toolSettings.Author = null;
             return toolSettings;
         }
         #endregion
@@ -10170,7 +10171,7 @@ namespace Nuke.Docker
         public static DockerCommitSettings ResetMessage(this DockerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Message = default(string);
+            toolSettings.Message = null;
             return toolSettings;
         }
         #endregion
@@ -10188,7 +10189,7 @@ namespace Nuke.Docker
         public static DockerCommitSettings ResetPause(this DockerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pause = default(bool);
+            toolSettings.Pause = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCommitSettings.Pause"/>.</em></p><p>Pause container during commit</p></summary>
@@ -10217,7 +10218,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerCommitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCommitSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCommitSettings SetContainer(this DockerCommitSettings toolSettings, string container)
         {
@@ -10225,72 +10226,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCommitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCommitSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCommitSettings ResetContainer(this DockerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerCommitSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerCommitSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerCommitSettings SetRepositorytags(this DockerCommitSettings toolSettings, params string[] repositorytags)
+        public static DockerCommitSettings SetRepository(this DockerCommitSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerCommitSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCommitSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerCommitSettings SetRepositorytags(this DockerCommitSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerCommitSettings ResetRepository(this DockerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerCommitSettings AddRepositorytags(this DockerCommitSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerCommitSettings AddRepositorytags(this DockerCommitSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerCommitSettings ClearRepositorytags(this DockerCommitSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerCommitSettings RemoveRepositorytags(this DockerCommitSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerCommitSettings RemoveRepositorytags(this DockerCommitSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -10384,12 +10343,12 @@ namespace Nuke.Docker
         public static DockerConfigCreateSettings ResetTemplateDriver(this DockerConfigCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TemplateDriver = default(string);
+            toolSettings.TemplateDriver = null;
             return toolSettings;
         }
         #endregion
         #region Config
-        /// <summary><p><em>Sets <see cref="DockerConfigCreateSettings.Config"/>.</em></p><p>CONFIG</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerConfigCreateSettings.Config"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigCreateSettings SetConfig(this DockerConfigCreateSettings toolSettings, string config)
         {
@@ -10397,12 +10356,12 @@ namespace Nuke.Docker
             toolSettings.Config = config;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerConfigCreateSettings.Config"/>.</em></p><p>CONFIG</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerConfigCreateSettings.Config"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigCreateSettings ResetConfig(this DockerConfigCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = default(string);
+            toolSettings.Config = null;
             return toolSettings;
         }
         #endregion
@@ -10420,7 +10379,7 @@ namespace Nuke.Docker
         public static DockerConfigCreateSettings ResetFile(this DockerConfigCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.File = default(string);
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
@@ -10446,7 +10405,7 @@ namespace Nuke.Docker
         public static DockerConfigInspectSettings ResetFormat(this DockerConfigInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -10464,7 +10423,7 @@ namespace Nuke.Docker
         public static DockerConfigInspectSettings ResetPretty(this DockerConfigInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pretty = default(bool);
+            toolSettings.Pretty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerConfigInspectSettings.Pretty"/>.</em></p><p>Print the information in a human friendly format</p></summary>
@@ -10492,26 +10451,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Config
-        /// <summary><p><em>Sets <see cref="DockerConfigInspectSettings.Config"/>.</em></p><p>CONFIG</p></summary>
-        [Pure]
-        public static DockerConfigInspectSettings SetConfig(this DockerConfigInspectSettings toolSettings, string config)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = config;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerConfigInspectSettings.Config"/>.</em></p><p>CONFIG</p></summary>
-        [Pure]
-        public static DockerConfigInspectSettings ResetConfig(this DockerConfigInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Configs
-        /// <summary><p><em>Sets <see cref="DockerConfigInspectSettings.Configs"/> to a new list.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerConfigInspectSettings.Configs"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings SetConfigs(this DockerConfigInspectSettings toolSettings, params string[] configs)
         {
@@ -10519,7 +10460,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal = configs.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerConfigInspectSettings.Configs"/> to a new list.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerConfigInspectSettings.Configs"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings SetConfigs(this DockerConfigInspectSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10527,7 +10468,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal = configs.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings AddConfigs(this DockerConfigInspectSettings toolSettings, params string[] configs)
         {
@@ -10535,7 +10476,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.AddRange(configs);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings AddConfigs(this DockerConfigInspectSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10543,7 +10484,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.AddRange(configs);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings ClearConfigs(this DockerConfigInspectSettings toolSettings)
         {
@@ -10551,7 +10492,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings RemoveConfigs(this DockerConfigInspectSettings toolSettings, params string[] configs)
         {
@@ -10560,7 +10501,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerConfigInspectSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigInspectSettings RemoveConfigs(this DockerConfigInspectSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10592,7 +10533,7 @@ namespace Nuke.Docker
         public static DockerConfigLsSettings ResetFilter(this DockerConfigLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -10610,7 +10551,7 @@ namespace Nuke.Docker
         public static DockerConfigLsSettings ResetFormat(this DockerConfigLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -10628,7 +10569,7 @@ namespace Nuke.Docker
         public static DockerConfigLsSettings ResetQuiet(this DockerConfigLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerConfigLsSettings.Quiet"/>.</em></p><p>Only display IDs</p></summary>
@@ -10664,26 +10605,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerConfigRmSettingsExtensions
     {
-        #region Config
-        /// <summary><p><em>Sets <see cref="DockerConfigRmSettings.Config"/>.</em></p><p>CONFIG</p></summary>
-        [Pure]
-        public static DockerConfigRmSettings SetConfig(this DockerConfigRmSettings toolSettings, string config)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = config;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerConfigRmSettings.Config"/>.</em></p><p>CONFIG</p></summary>
-        [Pure]
-        public static DockerConfigRmSettings ResetConfig(this DockerConfigRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Configs
-        /// <summary><p><em>Sets <see cref="DockerConfigRmSettings.Configs"/> to a new list.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerConfigRmSettings.Configs"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings SetConfigs(this DockerConfigRmSettings toolSettings, params string[] configs)
         {
@@ -10691,7 +10614,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal = configs.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerConfigRmSettings.Configs"/> to a new list.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerConfigRmSettings.Configs"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings SetConfigs(this DockerConfigRmSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10699,7 +10622,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal = configs.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings AddConfigs(this DockerConfigRmSettings toolSettings, params string[] configs)
         {
@@ -10707,7 +10630,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.AddRange(configs);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings AddConfigs(this DockerConfigRmSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10715,7 +10638,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.AddRange(configs);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings ClearConfigs(this DockerConfigRmSettings toolSettings)
         {
@@ -10723,7 +10646,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings RemoveConfigs(this DockerConfigRmSettings toolSettings, params string[] configs)
         {
@@ -10732,7 +10655,7 @@ namespace Nuke.Docker
             toolSettings.ConfigsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p>[CONFIG...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerConfigRmSettings.Configs"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerConfigRmSettings RemoveConfigs(this DockerConfigRmSettings toolSettings, IEnumerable<string> configs)
         {
@@ -10772,7 +10695,7 @@ namespace Nuke.Docker
         public static DockerContainerAttachSettings ResetDetachKeys(this DockerContainerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -10790,7 +10713,7 @@ namespace Nuke.Docker
         public static DockerContainerAttachSettings ResetNoStdin(this DockerContainerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoStdin = default(bool);
+            toolSettings.NoStdin = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerAttachSettings.NoStdin"/>.</em></p><p>Do not attach STDIN</p></summary>
@@ -10832,7 +10755,7 @@ namespace Nuke.Docker
         public static DockerContainerAttachSettings ResetSigProxy(this DockerContainerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SigProxy = default(bool);
+            toolSettings.SigProxy = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerAttachSettings.SigProxy"/>.</em></p><p>Proxy all received signals to the process</p></summary>
@@ -10861,7 +10784,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerAttachSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerAttachSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerAttachSettings SetContainer(this DockerContainerAttachSettings toolSettings, string container)
         {
@@ -10869,12 +10792,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerAttachSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerAttachSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerAttachSettings ResetContainer(this DockerContainerAttachSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -10900,7 +10823,7 @@ namespace Nuke.Docker
         public static DockerContainerCommitSettings ResetAuthor(this DockerContainerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Author = default(string);
+            toolSettings.Author = null;
             return toolSettings;
         }
         #endregion
@@ -10978,7 +10901,7 @@ namespace Nuke.Docker
         public static DockerContainerCommitSettings ResetMessage(this DockerContainerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Message = default(string);
+            toolSettings.Message = null;
             return toolSettings;
         }
         #endregion
@@ -10996,7 +10919,7 @@ namespace Nuke.Docker
         public static DockerContainerCommitSettings ResetPause(this DockerContainerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pause = default(bool);
+            toolSettings.Pause = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCommitSettings.Pause"/>.</em></p><p>Pause container during commit</p></summary>
@@ -11025,7 +10948,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerCommitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerCommitSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerCommitSettings SetContainer(this DockerContainerCommitSettings toolSettings, string container)
         {
@@ -11033,72 +10956,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerCommitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerCommitSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerCommitSettings ResetContainer(this DockerContainerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerContainerCommitSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerContainerCommitSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerContainerCommitSettings SetRepositorytags(this DockerContainerCommitSettings toolSettings, params string[] repositorytags)
+        public static DockerContainerCommitSettings SetRepository(this DockerContainerCommitSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerCommitSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerCommitSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerContainerCommitSettings SetRepositorytags(this DockerContainerCommitSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerContainerCommitSettings ResetRepository(this DockerContainerCommitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerContainerCommitSettings AddRepositorytags(this DockerContainerCommitSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerContainerCommitSettings AddRepositorytags(this DockerContainerCommitSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerContainerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerContainerCommitSettings ClearRepositorytags(this DockerContainerCommitSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerContainerCommitSettings RemoveRepositorytags(this DockerContainerCommitSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerCommitSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerContainerCommitSettings RemoveRepositorytags(this DockerContainerCommitSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -11244,7 +11125,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetBlkioWeight(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
@@ -11442,7 +11323,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCgroupParent(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -11460,14 +11341,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCidfile(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cidfile = default(string);
+            toolSettings.Cidfile = null;
             return toolSettings;
         }
         #endregion
         #region CpuCount
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuCount"/>.</em></p><p>CPU count (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuCount(this DockerContainerCreateSettings toolSettings, long cpuCount)
+        public static DockerContainerCreateSettings SetCpuCount(this DockerContainerCreateSettings toolSettings, long? cpuCount)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuCount = cpuCount;
@@ -11478,14 +11359,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuCount(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuCount = default(long);
+            toolSettings.CpuCount = null;
             return toolSettings;
         }
         #endregion
         #region CpuPercent
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuPercent"/>.</em></p><p>CPU percent (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuPercent(this DockerContainerCreateSettings toolSettings, long cpuPercent)
+        public static DockerContainerCreateSettings SetCpuPercent(this DockerContainerCreateSettings toolSettings, long? cpuPercent)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = cpuPercent;
@@ -11496,14 +11377,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuPercent(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPercent = default(long);
+            toolSettings.CpuPercent = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuPeriod(this DockerContainerCreateSettings toolSettings, long cpuPeriod)
+        public static DockerContainerCreateSettings SetCpuPeriod(this DockerContainerCreateSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -11514,14 +11395,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuPeriod(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuQuota(this DockerContainerCreateSettings toolSettings, long cpuQuota)
+        public static DockerContainerCreateSettings SetCpuQuota(this DockerContainerCreateSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -11532,14 +11413,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuQuota(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuRtPeriod"/>.</em></p><p>Limit CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuRtPeriod(this DockerContainerCreateSettings toolSettings, long cpuRtPeriod)
+        public static DockerContainerCreateSettings SetCpuRtPeriod(this DockerContainerCreateSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -11550,14 +11431,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuRtPeriod(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuRtRuntime"/>.</em></p><p>Limit CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuRtRuntime(this DockerContainerCreateSettings toolSettings, long cpuRtRuntime)
+        public static DockerContainerCreateSettings SetCpuRtRuntime(this DockerContainerCreateSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -11568,14 +11449,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuRtRuntime(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpuShares(this DockerContainerCreateSettings toolSettings, long cpuShares)
+        public static DockerContainerCreateSettings SetCpuShares(this DockerContainerCreateSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -11586,14 +11467,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpuShares(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCpus(this DockerContainerCreateSettings toolSettings, decimal cpus)
+        public static DockerContainerCreateSettings SetCpus(this DockerContainerCreateSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -11604,7 +11485,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpus(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -11622,7 +11503,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpusetCpus(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -11640,7 +11521,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetCpusetMems(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -12018,7 +11899,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetDisableContentTrust(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -12300,7 +12181,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetEntrypoint(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -12558,7 +12439,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHealthCmd(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -12576,7 +12457,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHealthInterval(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -12594,7 +12475,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHealthRetries(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -12612,7 +12493,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHealthStartPeriod(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -12630,7 +12511,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHealthTimeout(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -12648,7 +12529,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHelp(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Help = default(bool);
+            toolSettings.Help = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Help"/>.</em></p><p>Print usage</p></summary>
@@ -12690,7 +12571,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetHostname(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -12708,7 +12589,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetInit(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Init = default(bool);
+            toolSettings.Init = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Init"/>.</em></p><p>Run an init inside the container that forwards signals and reaps processes</p></summary>
@@ -12750,7 +12631,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetInteractive(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -12781,7 +12662,7 @@ namespace Nuke.Docker
         #region IoMaxbandwidth
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.IoMaxbandwidth"/>.</em></p><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetIoMaxbandwidth(this DockerContainerCreateSettings toolSettings, long ioMaxbandwidth)
+        public static DockerContainerCreateSettings SetIoMaxbandwidth(this DockerContainerCreateSettings toolSettings, long? ioMaxbandwidth)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IoMaxbandwidth = ioMaxbandwidth;
@@ -12792,7 +12673,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIoMaxbandwidth(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxbandwidth = default(long);
+            toolSettings.IoMaxbandwidth = null;
             return toolSettings;
         }
         #endregion
@@ -12810,7 +12691,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIoMaxiops(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxiops = default(int);
+            toolSettings.IoMaxiops = null;
             return toolSettings;
         }
         #endregion
@@ -12828,7 +12709,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIp(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip = default(string);
+            toolSettings.Ip = null;
             return toolSettings;
         }
         #endregion
@@ -12846,7 +12727,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIp6(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip6 = default(string);
+            toolSettings.Ip6 = null;
             return toolSettings;
         }
         #endregion
@@ -12864,7 +12745,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIpc(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ipc = default(string);
+            toolSettings.Ipc = null;
             return toolSettings;
         }
         #endregion
@@ -12882,14 +12763,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetIsolation(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetKernelMemory(this DockerContainerCreateSettings toolSettings, long kernelMemory)
+        public static DockerContainerCreateSettings SetKernelMemory(this DockerContainerCreateSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -12900,7 +12781,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetKernelMemory(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
@@ -13158,7 +13039,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetLogDriver(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -13236,14 +13117,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMacAddress(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MacAddress = default(string);
+            toolSettings.MacAddress = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetMemory(this DockerContainerCreateSettings toolSettings, long memory)
+        public static DockerContainerCreateSettings SetMemory(this DockerContainerCreateSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -13254,14 +13135,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMemory(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetMemoryReservation(this DockerContainerCreateSettings toolSettings, long memoryReservation)
+        public static DockerContainerCreateSettings SetMemoryReservation(this DockerContainerCreateSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -13272,14 +13153,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMemoryReservation(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetMemorySwap(this DockerContainerCreateSettings toolSettings, long memorySwap)
+        public static DockerContainerCreateSettings SetMemorySwap(this DockerContainerCreateSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -13290,14 +13171,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMemorySwap(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwappiness
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.MemorySwappiness"/>.</em></p><p>Tune container memory swappiness (0 to 100)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetMemorySwappiness(this DockerContainerCreateSettings toolSettings, long memorySwappiness)
+        public static DockerContainerCreateSettings SetMemorySwappiness(this DockerContainerCreateSettings toolSettings, long? memorySwappiness)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwappiness = memorySwappiness;
@@ -13308,7 +13189,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMemorySwappiness(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwappiness = default(long);
+            toolSettings.MemorySwappiness = null;
             return toolSettings;
         }
         #endregion
@@ -13326,7 +13207,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetMount(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mount = default(string);
+            toolSettings.Mount = null;
             return toolSettings;
         }
         #endregion
@@ -13344,7 +13225,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetName(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -13362,7 +13243,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetNet(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Net = default(string);
+            toolSettings.Net = null;
             return toolSettings;
         }
         #endregion
@@ -13440,7 +13321,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetNetwork(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -13518,7 +13399,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetNoHealthcheck(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -13560,7 +13441,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetOomKillDisable(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomKillDisable = default(bool);
+            toolSettings.OomKillDisable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.OomKillDisable"/>.</em></p><p>Disable OOM Killer</p></summary>
@@ -13602,7 +13483,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetOomScoreAdj(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomScoreAdj = default(int);
+            toolSettings.OomScoreAdj = null;
             return toolSettings;
         }
         #endregion
@@ -13620,14 +13501,14 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetPid(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pid = default(string);
+            toolSettings.Pid = null;
             return toolSettings;
         }
         #endregion
         #region PidsLimit
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.PidsLimit"/>.</em></p><p>Tune container pids limit (set -1 for unlimited)</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetPidsLimit(this DockerContainerCreateSettings toolSettings, long pidsLimit)
+        public static DockerContainerCreateSettings SetPidsLimit(this DockerContainerCreateSettings toolSettings, long? pidsLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PidsLimit = pidsLimit;
@@ -13638,7 +13519,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetPidsLimit(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PidsLimit = default(long);
+            toolSettings.PidsLimit = null;
             return toolSettings;
         }
         #endregion
@@ -13656,7 +13537,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetPlatform(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -13674,7 +13555,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetPrivileged(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Privileged"/>.</em></p><p>Give extended privileges to this container</p></summary>
@@ -13776,7 +13657,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetPublishAll(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishAll = default(bool);
+            toolSettings.PublishAll = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.PublishAll"/>.</em></p><p>Publish all exposed ports to random ports</p></summary>
@@ -13818,7 +13699,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetReadOnly(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -13860,7 +13741,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetRestart(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
@@ -13878,7 +13759,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetRm(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Rm"/>.</em></p><p>Automatically remove the container when it exits</p></summary>
@@ -13920,7 +13801,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetRuntime(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = default(string);
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -13987,7 +13868,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetShmSize(this DockerContainerCreateSettings toolSettings, long shmSize)
+        public static DockerContainerCreateSettings SetShmSize(this DockerContainerCreateSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -13998,7 +13879,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetShmSize(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -14016,7 +13897,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetStopSignal(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -14034,7 +13915,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetStopTimeout(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopTimeout = default(int);
+            toolSettings.StopTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -14214,7 +14095,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetTty(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerCreateSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -14256,7 +14137,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetUlimit(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
@@ -14274,7 +14155,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetUser(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -14292,7 +14173,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetUserns(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Userns = default(string);
+            toolSettings.Userns = null;
             return toolSettings;
         }
         #endregion
@@ -14310,7 +14191,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetUts(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Uts = default(string);
+            toolSettings.Uts = null;
             return toolSettings;
         }
         #endregion
@@ -14388,7 +14269,7 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetVolumeDriver(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumeDriver = default(string);
+            toolSettings.VolumeDriver = null;
             return toolSettings;
         }
         #endregion
@@ -14466,12 +14347,12 @@ namespace Nuke.Docker
         public static DockerContainerCreateSettings ResetWorkdir(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerCreateSettings SetImage(this DockerContainerCreateSettings toolSettings, string image)
         {
@@ -14479,72 +14360,30 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerCreateSettings ResetImage(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
-        #region Commands
-        /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        #region Command
+        /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCommands(this DockerContainerCreateSettings toolSettings, params string[] commands)
+        public static DockerContainerCreateSettings SetCommand(this DockerContainerCreateSettings toolSettings, string command)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
+            toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerContainerCreateSettings SetCommands(this DockerContainerCreateSettings toolSettings, IEnumerable<string> commands)
+        public static DockerContainerCreateSettings ResetCommand(this DockerContainerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerCreateSettings AddCommands(this DockerContainerCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerCreateSettings AddCommands(this DockerContainerCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerContainerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerCreateSettings ClearCommands(this DockerContainerCreateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerCreateSettings RemoveCommands(this DockerContainerCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerCreateSettings RemoveCommands(this DockerContainerCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -14617,7 +14456,7 @@ namespace Nuke.Docker
     public static partial class DockerContainerDiffSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerDiffSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerDiffSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerDiffSettings SetContainer(this DockerContainerDiffSettings toolSettings, string container)
         {
@@ -14625,12 +14464,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerDiffSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerDiffSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerDiffSettings ResetContainer(this DockerContainerDiffSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -14656,7 +14495,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetDetach(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerExecSettings.Detach"/>.</em></p><p>Detached mode: run command in the background</p></summary>
@@ -14698,7 +14537,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetDetachKeys(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -14776,7 +14615,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetInteractive(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerExecSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -14818,7 +14657,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetPrivileged(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerExecSettings.Privileged"/>.</em></p><p>Give extended privileges to the command</p></summary>
@@ -14860,7 +14699,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetTty(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerExecSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -14902,7 +14741,7 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetUser(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -14920,12 +14759,12 @@ namespace Nuke.Docker
         public static DockerContainerExecSettings ResetWorkdir(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerExecSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerExecSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExecSettings SetContainer(this DockerContainerExecSettings toolSettings, string container)
         {
@@ -14933,17 +14772,17 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerExecSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerExecSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExecSettings ResetContainer(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
         #region Command
-        /// <summary><p><em>Sets <see cref="DockerContainerExecSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerExecSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExecSettings SetCommand(this DockerContainerExecSettings toolSettings, string command)
         {
@@ -14951,12 +14790,12 @@ namespace Nuke.Docker
             toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerExecSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerExecSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExecSettings ResetCommand(this DockerContainerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Command = default(string);
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -15042,12 +14881,12 @@ namespace Nuke.Docker
         public static DockerContainerExportSettings ResetOutput(this DockerContainerExportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Output = default(string);
+            toolSettings.Output = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerExportSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerExportSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExportSettings SetContainer(this DockerContainerExportSettings toolSettings, string container)
         {
@@ -15055,12 +14894,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerExportSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerExportSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerExportSettings ResetContainer(this DockerContainerExportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -15086,7 +14925,7 @@ namespace Nuke.Docker
         public static DockerContainerInspectSettings ResetFormat(this DockerContainerInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -15104,7 +14943,7 @@ namespace Nuke.Docker
         public static DockerContainerInspectSettings ResetSize(this DockerContainerInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Size = default(bool);
+            toolSettings.Size = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerInspectSettings.Size"/>.</em></p><p>Display total file sizes</p></summary>
@@ -15132,26 +14971,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerInspectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerInspectSettings SetContainer(this DockerContainerInspectSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerInspectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerInspectSettings ResetContainer(this DockerContainerInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerInspectSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerInspectSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings SetContainers(this DockerContainerInspectSettings toolSettings, params string[] containers)
         {
@@ -15159,7 +14980,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerInspectSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerInspectSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings SetContainers(this DockerContainerInspectSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15167,7 +14988,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings AddContainers(this DockerContainerInspectSettings toolSettings, params string[] containers)
         {
@@ -15175,7 +14996,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings AddContainers(this DockerContainerInspectSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15183,7 +15004,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings ClearContainers(this DockerContainerInspectSettings toolSettings)
         {
@@ -15191,7 +15012,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings RemoveContainers(this DockerContainerInspectSettings toolSettings, params string[] containers)
         {
@@ -15200,7 +15021,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerInspectSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerInspectSettings RemoveContainers(this DockerContainerInspectSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15232,30 +15053,12 @@ namespace Nuke.Docker
         public static DockerContainerKillSettings ResetSignal(this DockerContainerKillSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Signal = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerKillSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerKillSettings SetContainer(this DockerContainerKillSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerKillSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerKillSettings ResetContainer(this DockerContainerKillSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Signal = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerKillSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerKillSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings SetContainers(this DockerContainerKillSettings toolSettings, params string[] containers)
         {
@@ -15263,7 +15066,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerKillSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerKillSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings SetContainers(this DockerContainerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15271,7 +15074,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings AddContainers(this DockerContainerKillSettings toolSettings, params string[] containers)
         {
@@ -15279,7 +15082,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings AddContainers(this DockerContainerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15287,7 +15090,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings ClearContainers(this DockerContainerKillSettings toolSettings)
         {
@@ -15295,7 +15098,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings RemoveContainers(this DockerContainerKillSettings toolSettings, params string[] containers)
         {
@@ -15304,7 +15107,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerKillSettings RemoveContainers(this DockerContainerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15336,7 +15139,7 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetDetails(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Details = default(bool);
+            toolSettings.Details = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLogsSettings.Details"/>.</em></p><p>Show extra details provided to logs</p></summary>
@@ -15378,7 +15181,7 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetFollow(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Follow = default(bool);
+            toolSettings.Follow = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLogsSettings.Follow"/>.</em></p><p>Follow log output</p></summary>
@@ -15420,7 +15223,7 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetSince(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Since = default(string);
+            toolSettings.Since = null;
             return toolSettings;
         }
         #endregion
@@ -15438,7 +15241,7 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetTail(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tail = default(string);
+            toolSettings.Tail = null;
             return toolSettings;
         }
         #endregion
@@ -15456,7 +15259,7 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetTimestamps(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Timestamps = default(bool);
+            toolSettings.Timestamps = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLogsSettings.Timestamps"/>.</em></p><p>Show timestamps</p></summary>
@@ -15498,12 +15301,12 @@ namespace Nuke.Docker
         public static DockerContainerLogsSettings ResetUntil(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Until = default(string);
+            toolSettings.Until = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerLogsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerLogsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerLogsSettings SetContainer(this DockerContainerLogsSettings toolSettings, string container)
         {
@@ -15511,12 +15314,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerLogsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerLogsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerLogsSettings ResetContainer(this DockerContainerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -15542,7 +15345,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetAll(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLsSettings.All"/>.</em></p><p>Show all containers (default shows just running)</p></summary>
@@ -15584,7 +15387,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetFilter(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -15602,7 +15405,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetFormat(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -15620,7 +15423,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetLast(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Last = default(int);
+            toolSettings.Last = null;
             return toolSettings;
         }
         #endregion
@@ -15638,7 +15441,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetLatest(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Latest = default(bool);
+            toolSettings.Latest = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLsSettings.Latest"/>.</em></p><p>Show the latest created container (includes all states)</p></summary>
@@ -15680,7 +15483,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetNoTrunc(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLsSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -15722,7 +15525,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetQuiet(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLsSettings.Quiet"/>.</em></p><p>Only display numeric IDs</p></summary>
@@ -15764,7 +15567,7 @@ namespace Nuke.Docker
         public static DockerContainerLsSettings ResetSize(this DockerContainerLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Size = default(bool);
+            toolSettings.Size = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerLsSettings.Size"/>.</em></p><p>Display total file sizes</p></summary>
@@ -15800,26 +15603,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerContainerPauseSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerPauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerPauseSettings SetContainer(this DockerContainerPauseSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerPauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerPauseSettings ResetContainer(this DockerContainerPauseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerPauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerPauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings SetContainers(this DockerContainerPauseSettings toolSettings, params string[] containers)
         {
@@ -15827,7 +15612,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerPauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerPauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings SetContainers(this DockerContainerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15835,7 +15620,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings AddContainers(this DockerContainerPauseSettings toolSettings, params string[] containers)
         {
@@ -15843,7 +15628,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings AddContainers(this DockerContainerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15851,7 +15636,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings ClearContainers(this DockerContainerPauseSettings toolSettings)
         {
@@ -15859,7 +15644,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings RemoveContainers(this DockerContainerPauseSettings toolSettings, params string[] containers)
         {
@@ -15868,7 +15653,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPauseSettings RemoveContainers(this DockerContainerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -15887,7 +15672,7 @@ namespace Nuke.Docker
     public static partial class DockerContainerPortSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerPortSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerPortSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPortSettings SetContainer(this DockerContainerPortSettings toolSettings, string container)
         {
@@ -15895,72 +15680,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerPortSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerPortSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerPortSettings ResetContainer(this DockerContainerPortSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Private_portprotos
-        /// <summary><p><em>Sets <see cref="DockerContainerPortSettings.Private_portprotos"/> to a new list.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
+        #region PrivatePort
+        /// <summary><p><em>Sets <see cref="DockerContainerPortSettings.PrivatePort"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
         [Pure]
-        public static DockerContainerPortSettings SetPrivate_portprotos(this DockerContainerPortSettings toolSettings, params string[] private_portprotos)
+        public static DockerContainerPortSettings SetPrivatePort(this DockerContainerPortSettings toolSettings, string privatePort)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal = private_portprotos.ToList();
+            toolSettings.PrivatePort = privatePort;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerPortSettings.Private_portprotos"/> to a new list.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerPortSettings.PrivatePort"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
         [Pure]
-        public static DockerContainerPortSettings SetPrivate_portprotos(this DockerContainerPortSettings toolSettings, IEnumerable<string> private_portprotos)
+        public static DockerContainerPortSettings ResetPrivatePort(this DockerContainerPortSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal = private_portprotos.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerContainerPortSettings AddPrivate_portprotos(this DockerContainerPortSettings toolSettings, params string[] private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.AddRange(private_portprotos);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerContainerPortSettings AddPrivate_portprotos(this DockerContainerPortSettings toolSettings, IEnumerable<string> private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.AddRange(private_portprotos);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerContainerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerContainerPortSettings ClearPrivate_portprotos(this DockerContainerPortSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerContainerPortSettings RemovePrivate_portprotos(this DockerContainerPortSettings toolSettings, params string[] private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(private_portprotos);
-            toolSettings.Private_portprotosInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerContainerPortSettings RemovePrivate_portprotos(this DockerContainerPortSettings toolSettings, IEnumerable<string> private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(private_portprotos);
-            toolSettings.Private_portprotosInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.PrivatePort = null;
             return toolSettings;
         }
         #endregion
@@ -15986,7 +15729,7 @@ namespace Nuke.Docker
         public static DockerContainerPruneSettings ResetFilter(this DockerContainerPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -16004,7 +15747,7 @@ namespace Nuke.Docker
         public static DockerContainerPruneSettings ResetForce(this DockerContainerPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerPruneSettings.Force"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -16041,7 +15784,7 @@ namespace Nuke.Docker
     public static partial class DockerContainerRenameSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerRenameSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRenameSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRenameSettings SetContainer(this DockerContainerRenameSettings toolSettings, string container)
         {
@@ -16049,12 +15792,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerRenameSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerRenameSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRenameSettings ResetContainer(this DockerContainerRenameSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NewName
+        /// <summary><p><em>Sets <see cref="DockerContainerRenameSettings.NewName"/>.</em></p><p>NEW_NAME</p></summary>
+        [Pure]
+        public static DockerContainerRenameSettings SetNewName(this DockerContainerRenameSettings toolSettings, string newName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NewName = newName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerContainerRenameSettings.NewName"/>.</em></p><p>NEW_NAME</p></summary>
+        [Pure]
+        public static DockerContainerRenameSettings ResetNewName(this DockerContainerRenameSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NewName = null;
             return toolSettings;
         }
         #endregion
@@ -16080,30 +15841,12 @@ namespace Nuke.Docker
         public static DockerContainerRestartSettings ResetTime(this DockerContainerRestartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Time = default(int);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerRestartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerRestartSettings SetContainer(this DockerContainerRestartSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerRestartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerRestartSettings ResetContainer(this DockerContainerRestartSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Time = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerRestartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRestartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings SetContainers(this DockerContainerRestartSettings toolSettings, params string[] containers)
         {
@@ -16111,7 +15854,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerRestartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRestartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings SetContainers(this DockerContainerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16119,7 +15862,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings AddContainers(this DockerContainerRestartSettings toolSettings, params string[] containers)
         {
@@ -16127,7 +15870,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings AddContainers(this DockerContainerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16135,7 +15878,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings ClearContainers(this DockerContainerRestartSettings toolSettings)
         {
@@ -16143,7 +15886,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings RemoveContainers(this DockerContainerRestartSettings toolSettings, params string[] containers)
         {
@@ -16152,7 +15895,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRestartSettings RemoveContainers(this DockerContainerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16184,7 +15927,7 @@ namespace Nuke.Docker
         public static DockerContainerRmSettings ResetForce(this DockerContainerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRmSettings.Force"/>.</em></p><p>Force the removal of a running container (uses SIGKILL)</p></summary>
@@ -16226,7 +15969,7 @@ namespace Nuke.Docker
         public static DockerContainerRmSettings ResetLink(this DockerContainerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Link = default(bool);
+            toolSettings.Link = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRmSettings.Link"/>.</em></p><p>Remove the specified link</p></summary>
@@ -16268,7 +16011,7 @@ namespace Nuke.Docker
         public static DockerContainerRmSettings ResetVolumes(this DockerContainerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Volumes = default(bool);
+            toolSettings.Volumes = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRmSettings.Volumes"/>.</em></p><p>Remove the volumes associated with the container</p></summary>
@@ -16296,26 +16039,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerRmSettings SetContainer(this DockerContainerRmSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerRmSettings ResetContainer(this DockerContainerRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerRmSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRmSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings SetContainers(this DockerContainerRmSettings toolSettings, params string[] containers)
         {
@@ -16323,7 +16048,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerRmSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRmSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings SetContainers(this DockerContainerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16331,7 +16056,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings AddContainers(this DockerContainerRmSettings toolSettings, params string[] containers)
         {
@@ -16339,7 +16064,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings AddContainers(this DockerContainerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16347,7 +16072,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings ClearContainers(this DockerContainerRmSettings toolSettings)
         {
@@ -16355,7 +16080,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings RemoveContainers(this DockerContainerRmSettings toolSettings, params string[] containers)
         {
@@ -16364,7 +16089,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRmSettings RemoveContainers(this DockerContainerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -16516,7 +16241,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetBlkioWeight(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
@@ -16714,7 +16439,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCgroupParent(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -16732,14 +16457,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCidfile(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cidfile = default(string);
+            toolSettings.Cidfile = null;
             return toolSettings;
         }
         #endregion
         #region CpuCount
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuCount"/>.</em></p><p>CPU count (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuCount(this DockerContainerRunSettings toolSettings, long cpuCount)
+        public static DockerContainerRunSettings SetCpuCount(this DockerContainerRunSettings toolSettings, long? cpuCount)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuCount = cpuCount;
@@ -16750,14 +16475,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuCount(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuCount = default(long);
+            toolSettings.CpuCount = null;
             return toolSettings;
         }
         #endregion
         #region CpuPercent
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuPercent"/>.</em></p><p>CPU percent (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuPercent(this DockerContainerRunSettings toolSettings, long cpuPercent)
+        public static DockerContainerRunSettings SetCpuPercent(this DockerContainerRunSettings toolSettings, long? cpuPercent)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = cpuPercent;
@@ -16768,14 +16493,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuPercent(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPercent = default(long);
+            toolSettings.CpuPercent = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuPeriod(this DockerContainerRunSettings toolSettings, long cpuPeriod)
+        public static DockerContainerRunSettings SetCpuPeriod(this DockerContainerRunSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -16786,14 +16511,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuPeriod(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuQuota(this DockerContainerRunSettings toolSettings, long cpuQuota)
+        public static DockerContainerRunSettings SetCpuQuota(this DockerContainerRunSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -16804,14 +16529,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuQuota(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuRtPeriod"/>.</em></p><p>Limit CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuRtPeriod(this DockerContainerRunSettings toolSettings, long cpuRtPeriod)
+        public static DockerContainerRunSettings SetCpuRtPeriod(this DockerContainerRunSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -16822,14 +16547,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuRtPeriod(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuRtRuntime"/>.</em></p><p>Limit CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuRtRuntime(this DockerContainerRunSettings toolSettings, long cpuRtRuntime)
+        public static DockerContainerRunSettings SetCpuRtRuntime(this DockerContainerRunSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -16840,14 +16565,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuRtRuntime(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpuShares(this DockerContainerRunSettings toolSettings, long cpuShares)
+        public static DockerContainerRunSettings SetCpuShares(this DockerContainerRunSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -16858,14 +16583,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpuShares(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCpus(this DockerContainerRunSettings toolSettings, decimal cpus)
+        public static DockerContainerRunSettings SetCpus(this DockerContainerRunSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -16876,7 +16601,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpus(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -16894,7 +16619,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpusetCpus(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -16912,7 +16637,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetCpusetMems(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -16930,7 +16655,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetDetach(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Detach"/>.</em></p><p>Run container in background and print container ID</p></summary>
@@ -16972,7 +16697,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetDetachKeys(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -17350,7 +17075,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetDisableContentTrust(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -17632,7 +17357,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetEntrypoint(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -17890,7 +17615,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHealthCmd(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -17908,7 +17633,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHealthInterval(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -17926,7 +17651,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHealthRetries(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -17944,7 +17669,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHealthStartPeriod(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -17962,7 +17687,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHealthTimeout(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -17980,7 +17705,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHelp(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Help = default(bool);
+            toolSettings.Help = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Help"/>.</em></p><p>Print usage</p></summary>
@@ -18022,7 +17747,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetHostname(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -18040,7 +17765,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetInit(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Init = default(bool);
+            toolSettings.Init = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Init"/>.</em></p><p>Run an init inside the container that forwards signals and reaps processes</p></summary>
@@ -18082,7 +17807,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetInteractive(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -18113,7 +17838,7 @@ namespace Nuke.Docker
         #region IoMaxbandwidth
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.IoMaxbandwidth"/>.</em></p><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetIoMaxbandwidth(this DockerContainerRunSettings toolSettings, long ioMaxbandwidth)
+        public static DockerContainerRunSettings SetIoMaxbandwidth(this DockerContainerRunSettings toolSettings, long? ioMaxbandwidth)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IoMaxbandwidth = ioMaxbandwidth;
@@ -18124,7 +17849,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIoMaxbandwidth(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxbandwidth = default(long);
+            toolSettings.IoMaxbandwidth = null;
             return toolSettings;
         }
         #endregion
@@ -18142,7 +17867,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIoMaxiops(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxiops = default(int);
+            toolSettings.IoMaxiops = null;
             return toolSettings;
         }
         #endregion
@@ -18160,7 +17885,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIp(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip = default(string);
+            toolSettings.Ip = null;
             return toolSettings;
         }
         #endregion
@@ -18178,7 +17903,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIp6(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip6 = default(string);
+            toolSettings.Ip6 = null;
             return toolSettings;
         }
         #endregion
@@ -18196,7 +17921,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIpc(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ipc = default(string);
+            toolSettings.Ipc = null;
             return toolSettings;
         }
         #endregion
@@ -18214,14 +17939,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetIsolation(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetKernelMemory(this DockerContainerRunSettings toolSettings, long kernelMemory)
+        public static DockerContainerRunSettings SetKernelMemory(this DockerContainerRunSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -18232,7 +17957,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetKernelMemory(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
@@ -18490,7 +18215,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetLogDriver(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -18568,14 +18293,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMacAddress(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MacAddress = default(string);
+            toolSettings.MacAddress = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetMemory(this DockerContainerRunSettings toolSettings, long memory)
+        public static DockerContainerRunSettings SetMemory(this DockerContainerRunSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -18586,14 +18311,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMemory(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetMemoryReservation(this DockerContainerRunSettings toolSettings, long memoryReservation)
+        public static DockerContainerRunSettings SetMemoryReservation(this DockerContainerRunSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -18604,14 +18329,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMemoryReservation(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetMemorySwap(this DockerContainerRunSettings toolSettings, long memorySwap)
+        public static DockerContainerRunSettings SetMemorySwap(this DockerContainerRunSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -18622,14 +18347,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMemorySwap(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwappiness
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.MemorySwappiness"/>.</em></p><p>Tune container memory swappiness (0 to 100)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetMemorySwappiness(this DockerContainerRunSettings toolSettings, long memorySwappiness)
+        public static DockerContainerRunSettings SetMemorySwappiness(this DockerContainerRunSettings toolSettings, long? memorySwappiness)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwappiness = memorySwappiness;
@@ -18640,7 +18365,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMemorySwappiness(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwappiness = default(long);
+            toolSettings.MemorySwappiness = null;
             return toolSettings;
         }
         #endregion
@@ -18658,7 +18383,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetMount(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mount = default(string);
+            toolSettings.Mount = null;
             return toolSettings;
         }
         #endregion
@@ -18676,7 +18401,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetName(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -18694,7 +18419,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetNet(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Net = default(string);
+            toolSettings.Net = null;
             return toolSettings;
         }
         #endregion
@@ -18772,7 +18497,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetNetwork(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -18850,7 +18575,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetNoHealthcheck(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -18892,7 +18617,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetOomKillDisable(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomKillDisable = default(bool);
+            toolSettings.OomKillDisable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.OomKillDisable"/>.</em></p><p>Disable OOM Killer</p></summary>
@@ -18934,7 +18659,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetOomScoreAdj(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomScoreAdj = default(int);
+            toolSettings.OomScoreAdj = null;
             return toolSettings;
         }
         #endregion
@@ -18952,14 +18677,14 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetPid(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pid = default(string);
+            toolSettings.Pid = null;
             return toolSettings;
         }
         #endregion
         #region PidsLimit
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.PidsLimit"/>.</em></p><p>Tune container pids limit (set -1 for unlimited)</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetPidsLimit(this DockerContainerRunSettings toolSettings, long pidsLimit)
+        public static DockerContainerRunSettings SetPidsLimit(this DockerContainerRunSettings toolSettings, long? pidsLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PidsLimit = pidsLimit;
@@ -18970,7 +18695,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetPidsLimit(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PidsLimit = default(long);
+            toolSettings.PidsLimit = null;
             return toolSettings;
         }
         #endregion
@@ -18988,7 +18713,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetPlatform(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -19006,7 +18731,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetPrivileged(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Privileged"/>.</em></p><p>Give extended privileges to this container</p></summary>
@@ -19108,7 +18833,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetPublishAll(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishAll = default(bool);
+            toolSettings.PublishAll = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.PublishAll"/>.</em></p><p>Publish all exposed ports to random ports</p></summary>
@@ -19150,7 +18875,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetReadOnly(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -19192,7 +18917,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetRestart(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
@@ -19210,7 +18935,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetRm(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Rm"/>.</em></p><p>Automatically remove the container when it exits</p></summary>
@@ -19252,7 +18977,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetRuntime(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = default(string);
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -19319,7 +19044,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetShmSize(this DockerContainerRunSettings toolSettings, long shmSize)
+        public static DockerContainerRunSettings SetShmSize(this DockerContainerRunSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -19330,7 +19055,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetShmSize(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -19348,7 +19073,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetSigProxy(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SigProxy = default(bool);
+            toolSettings.SigProxy = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.SigProxy"/>.</em></p><p>Proxy received signals to the process</p></summary>
@@ -19390,7 +19115,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetStopSignal(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -19408,7 +19133,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetStopTimeout(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopTimeout = default(int);
+            toolSettings.StopTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -19588,7 +19313,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetTty(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerRunSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -19630,7 +19355,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetUlimit(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
@@ -19648,7 +19373,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetUser(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -19666,7 +19391,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetUserns(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Userns = default(string);
+            toolSettings.Userns = null;
             return toolSettings;
         }
         #endregion
@@ -19684,7 +19409,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetUts(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Uts = default(string);
+            toolSettings.Uts = null;
             return toolSettings;
         }
         #endregion
@@ -19762,7 +19487,7 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetVolumeDriver(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumeDriver = default(string);
+            toolSettings.VolumeDriver = null;
             return toolSettings;
         }
         #endregion
@@ -19840,12 +19565,12 @@ namespace Nuke.Docker
         public static DockerContainerRunSettings ResetWorkdir(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRunSettings SetImage(this DockerContainerRunSettings toolSettings, string image)
         {
@@ -19853,72 +19578,30 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerRunSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerRunSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerRunSettings ResetImage(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
-        #region Commands
-        /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        #region Command
+        /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCommands(this DockerContainerRunSettings toolSettings, params string[] commands)
+        public static DockerContainerRunSettings SetCommand(this DockerContainerRunSettings toolSettings, string command)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
+            toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerRunSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerRunSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerContainerRunSettings SetCommands(this DockerContainerRunSettings toolSettings, IEnumerable<string> commands)
+        public static DockerContainerRunSettings ResetCommand(this DockerContainerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerRunSettings AddCommands(this DockerContainerRunSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerRunSettings AddCommands(this DockerContainerRunSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerContainerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerRunSettings ClearCommands(this DockerContainerRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerRunSettings RemoveCommands(this DockerContainerRunSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerContainerRunSettings RemoveCommands(this DockerContainerRunSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -20004,7 +19687,7 @@ namespace Nuke.Docker
         public static DockerContainerStartSettings ResetAttach(this DockerContainerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Attach = default(bool);
+            toolSettings.Attach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerStartSettings.Attach"/>.</em></p><p>Attach STDOUT/STDERR and forward signals</p></summary>
@@ -20046,7 +19729,7 @@ namespace Nuke.Docker
         public static DockerContainerStartSettings ResetCheckpoint(this DockerContainerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Checkpoint = default(string);
+            toolSettings.Checkpoint = null;
             return toolSettings;
         }
         #endregion
@@ -20064,7 +19747,7 @@ namespace Nuke.Docker
         public static DockerContainerStartSettings ResetCheckpointDir(this DockerContainerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CheckpointDir = default(string);
+            toolSettings.CheckpointDir = null;
             return toolSettings;
         }
         #endregion
@@ -20082,7 +19765,7 @@ namespace Nuke.Docker
         public static DockerContainerStartSettings ResetDetachKeys(this DockerContainerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -20100,7 +19783,7 @@ namespace Nuke.Docker
         public static DockerContainerStartSettings ResetInteractive(this DockerContainerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerStartSettings.Interactive"/>.</em></p><p>Attach container's STDIN</p></summary>
@@ -20128,26 +19811,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerStartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerStartSettings SetContainer(this DockerContainerStartSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerStartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerStartSettings ResetContainer(this DockerContainerStartSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerStartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerStartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings SetContainers(this DockerContainerStartSettings toolSettings, params string[] containers)
         {
@@ -20155,7 +19820,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerStartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerStartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings SetContainers(this DockerContainerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20163,7 +19828,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings AddContainers(this DockerContainerStartSettings toolSettings, params string[] containers)
         {
@@ -20171,7 +19836,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings AddContainers(this DockerContainerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20179,7 +19844,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings ClearContainers(this DockerContainerStartSettings toolSettings)
         {
@@ -20187,7 +19852,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings RemoveContainers(this DockerContainerStartSettings toolSettings, params string[] containers)
         {
@@ -20196,7 +19861,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStartSettings RemoveContainers(this DockerContainerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20228,7 +19893,7 @@ namespace Nuke.Docker
         public static DockerContainerStatsSettings ResetAll(this DockerContainerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerStatsSettings.All"/>.</em></p><p>Show all containers (default shows just running)</p></summary>
@@ -20270,7 +19935,7 @@ namespace Nuke.Docker
         public static DockerContainerStatsSettings ResetFormat(this DockerContainerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -20288,7 +19953,7 @@ namespace Nuke.Docker
         public static DockerContainerStatsSettings ResetNoStream(this DockerContainerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoStream = default(bool);
+            toolSettings.NoStream = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerStatsSettings.NoStream"/>.</em></p><p>Disable streaming stats and only pull the first result</p></summary>
@@ -20330,7 +19995,7 @@ namespace Nuke.Docker
         public static DockerContainerStatsSettings ResetNoTrunc(this DockerContainerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerContainerStatsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -20440,30 +20105,12 @@ namespace Nuke.Docker
         public static DockerContainerStopSettings ResetTime(this DockerContainerStopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Time = default(int);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerStopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerStopSettings SetContainer(this DockerContainerStopSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerStopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerStopSettings ResetContainer(this DockerContainerStopSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Time = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerStopSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerStopSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings SetContainers(this DockerContainerStopSettings toolSettings, params string[] containers)
         {
@@ -20471,7 +20118,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerStopSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerStopSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings SetContainers(this DockerContainerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20479,7 +20126,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings AddContainers(this DockerContainerStopSettings toolSettings, params string[] containers)
         {
@@ -20487,7 +20134,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings AddContainers(this DockerContainerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20495,7 +20142,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings ClearContainers(this DockerContainerStopSettings toolSettings)
         {
@@ -20503,7 +20150,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings RemoveContainers(this DockerContainerStopSettings toolSettings, params string[] containers)
         {
@@ -20512,7 +20159,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerStopSettings RemoveContainers(this DockerContainerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20531,7 +20178,7 @@ namespace Nuke.Docker
     public static partial class DockerContainerTopSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerTopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerTopSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerTopSettings SetContainer(this DockerContainerTopSettings toolSettings, string container)
         {
@@ -20539,30 +20186,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerTopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerTopSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerTopSettings ResetContainer(this DockerContainerTopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Ps
-        /// <summary><p><em>Sets <see cref="DockerContainerTopSettings.Ps"/>.</em></p><p>[ps</p></summary>
+        #region Options
+        /// <summary><p><em>Sets <see cref="DockerContainerTopSettings.Options"/>.</em></p><p>OPTIONS]</p></summary>
         [Pure]
-        public static DockerContainerTopSettings SetPs(this DockerContainerTopSettings toolSettings, string ps)
+        public static DockerContainerTopSettings SetOptions(this DockerContainerTopSettings toolSettings, string options)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ps = ps;
+            toolSettings.Options = options;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerContainerTopSettings.Ps"/>.</em></p><p>[ps</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerContainerTopSettings.Options"/>.</em></p><p>OPTIONS]</p></summary>
         [Pure]
-        public static DockerContainerTopSettings ResetPs(this DockerContainerTopSettings toolSettings)
+        public static DockerContainerTopSettings ResetOptions(this DockerContainerTopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ps = default(string);
+            toolSettings.Options = null;
             return toolSettings;
         }
         #endregion
@@ -20574,26 +20221,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerContainerUnpauseSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerUnpauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerUnpauseSettings SetContainer(this DockerContainerUnpauseSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerUnpauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerUnpauseSettings ResetContainer(this DockerContainerUnpauseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerUnpauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerUnpauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings SetContainers(this DockerContainerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -20601,7 +20230,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerUnpauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerUnpauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings SetContainers(this DockerContainerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20609,7 +20238,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings AddContainers(this DockerContainerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -20617,7 +20246,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings AddContainers(this DockerContainerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20625,7 +20254,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings ClearContainers(this DockerContainerUnpauseSettings toolSettings)
         {
@@ -20633,7 +20262,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings RemoveContainers(this DockerContainerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -20642,7 +20271,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUnpauseSettings RemoveContainers(this DockerContainerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20674,14 +20303,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetBlkioWeight(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpuPeriod(this DockerContainerUpdateSettings toolSettings, long cpuPeriod)
+        public static DockerContainerUpdateSettings SetCpuPeriod(this DockerContainerUpdateSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -20692,14 +20321,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpuPeriod(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpuQuota(this DockerContainerUpdateSettings toolSettings, long cpuQuota)
+        public static DockerContainerUpdateSettings SetCpuQuota(this DockerContainerUpdateSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -20710,14 +20339,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpuQuota(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.CpuRtPeriod"/>.</em></p><p>Limit the CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpuRtPeriod(this DockerContainerUpdateSettings toolSettings, long cpuRtPeriod)
+        public static DockerContainerUpdateSettings SetCpuRtPeriod(this DockerContainerUpdateSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -20728,14 +20357,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpuRtPeriod(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.CpuRtRuntime"/>.</em></p><p>Limit the CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpuRtRuntime(this DockerContainerUpdateSettings toolSettings, long cpuRtRuntime)
+        public static DockerContainerUpdateSettings SetCpuRtRuntime(this DockerContainerUpdateSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -20746,14 +20375,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpuRtRuntime(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpuShares(this DockerContainerUpdateSettings toolSettings, long cpuShares)
+        public static DockerContainerUpdateSettings SetCpuShares(this DockerContainerUpdateSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -20764,14 +20393,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpuShares(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetCpus(this DockerContainerUpdateSettings toolSettings, decimal cpus)
+        public static DockerContainerUpdateSettings SetCpus(this DockerContainerUpdateSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -20782,7 +20411,7 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpus(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -20800,7 +20429,7 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpusetCpus(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -20818,14 +20447,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetCpusetMems(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetKernelMemory(this DockerContainerUpdateSettings toolSettings, long kernelMemory)
+        public static DockerContainerUpdateSettings SetKernelMemory(this DockerContainerUpdateSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -20836,14 +20465,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetKernelMemory(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetMemory(this DockerContainerUpdateSettings toolSettings, long memory)
+        public static DockerContainerUpdateSettings SetMemory(this DockerContainerUpdateSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -20854,14 +20483,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetMemory(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetMemoryReservation(this DockerContainerUpdateSettings toolSettings, long memoryReservation)
+        public static DockerContainerUpdateSettings SetMemoryReservation(this DockerContainerUpdateSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -20872,14 +20501,14 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetMemoryReservation(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerContainerUpdateSettings SetMemorySwap(this DockerContainerUpdateSettings toolSettings, long memorySwap)
+        public static DockerContainerUpdateSettings SetMemorySwap(this DockerContainerUpdateSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -20890,7 +20519,7 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetMemorySwap(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
@@ -20908,30 +20537,12 @@ namespace Nuke.Docker
         public static DockerContainerUpdateSettings ResetRestart(this DockerContainerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerUpdateSettings SetContainer(this DockerContainerUpdateSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerUpdateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerUpdateSettings ResetContainer(this DockerContainerUpdateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings SetContainers(this DockerContainerUpdateSettings toolSettings, params string[] containers)
         {
@@ -20939,7 +20550,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerUpdateSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings SetContainers(this DockerContainerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20947,7 +20558,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings AddContainers(this DockerContainerUpdateSettings toolSettings, params string[] containers)
         {
@@ -20955,7 +20566,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings AddContainers(this DockerContainerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20963,7 +20574,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings ClearContainers(this DockerContainerUpdateSettings toolSettings)
         {
@@ -20971,7 +20582,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings RemoveContainers(this DockerContainerUpdateSettings toolSettings, params string[] containers)
         {
@@ -20980,7 +20591,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerUpdateSettings RemoveContainers(this DockerContainerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -20998,26 +20609,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerContainerWaitSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerContainerWaitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerWaitSettings SetContainer(this DockerContainerWaitSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerContainerWaitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerContainerWaitSettings ResetContainer(this DockerContainerWaitSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerContainerWaitSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerWaitSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings SetContainers(this DockerContainerWaitSettings toolSettings, params string[] containers)
         {
@@ -21025,7 +20618,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerContainerWaitSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerContainerWaitSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings SetContainers(this DockerContainerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -21033,7 +20626,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings AddContainers(this DockerContainerWaitSettings toolSettings, params string[] containers)
         {
@@ -21041,7 +20634,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings AddContainers(this DockerContainerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -21049,7 +20642,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings ClearContainers(this DockerContainerWaitSettings toolSettings)
         {
@@ -21057,7 +20650,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings RemoveContainers(this DockerContainerWaitSettings toolSettings, params string[] containers)
         {
@@ -21066,7 +20659,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerContainerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerContainerWaitSettings RemoveContainers(this DockerContainerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -21218,7 +20811,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetBlkioWeight(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
@@ -21416,7 +21009,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCgroupParent(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -21434,14 +21027,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCidfile(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cidfile = default(string);
+            toolSettings.Cidfile = null;
             return toolSettings;
         }
         #endregion
         #region CpuCount
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuCount"/>.</em></p><p>CPU count (Windows only)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuCount(this DockerCreateSettings toolSettings, long cpuCount)
+        public static DockerCreateSettings SetCpuCount(this DockerCreateSettings toolSettings, long? cpuCount)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuCount = cpuCount;
@@ -21452,14 +21045,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuCount(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuCount = default(long);
+            toolSettings.CpuCount = null;
             return toolSettings;
         }
         #endregion
         #region CpuPercent
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuPercent"/>.</em></p><p>CPU percent (Windows only)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuPercent(this DockerCreateSettings toolSettings, long cpuPercent)
+        public static DockerCreateSettings SetCpuPercent(this DockerCreateSettings toolSettings, long? cpuPercent)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = cpuPercent;
@@ -21470,14 +21063,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuPercent(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPercent = default(long);
+            toolSettings.CpuPercent = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuPeriod(this DockerCreateSettings toolSettings, long cpuPeriod)
+        public static DockerCreateSettings SetCpuPeriod(this DockerCreateSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -21488,14 +21081,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuPeriod(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuQuota(this DockerCreateSettings toolSettings, long cpuQuota)
+        public static DockerCreateSettings SetCpuQuota(this DockerCreateSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -21506,14 +21099,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuQuota(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuRtPeriod"/>.</em></p><p>Limit CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuRtPeriod(this DockerCreateSettings toolSettings, long cpuRtPeriod)
+        public static DockerCreateSettings SetCpuRtPeriod(this DockerCreateSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -21524,14 +21117,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuRtPeriod(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuRtRuntime"/>.</em></p><p>Limit CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuRtRuntime(this DockerCreateSettings toolSettings, long cpuRtRuntime)
+        public static DockerCreateSettings SetCpuRtRuntime(this DockerCreateSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -21542,14 +21135,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuRtRuntime(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpuShares(this DockerCreateSettings toolSettings, long cpuShares)
+        public static DockerCreateSettings SetCpuShares(this DockerCreateSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -21560,14 +21153,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpuShares(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCpus(this DockerCreateSettings toolSettings, decimal cpus)
+        public static DockerCreateSettings SetCpus(this DockerCreateSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -21578,7 +21171,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpus(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -21596,7 +21189,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpusetCpus(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -21614,7 +21207,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetCpusetMems(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -21992,7 +21585,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetDisableContentTrust(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -22274,7 +21867,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetEntrypoint(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -22532,7 +22125,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHealthCmd(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -22550,7 +22143,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHealthInterval(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -22568,7 +22161,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHealthRetries(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -22586,7 +22179,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHealthStartPeriod(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -22604,7 +22197,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHealthTimeout(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -22622,7 +22215,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHelp(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Help = default(bool);
+            toolSettings.Help = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Help"/>.</em></p><p>Print usage</p></summary>
@@ -22664,7 +22257,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetHostname(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -22682,7 +22275,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetInit(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Init = default(bool);
+            toolSettings.Init = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Init"/>.</em></p><p>Run an init inside the container that forwards signals and reaps processes</p></summary>
@@ -22724,7 +22317,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetInteractive(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -22755,7 +22348,7 @@ namespace Nuke.Docker
         #region IoMaxbandwidth
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.IoMaxbandwidth"/>.</em></p><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetIoMaxbandwidth(this DockerCreateSettings toolSettings, long ioMaxbandwidth)
+        public static DockerCreateSettings SetIoMaxbandwidth(this DockerCreateSettings toolSettings, long? ioMaxbandwidth)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IoMaxbandwidth = ioMaxbandwidth;
@@ -22766,7 +22359,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIoMaxbandwidth(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxbandwidth = default(long);
+            toolSettings.IoMaxbandwidth = null;
             return toolSettings;
         }
         #endregion
@@ -22784,7 +22377,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIoMaxiops(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxiops = default(int);
+            toolSettings.IoMaxiops = null;
             return toolSettings;
         }
         #endregion
@@ -22802,7 +22395,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIp(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip = default(string);
+            toolSettings.Ip = null;
             return toolSettings;
         }
         #endregion
@@ -22820,7 +22413,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIp6(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip6 = default(string);
+            toolSettings.Ip6 = null;
             return toolSettings;
         }
         #endregion
@@ -22838,7 +22431,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIpc(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ipc = default(string);
+            toolSettings.Ipc = null;
             return toolSettings;
         }
         #endregion
@@ -22856,14 +22449,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetIsolation(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerCreateSettings SetKernelMemory(this DockerCreateSettings toolSettings, long kernelMemory)
+        public static DockerCreateSettings SetKernelMemory(this DockerCreateSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -22874,7 +22467,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetKernelMemory(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
@@ -23132,7 +22725,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetLogDriver(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -23210,14 +22803,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMacAddress(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MacAddress = default(string);
+            toolSettings.MacAddress = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerCreateSettings SetMemory(this DockerCreateSettings toolSettings, long memory)
+        public static DockerCreateSettings SetMemory(this DockerCreateSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -23228,14 +22821,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMemory(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerCreateSettings SetMemoryReservation(this DockerCreateSettings toolSettings, long memoryReservation)
+        public static DockerCreateSettings SetMemoryReservation(this DockerCreateSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -23246,14 +22839,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMemoryReservation(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerCreateSettings SetMemorySwap(this DockerCreateSettings toolSettings, long memorySwap)
+        public static DockerCreateSettings SetMemorySwap(this DockerCreateSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -23264,14 +22857,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMemorySwap(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwappiness
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.MemorySwappiness"/>.</em></p><p>Tune container memory swappiness (0 to 100)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetMemorySwappiness(this DockerCreateSettings toolSettings, long memorySwappiness)
+        public static DockerCreateSettings SetMemorySwappiness(this DockerCreateSettings toolSettings, long? memorySwappiness)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwappiness = memorySwappiness;
@@ -23282,7 +22875,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMemorySwappiness(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwappiness = default(long);
+            toolSettings.MemorySwappiness = null;
             return toolSettings;
         }
         #endregion
@@ -23300,7 +22893,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetMount(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mount = default(string);
+            toolSettings.Mount = null;
             return toolSettings;
         }
         #endregion
@@ -23318,7 +22911,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetName(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -23336,7 +22929,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetNet(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Net = default(string);
+            toolSettings.Net = null;
             return toolSettings;
         }
         #endregion
@@ -23414,7 +23007,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetNetwork(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -23492,7 +23085,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetNoHealthcheck(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -23534,7 +23127,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetOomKillDisable(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomKillDisable = default(bool);
+            toolSettings.OomKillDisable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.OomKillDisable"/>.</em></p><p>Disable OOM Killer</p></summary>
@@ -23576,7 +23169,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetOomScoreAdj(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomScoreAdj = default(int);
+            toolSettings.OomScoreAdj = null;
             return toolSettings;
         }
         #endregion
@@ -23594,14 +23187,14 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetPid(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pid = default(string);
+            toolSettings.Pid = null;
             return toolSettings;
         }
         #endregion
         #region PidsLimit
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.PidsLimit"/>.</em></p><p>Tune container pids limit (set -1 for unlimited)</p></summary>
         [Pure]
-        public static DockerCreateSettings SetPidsLimit(this DockerCreateSettings toolSettings, long pidsLimit)
+        public static DockerCreateSettings SetPidsLimit(this DockerCreateSettings toolSettings, long? pidsLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PidsLimit = pidsLimit;
@@ -23612,7 +23205,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetPidsLimit(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PidsLimit = default(long);
+            toolSettings.PidsLimit = null;
             return toolSettings;
         }
         #endregion
@@ -23630,7 +23223,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetPlatform(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -23648,7 +23241,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetPrivileged(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Privileged"/>.</em></p><p>Give extended privileges to this container</p></summary>
@@ -23750,7 +23343,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetPublishAll(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishAll = default(bool);
+            toolSettings.PublishAll = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.PublishAll"/>.</em></p><p>Publish all exposed ports to random ports</p></summary>
@@ -23792,7 +23385,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetReadOnly(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -23834,7 +23427,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetRestart(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
@@ -23852,7 +23445,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetRm(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Rm"/>.</em></p><p>Automatically remove the container when it exits</p></summary>
@@ -23894,7 +23487,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetRuntime(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = default(string);
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -23961,7 +23554,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerCreateSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerCreateSettings SetShmSize(this DockerCreateSettings toolSettings, long shmSize)
+        public static DockerCreateSettings SetShmSize(this DockerCreateSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -23972,7 +23565,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetShmSize(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -23990,7 +23583,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetStopSignal(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -24008,7 +23601,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetStopTimeout(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopTimeout = default(int);
+            toolSettings.StopTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -24188,7 +23781,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetTty(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerCreateSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -24230,7 +23823,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetUlimit(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
@@ -24248,7 +23841,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetUser(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -24266,7 +23859,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetUserns(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Userns = default(string);
+            toolSettings.Userns = null;
             return toolSettings;
         }
         #endregion
@@ -24284,7 +23877,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetUts(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Uts = default(string);
+            toolSettings.Uts = null;
             return toolSettings;
         }
         #endregion
@@ -24362,7 +23955,7 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetVolumeDriver(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumeDriver = default(string);
+            toolSettings.VolumeDriver = null;
             return toolSettings;
         }
         #endregion
@@ -24440,12 +24033,12 @@ namespace Nuke.Docker
         public static DockerCreateSettings ResetWorkdir(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCreateSettings SetImage(this DockerCreateSettings toolSettings, string image)
         {
@@ -24453,72 +24046,30 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerCreateSettings ResetImage(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
-        #region Commands
-        /// <summary><p><em>Sets <see cref="DockerCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        #region Command
+        /// <summary><p><em>Sets <see cref="DockerCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCommands(this DockerCreateSettings toolSettings, params string[] commands)
+        public static DockerCreateSettings SetCommand(this DockerCreateSettings toolSettings, string command)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
+            toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerCreateSettings SetCommands(this DockerCreateSettings toolSettings, IEnumerable<string> commands)
+        public static DockerCreateSettings ResetCommand(this DockerCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerCreateSettings AddCommands(this DockerCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerCreateSettings AddCommands(this DockerCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerCreateSettings ClearCommands(this DockerCreateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerCreateSettings RemoveCommands(this DockerCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerCreateSettings RemoveCommands(this DockerCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -24604,7 +24155,7 @@ namespace Nuke.Docker
         public static DockerDeploySettings ResetBundleFile(this DockerDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BundleFile = default(string);
+            toolSettings.BundleFile = null;
             return toolSettings;
         }
         #endregion
@@ -24682,7 +24233,7 @@ namespace Nuke.Docker
         public static DockerDeploySettings ResetPrune(this DockerDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Prune = default(bool);
+            toolSettings.Prune = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerDeploySettings.Prune"/>.</em></p><p>Prune services that are no longer referenced</p></summary>
@@ -24724,7 +24275,7 @@ namespace Nuke.Docker
         public static DockerDeploySettings ResetResolveImage(this DockerDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResolveImage = default(ResolveImage);
+            toolSettings.ResolveImage = null;
             return toolSettings;
         }
         #endregion
@@ -24742,7 +24293,7 @@ namespace Nuke.Docker
         public static DockerDeploySettings ResetWithRegistryAuth(this DockerDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WithRegistryAuth = default(bool);
+            toolSettings.WithRegistryAuth = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerDeploySettings.WithRegistryAuth"/>.</em></p><p>Send registry authentication details to Swarm agents</p></summary>
@@ -24771,7 +24322,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Stack
-        /// <summary><p><em>Sets <see cref="DockerDeploySettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerDeploySettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerDeploySettings SetStack(this DockerDeploySettings toolSettings, string stack)
         {
@@ -24779,12 +24330,12 @@ namespace Nuke.Docker
             toolSettings.Stack = stack;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerDeploySettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerDeploySettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerDeploySettings ResetStack(this DockerDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = default(string);
+            toolSettings.Stack = null;
             return toolSettings;
         }
         #endregion
@@ -24797,7 +24348,7 @@ namespace Nuke.Docker
     public static partial class DockerDiffSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerDiffSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerDiffSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerDiffSettings SetContainer(this DockerDiffSettings toolSettings, string container)
         {
@@ -24805,12 +24356,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerDiffSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerDiffSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerDiffSettings ResetContainer(this DockerDiffSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -24836,7 +24387,7 @@ namespace Nuke.Docker
         public static DockerEventsSettings ResetFilter(this DockerEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -24854,7 +24405,7 @@ namespace Nuke.Docker
         public static DockerEventsSettings ResetFormat(this DockerEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -24872,7 +24423,7 @@ namespace Nuke.Docker
         public static DockerEventsSettings ResetSince(this DockerEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Since = default(string);
+            toolSettings.Since = null;
             return toolSettings;
         }
         #endregion
@@ -24890,7 +24441,7 @@ namespace Nuke.Docker
         public static DockerEventsSettings ResetUntil(this DockerEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Until = default(string);
+            toolSettings.Until = null;
             return toolSettings;
         }
         #endregion
@@ -24916,7 +24467,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetDetach(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerExecSettings.Detach"/>.</em></p><p>Detached mode: run command in the background</p></summary>
@@ -24958,7 +24509,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetDetachKeys(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -25036,7 +24587,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetInteractive(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerExecSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -25078,7 +24629,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetPrivileged(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerExecSettings.Privileged"/>.</em></p><p>Give extended privileges to the command</p></summary>
@@ -25120,7 +24671,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetTty(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerExecSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -25162,7 +24713,7 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetUser(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -25180,12 +24731,12 @@ namespace Nuke.Docker
         public static DockerExecSettings ResetWorkdir(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerExecSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerExecSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExecSettings SetContainer(this DockerExecSettings toolSettings, string container)
         {
@@ -25193,17 +24744,17 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerExecSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerExecSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExecSettings ResetContainer(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
         #region Command
-        /// <summary><p><em>Sets <see cref="DockerExecSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerExecSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExecSettings SetCommand(this DockerExecSettings toolSettings, string command)
         {
@@ -25211,12 +24762,12 @@ namespace Nuke.Docker
             toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerExecSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerExecSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExecSettings ResetCommand(this DockerExecSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Command = default(string);
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -25302,12 +24853,12 @@ namespace Nuke.Docker
         public static DockerExportSettings ResetOutput(this DockerExportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Output = default(string);
+            toolSettings.Output = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerExportSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerExportSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExportSettings SetContainer(this DockerExportSettings toolSettings, string container)
         {
@@ -25315,12 +24866,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerExportSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerExportSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerExportSettings ResetContainer(this DockerExportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -25346,7 +24897,7 @@ namespace Nuke.Docker
         public static DockerHistorySettings ResetFormat(this DockerHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -25364,7 +24915,7 @@ namespace Nuke.Docker
         public static DockerHistorySettings ResetHuman(this DockerHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Human = default(bool);
+            toolSettings.Human = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerHistorySettings.Human"/>.</em></p><p>Print sizes and dates in human readable format</p></summary>
@@ -25406,7 +24957,7 @@ namespace Nuke.Docker
         public static DockerHistorySettings ResetNoTrunc(this DockerHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerHistorySettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -25448,7 +24999,7 @@ namespace Nuke.Docker
         public static DockerHistorySettings ResetQuiet(this DockerHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerHistorySettings.Quiet"/>.</em></p><p>Only show numeric IDs</p></summary>
@@ -25477,7 +25028,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerHistorySettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerHistorySettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerHistorySettings SetImage(this DockerHistorySettings toolSettings, string image)
         {
@@ -25485,12 +25036,12 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerHistorySettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerHistorySettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerHistorySettings ResetImage(this DockerHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
@@ -25704,7 +25255,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCgroupParent(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -25722,7 +25273,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCompress(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Compress = default(bool);
+            toolSettings.Compress = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Compress"/>.</em></p><p>Compress the build context using gzip</p></summary>
@@ -25753,7 +25304,7 @@ namespace Nuke.Docker
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.CpuPeriod"/>.</em></p><p>Limit the CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetCpuPeriod(this DockerImageBuildSettings toolSettings, long cpuPeriod)
+        public static DockerImageBuildSettings SetCpuPeriod(this DockerImageBuildSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -25764,14 +25315,14 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCpuPeriod(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.CpuQuota"/>.</em></p><p>Limit the CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetCpuQuota(this DockerImageBuildSettings toolSettings, long cpuQuota)
+        public static DockerImageBuildSettings SetCpuQuota(this DockerImageBuildSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -25782,14 +25333,14 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCpuQuota(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetCpuShares(this DockerImageBuildSettings toolSettings, long cpuShares)
+        public static DockerImageBuildSettings SetCpuShares(this DockerImageBuildSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -25800,7 +25351,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCpuShares(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
@@ -25818,7 +25369,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCpusetCpus(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -25836,7 +25387,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetCpusetMems(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -25854,7 +25405,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetDisableContentTrust(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -25896,7 +25447,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetFile(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.File = default(string);
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
@@ -25914,7 +25465,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetForceRm(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ForceRm = default(bool);
+            toolSettings.ForceRm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.ForceRm"/>.</em></p><p>Always remove intermediate containers</p></summary>
@@ -25956,7 +25507,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetIidfile(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Iidfile = default(string);
+            toolSettings.Iidfile = null;
             return toolSettings;
         }
         #endregion
@@ -25974,7 +25525,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetIsolation(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
@@ -26041,7 +25592,7 @@ namespace Nuke.Docker
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetMemory(this DockerImageBuildSettings toolSettings, long memory)
+        public static DockerImageBuildSettings SetMemory(this DockerImageBuildSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -26052,14 +25603,14 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetMemory(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetMemorySwap(this DockerImageBuildSettings toolSettings, long memorySwap)
+        public static DockerImageBuildSettings SetMemorySwap(this DockerImageBuildSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -26070,7 +25621,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetMemorySwap(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
@@ -26088,7 +25639,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetNetwork(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -26106,7 +25657,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetNoCache(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoCache = default(bool);
+            toolSettings.NoCache = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.NoCache"/>.</em></p><p>Do not use cache when building the image</p></summary>
@@ -26148,7 +25699,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetPlatform(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -26166,7 +25717,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetPull(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pull = default(bool);
+            toolSettings.Pull = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Pull"/>.</em></p><p>Always attempt to pull a newer version of the image</p></summary>
@@ -26208,7 +25759,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetQuiet(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Quiet"/>.</em></p><p>Suppress the build output and print image ID on success</p></summary>
@@ -26250,7 +25801,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetRm(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Rm"/>.</em></p><p>Remove intermediate containers after a successful build</p></summary>
@@ -26341,7 +25892,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerImageBuildSettings SetShmSize(this DockerImageBuildSettings toolSettings, long shmSize)
+        public static DockerImageBuildSettings SetShmSize(this DockerImageBuildSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -26352,7 +25903,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetShmSize(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -26370,7 +25921,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetSquash(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Squash = default(bool);
+            toolSettings.Squash = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Squash"/>.</em></p><p>Squash newly built layers into a single new layer</p></summary>
@@ -26412,7 +25963,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetStream(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stream = default(bool);
+            toolSettings.Stream = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageBuildSettings.Stream"/>.</em></p><p>Stream attaches to server to negotiate build context</p></summary>
@@ -26514,7 +26065,7 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetTarget(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Target = default(string);
+            toolSettings.Target = null;
             return toolSettings;
         }
         #endregion
@@ -26532,12 +26083,12 @@ namespace Nuke.Docker
         public static DockerImageBuildSettings ResetUlimit(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
         #region Path
-        /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.Path"/>.</em></p><p>PATH|URL|-</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageBuildSettings.Path"/>.</em></p><p>Path or url where the build context is located.</p></summary>
         [Pure]
         public static DockerImageBuildSettings SetPath(this DockerImageBuildSettings toolSettings, string path)
         {
@@ -26545,12 +26096,12 @@ namespace Nuke.Docker
             toolSettings.Path = path;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerImageBuildSettings.Path"/>.</em></p><p>PATH|URL|-</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImageBuildSettings.Path"/>.</em></p><p>Path or url where the build context is located.</p></summary>
         [Pure]
         public static DockerImageBuildSettings ResetPath(this DockerImageBuildSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Path = default(string);
+            toolSettings.Path = null;
             return toolSettings;
         }
         #endregion
@@ -26576,7 +26127,7 @@ namespace Nuke.Docker
         public static DockerImageHistorySettings ResetFormat(this DockerImageHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -26594,7 +26145,7 @@ namespace Nuke.Docker
         public static DockerImageHistorySettings ResetHuman(this DockerImageHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Human = default(bool);
+            toolSettings.Human = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageHistorySettings.Human"/>.</em></p><p>Print sizes and dates in human readable format</p></summary>
@@ -26636,7 +26187,7 @@ namespace Nuke.Docker
         public static DockerImageHistorySettings ResetNoTrunc(this DockerImageHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageHistorySettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -26678,7 +26229,7 @@ namespace Nuke.Docker
         public static DockerImageHistorySettings ResetQuiet(this DockerImageHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageHistorySettings.Quiet"/>.</em></p><p>Only show numeric IDs</p></summary>
@@ -26707,7 +26258,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerImageHistorySettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageHistorySettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageHistorySettings SetImage(this DockerImageHistorySettings toolSettings, string image)
         {
@@ -26715,12 +26266,12 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerImageHistorySettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImageHistorySettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageHistorySettings ResetImage(this DockerImageHistorySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
@@ -26806,7 +26357,7 @@ namespace Nuke.Docker
         public static DockerImageImportSettings ResetMessage(this DockerImageImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Message = default(string);
+            toolSettings.Message = null;
             return toolSettings;
         }
         #endregion
@@ -26824,67 +26375,25 @@ namespace Nuke.Docker
         public static DockerImageImportSettings ResetFile(this DockerImageImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.File = default(string);
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerImageImportSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerImageImportSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImageImportSettings SetRepositorytags(this DockerImageImportSettings toolSettings, params string[] repositorytags)
+        public static DockerImageImportSettings SetRepository(this DockerImageImportSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImageImportSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImageImportSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImageImportSettings SetRepositorytags(this DockerImageImportSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerImageImportSettings ResetRepository(this DockerImageImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImageImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageImportSettings AddRepositorytags(this DockerImageImportSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImageImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageImportSettings AddRepositorytags(this DockerImageImportSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerImageImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageImportSettings ClearRepositorytags(this DockerImageImportSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImageImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageImportSettings RemoveRepositorytags(this DockerImageImportSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImageImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageImportSettings RemoveRepositorytags(this DockerImageImportSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -26910,30 +26419,12 @@ namespace Nuke.Docker
         public static DockerImageInspectSettings ResetFormat(this DockerImageInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Image
-        /// <summary><p><em>Sets <see cref="DockerImageInspectSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageInspectSettings SetImage(this DockerImageInspectSettings toolSettings, string image)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = image;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImageInspectSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageInspectSettings ResetImage(this DockerImageInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
         #region Images
-        /// <summary><p><em>Sets <see cref="DockerImageInspectSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageInspectSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings SetImages(this DockerImageInspectSettings toolSettings, params string[] images)
         {
@@ -26941,7 +26432,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImageInspectSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageInspectSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings SetImages(this DockerImageInspectSettings toolSettings, IEnumerable<string> images)
         {
@@ -26949,7 +26440,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageInspectSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageInspectSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings AddImages(this DockerImageInspectSettings toolSettings, params string[] images)
         {
@@ -26957,7 +26448,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageInspectSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageInspectSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings AddImages(this DockerImageInspectSettings toolSettings, IEnumerable<string> images)
         {
@@ -26965,7 +26456,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerImageInspectSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerImageInspectSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings ClearImages(this DockerImageInspectSettings toolSettings)
         {
@@ -26973,7 +26464,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageInspectSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageInspectSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings RemoveImages(this DockerImageInspectSettings toolSettings, params string[] images)
         {
@@ -26982,7 +26473,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageInspectSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageInspectSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageInspectSettings RemoveImages(this DockerImageInspectSettings toolSettings, IEnumerable<string> images)
         {
@@ -27014,7 +26505,7 @@ namespace Nuke.Docker
         public static DockerImageLoadSettings ResetInput(this DockerImageLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Input = default(string);
+            toolSettings.Input = null;
             return toolSettings;
         }
         #endregion
@@ -27032,7 +26523,7 @@ namespace Nuke.Docker
         public static DockerImageLoadSettings ResetQuiet(this DockerImageLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageLoadSettings.Quiet"/>.</em></p><p>Suppress the load output</p></summary>
@@ -27082,7 +26573,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetAll(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageLsSettings.All"/>.</em></p><p>Show all images (default hides intermediate images)</p></summary>
@@ -27124,7 +26615,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetDigests(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = default(bool);
+            toolSettings.Digests = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageLsSettings.Digests"/>.</em></p><p>Show digests</p></summary>
@@ -27166,7 +26657,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetFilter(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -27184,7 +26675,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetFormat(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -27202,7 +26693,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetNoTrunc(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageLsSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -27244,7 +26735,7 @@ namespace Nuke.Docker
         public static DockerImageLsSettings ResetQuiet(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageLsSettings.Quiet"/>.</em></p><p>Only show numeric IDs</p></summary>
@@ -27272,63 +26763,21 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerImageLsSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerImageLsSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImageLsSettings SetRepositorytags(this DockerImageLsSettings toolSettings, params string[] repositorytags)
+        public static DockerImageLsSettings SetRepository(this DockerImageLsSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImageLsSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImageLsSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImageLsSettings SetRepositorytags(this DockerImageLsSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerImageLsSettings ResetRepository(this DockerImageLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImageLsSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageLsSettings AddRepositorytags(this DockerImageLsSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImageLsSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageLsSettings AddRepositorytags(this DockerImageLsSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerImageLsSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageLsSettings ClearRepositorytags(this DockerImageLsSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImageLsSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageLsSettings RemoveRepositorytags(this DockerImageLsSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImageLsSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImageLsSettings RemoveRepositorytags(this DockerImageLsSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -27354,7 +26803,7 @@ namespace Nuke.Docker
         public static DockerImagePruneSettings ResetAll(this DockerImagePruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagePruneSettings.All"/>.</em></p><p>Remove all unused images, not just dangling ones</p></summary>
@@ -27396,7 +26845,7 @@ namespace Nuke.Docker
         public static DockerImagePruneSettings ResetFilter(this DockerImagePruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -27414,7 +26863,7 @@ namespace Nuke.Docker
         public static DockerImagePruneSettings ResetForce(this DockerImagePruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagePruneSettings.Force"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -27464,7 +26913,7 @@ namespace Nuke.Docker
         public static DockerImagePullSettings ResetAllTags(this DockerImagePullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllTags = default(bool);
+            toolSettings.AllTags = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagePullSettings.AllTags"/>.</em></p><p>Download all tagged images in the repository</p></summary>
@@ -27506,7 +26955,7 @@ namespace Nuke.Docker
         public static DockerImagePullSettings ResetDisableContentTrust(this DockerImagePullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagePullSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -27548,25 +26997,25 @@ namespace Nuke.Docker
         public static DockerImagePullSettings ResetPlatform(this DockerImagePullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
-        #region Nametag
-        /// <summary><p><em>Sets <see cref="DockerImagePullSettings.Nametag"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
+        #region Name
+        /// <summary><p><em>Sets <see cref="DockerImagePullSettings.Name"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
         [Pure]
-        public static DockerImagePullSettings SetNametag(this DockerImagePullSettings toolSettings, string nametag)
+        public static DockerImagePullSettings SetName(this DockerImagePullSettings toolSettings, string name)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Nametag = nametag;
+            toolSettings.Name = name;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerImagePullSettings.Nametag"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImagePullSettings.Name"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
         [Pure]
-        public static DockerImagePullSettings ResetNametag(this DockerImagePullSettings toolSettings)
+        public static DockerImagePullSettings ResetName(this DockerImagePullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Nametag = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -27592,7 +27041,7 @@ namespace Nuke.Docker
         public static DockerImagePushSettings ResetDisableContentTrust(this DockerImagePushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagePushSettings.DisableContentTrust"/>.</em></p><p>Skip image signing</p></summary>
@@ -27620,6 +27069,24 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="DockerImagePushSettings.Name"/>.</em></p><p>NAME[:TAG]</p></summary>
+        [Pure]
+        public static DockerImagePushSettings SetName(this DockerImagePushSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagePushSettings.Name"/>.</em></p><p>NAME[:TAG]</p></summary>
+        [Pure]
+        public static DockerImagePushSettings ResetName(this DockerImagePushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerImageRmSettingsExtensions
@@ -27642,7 +27109,7 @@ namespace Nuke.Docker
         public static DockerImageRmSettings ResetForce(this DockerImageRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageRmSettings.Force"/>.</em></p><p>Force removal of the image</p></summary>
@@ -27684,7 +27151,7 @@ namespace Nuke.Docker
         public static DockerImageRmSettings ResetNoPrune(this DockerImageRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoPrune = default(bool);
+            toolSettings.NoPrune = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImageRmSettings.NoPrune"/>.</em></p><p>Do not delete untagged parents</p></summary>
@@ -27712,26 +27179,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Image
-        /// <summary><p><em>Sets <see cref="DockerImageRmSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageRmSettings SetImage(this DockerImageRmSettings toolSettings, string image)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = image;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImageRmSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageRmSettings ResetImage(this DockerImageRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Images
-        /// <summary><p><em>Sets <see cref="DockerImageRmSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageRmSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings SetImages(this DockerImageRmSettings toolSettings, params string[] images)
         {
@@ -27739,7 +27188,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImageRmSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageRmSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings SetImages(this DockerImageRmSettings toolSettings, IEnumerable<string> images)
         {
@@ -27747,7 +27196,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageRmSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageRmSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings AddImages(this DockerImageRmSettings toolSettings, params string[] images)
         {
@@ -27755,7 +27204,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageRmSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageRmSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings AddImages(this DockerImageRmSettings toolSettings, IEnumerable<string> images)
         {
@@ -27763,7 +27212,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerImageRmSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerImageRmSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings ClearImages(this DockerImageRmSettings toolSettings)
         {
@@ -27771,7 +27220,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageRmSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageRmSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings RemoveImages(this DockerImageRmSettings toolSettings, params string[] images)
         {
@@ -27780,7 +27229,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageRmSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageRmSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageRmSettings RemoveImages(this DockerImageRmSettings toolSettings, IEnumerable<string> images)
         {
@@ -27812,30 +27261,12 @@ namespace Nuke.Docker
         public static DockerImageSaveSettings ResetOutput(this DockerImageSaveSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Output = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Image
-        /// <summary><p><em>Sets <see cref="DockerImageSaveSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageSaveSettings SetImage(this DockerImageSaveSettings toolSettings, string image)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = image;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImageSaveSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerImageSaveSettings ResetImage(this DockerImageSaveSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Output = null;
             return toolSettings;
         }
         #endregion
         #region Images
-        /// <summary><p><em>Sets <see cref="DockerImageSaveSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageSaveSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings SetImages(this DockerImageSaveSettings toolSettings, params string[] images)
         {
@@ -27843,7 +27274,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImageSaveSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerImageSaveSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings SetImages(this DockerImageSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -27851,7 +27282,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings AddImages(this DockerImageSaveSettings toolSettings, params string[] images)
         {
@@ -27859,7 +27290,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerImageSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerImageSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings AddImages(this DockerImageSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -27867,7 +27298,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerImageSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerImageSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings ClearImages(this DockerImageSaveSettings toolSettings)
         {
@@ -27875,7 +27306,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings RemoveImages(this DockerImageSaveSettings toolSettings, params string[] images)
         {
@@ -27884,7 +27315,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerImageSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerImageSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerImageSaveSettings RemoveImages(this DockerImageSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -27902,6 +27333,42 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerImageTagSettingsExtensions
     {
+        #region SourceImage
+        /// <summary><p><em>Sets <see cref="DockerImageTagSettings.SourceImage"/>.</em></p><p>SOURCE_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerImageTagSettings SetSourceImage(this DockerImageTagSettings toolSettings, string sourceImage)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceImage = sourceImage;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImageTagSettings.SourceImage"/>.</em></p><p>SOURCE_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerImageTagSettings ResetSourceImage(this DockerImageTagSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceImage = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TargetImage
+        /// <summary><p><em>Sets <see cref="DockerImageTagSettings.TargetImage"/>.</em></p><p>TARGET_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerImageTagSettings SetTargetImage(this DockerImageTagSettings toolSettings, string targetImage)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetImage = targetImage;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImageTagSettings.TargetImage"/>.</em></p><p>TARGET_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerImageTagSettings ResetTargetImage(this DockerImageTagSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetImage = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerImagesSettingsExtensions
@@ -27924,7 +27391,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetAll(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images)</p></summary>
@@ -27966,7 +27433,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetDigests(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = default(bool);
+            toolSettings.Digests = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests</p></summary>
@@ -28008,7 +27475,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetFilter(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -28026,7 +27493,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetFormat(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -28044,7 +27511,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetNoTrunc(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -28086,7 +27553,7 @@ namespace Nuke.Docker
         public static DockerImagesSettings ResetQuiet(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs</p></summary>
@@ -28114,63 +27581,21 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImagesSettings SetRepositorytags(this DockerImagesSettings toolSettings, params string[] repositorytags)
+        public static DockerImagesSettings SetRepository(this DockerImagesSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImagesSettings SetRepositorytags(this DockerImagesSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerImagesSettings ResetRepository(this DockerImagesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImagesSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings AddRepositorytags(this DockerImagesSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImagesSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings AddRepositorytags(this DockerImagesSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerImagesSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings ClearRepositorytags(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImagesSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings RemoveRepositorytags(this DockerImagesSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImagesSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings RemoveRepositorytags(this DockerImagesSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -28256,7 +27681,7 @@ namespace Nuke.Docker
         public static DockerImportSettings ResetMessage(this DockerImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Message = default(string);
+            toolSettings.Message = null;
             return toolSettings;
         }
         #endregion
@@ -28274,67 +27699,25 @@ namespace Nuke.Docker
         public static DockerImportSettings ResetFile(this DockerImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.File = default(string);
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
-        #region Repositorytags
-        /// <summary><p><em>Sets <see cref="DockerImportSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerImportSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImportSettings SetRepositorytags(this DockerImportSettings toolSettings, params string[] repositorytags)
+        public static DockerImportSettings SetRepository(this DockerImportSettings toolSettings, string repository)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
+            toolSettings.Repository = repository;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerImportSettings.Repositorytags"/> to a new list.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerImportSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
         [Pure]
-        public static DockerImportSettings SetRepositorytags(this DockerImportSettings toolSettings, IEnumerable<string> repositorytags)
+        public static DockerImportSettings ResetRepository(this DockerImportSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal = repositorytags.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImportSettings AddRepositorytags(this DockerImportSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImportSettings AddRepositorytags(this DockerImportSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.AddRange(repositorytags);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImportSettings ClearRepositorytags(this DockerImportSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RepositorytagsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImportSettings RemoveRepositorytags(this DockerImportSettings toolSettings, params string[] repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerImportSettings.Repositorytags"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImportSettings RemoveRepositorytags(this DockerImportSettings toolSettings, IEnumerable<string> repositorytags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(repositorytags);
-            toolSettings.RepositorytagsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
@@ -28360,7 +27743,7 @@ namespace Nuke.Docker
         public static DockerInfoSettings ResetFormat(this DockerInfoSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -28386,7 +27769,7 @@ namespace Nuke.Docker
         public static DockerInspectSettings ResetFormat(this DockerInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -28404,7 +27787,7 @@ namespace Nuke.Docker
         public static DockerInspectSettings ResetSize(this DockerInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Size = default(bool);
+            toolSettings.Size = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerInspectSettings.Size"/>.</em></p><p>Display total file sizes if the type is container</p></summary>
@@ -28446,30 +27829,12 @@ namespace Nuke.Docker
         public static DockerInspectSettings ResetType(this DockerInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Type = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Name
-        /// <summary><p><em>Sets <see cref="DockerInspectSettings.Name"/>.</em></p><p>NAME|ID</p></summary>
-        [Pure]
-        public static DockerInspectSettings SetName(this DockerInspectSettings toolSettings, string name)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = name;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerInspectSettings.Name"/>.</em></p><p>NAME|ID</p></summary>
-        [Pure]
-        public static DockerInspectSettings ResetName(this DockerInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Type = null;
             return toolSettings;
         }
         #endregion
         #region Names
-        /// <summary><p><em>Sets <see cref="DockerInspectSettings.Names"/> to a new list.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerInspectSettings.Names"/> to a new list.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings SetNames(this DockerInspectSettings toolSettings, params string[] names)
         {
@@ -28477,7 +27842,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal = names.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerInspectSettings.Names"/> to a new list.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerInspectSettings.Names"/> to a new list.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings SetNames(this DockerInspectSettings toolSettings, IEnumerable<string> names)
         {
@@ -28485,7 +27850,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal = names.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerInspectSettings.Names"/>.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerInspectSettings.Names"/>.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings AddNames(this DockerInspectSettings toolSettings, params string[] names)
         {
@@ -28493,7 +27858,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal.AddRange(names);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerInspectSettings.Names"/>.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerInspectSettings.Names"/>.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings AddNames(this DockerInspectSettings toolSettings, IEnumerable<string> names)
         {
@@ -28501,7 +27866,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal.AddRange(names);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerInspectSettings.Names"/>.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerInspectSettings.Names"/>.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings ClearNames(this DockerInspectSettings toolSettings)
         {
@@ -28509,7 +27874,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerInspectSettings.Names"/>.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerInspectSettings.Names"/>.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings RemoveNames(this DockerInspectSettings toolSettings, params string[] names)
         {
@@ -28518,7 +27883,7 @@ namespace Nuke.Docker
             toolSettings.NamesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerInspectSettings.Names"/>.</em></p><p>[NAME|ID...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerInspectSettings.Names"/>.</em></p><p>NAME|ID</p></summary>
         [Pure]
         public static DockerInspectSettings RemoveNames(this DockerInspectSettings toolSettings, IEnumerable<string> names)
         {
@@ -28550,30 +27915,12 @@ namespace Nuke.Docker
         public static DockerKillSettings ResetSignal(this DockerKillSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Signal = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerKillSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerKillSettings SetContainer(this DockerKillSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerKillSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerKillSettings ResetContainer(this DockerKillSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Signal = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerKillSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerKillSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings SetContainers(this DockerKillSettings toolSettings, params string[] containers)
         {
@@ -28581,7 +27928,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerKillSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerKillSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings SetContainers(this DockerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -28589,7 +27936,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings AddContainers(this DockerKillSettings toolSettings, params string[] containers)
         {
@@ -28597,7 +27944,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings AddContainers(this DockerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -28605,7 +27952,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings ClearContainers(this DockerKillSettings toolSettings)
         {
@@ -28613,7 +27960,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings RemoveContainers(this DockerKillSettings toolSettings, params string[] containers)
         {
@@ -28622,7 +27969,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerKillSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerKillSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerKillSettings RemoveContainers(this DockerKillSettings toolSettings, IEnumerable<string> containers)
         {
@@ -28654,7 +28001,7 @@ namespace Nuke.Docker
         public static DockerLoadSettings ResetInput(this DockerLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Input = default(string);
+            toolSettings.Input = null;
             return toolSettings;
         }
         #endregion
@@ -28672,7 +28019,7 @@ namespace Nuke.Docker
         public static DockerLoadSettings ResetQuiet(this DockerLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerLoadSettings.Quiet"/>.</em></p><p>Suppress the load output</p></summary>
@@ -28722,7 +28069,7 @@ namespace Nuke.Docker
         public static DockerLoginSettings ResetPassword(this DockerLoginSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Password = default(string);
+            toolSettings.Password = null;
             return toolSettings;
         }
         #endregion
@@ -28740,7 +28087,7 @@ namespace Nuke.Docker
         public static DockerLoginSettings ResetPasswordStdin(this DockerLoginSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = default(bool);
+            toolSettings.PasswordStdin = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin</p></summary>
@@ -28782,67 +28129,25 @@ namespace Nuke.Docker
         public static DockerLoginSettings ResetUsername(this DockerLoginSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Username = default(string);
+            toolSettings.Username = null;
             return toolSettings;
         }
         #endregion
-        #region Servers
-        /// <summary><p><em>Sets <see cref="DockerLoginSettings.Servers"/> to a new list.</em></p><p>[SERVER]</p></summary>
+        #region Server
+        /// <summary><p><em>Sets <see cref="DockerLoginSettings.Server"/>.</em></p><p>[SERVER]</p></summary>
         [Pure]
-        public static DockerLoginSettings SetServers(this DockerLoginSettings toolSettings, params string[] servers)
+        public static DockerLoginSettings SetServer(this DockerLoginSettings toolSettings, string server)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal = servers.ToList();
+            toolSettings.Server = server;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerLoginSettings.Servers"/> to a new list.</em></p><p>[SERVER]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerLoginSettings.Server"/>.</em></p><p>[SERVER]</p></summary>
         [Pure]
-        public static DockerLoginSettings SetServers(this DockerLoginSettings toolSettings, IEnumerable<string> servers)
+        public static DockerLoginSettings ResetServer(this DockerLoginSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal = servers.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerLoginSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLoginSettings AddServers(this DockerLoginSettings toolSettings, params string[] servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.AddRange(servers);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerLoginSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLoginSettings AddServers(this DockerLoginSettings toolSettings, IEnumerable<string> servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.AddRange(servers);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerLoginSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLoginSettings ClearServers(this DockerLoginSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerLoginSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLoginSettings RemoveServers(this DockerLoginSettings toolSettings, params string[] servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(servers);
-            toolSettings.ServersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerLoginSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLoginSettings RemoveServers(this DockerLoginSettings toolSettings, IEnumerable<string> servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(servers);
-            toolSettings.ServersInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Server = null;
             return toolSettings;
         }
         #endregion
@@ -28854,63 +28159,21 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerLogoutSettingsExtensions
     {
-        #region Servers
-        /// <summary><p><em>Sets <see cref="DockerLogoutSettings.Servers"/> to a new list.</em></p><p>[SERVER]</p></summary>
+        #region Server
+        /// <summary><p><em>Sets <see cref="DockerLogoutSettings.Server"/>.</em></p><p>[SERVER]</p></summary>
         [Pure]
-        public static DockerLogoutSettings SetServers(this DockerLogoutSettings toolSettings, params string[] servers)
+        public static DockerLogoutSettings SetServer(this DockerLogoutSettings toolSettings, string server)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal = servers.ToList();
+            toolSettings.Server = server;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerLogoutSettings.Servers"/> to a new list.</em></p><p>[SERVER]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerLogoutSettings.Server"/>.</em></p><p>[SERVER]</p></summary>
         [Pure]
-        public static DockerLogoutSettings SetServers(this DockerLogoutSettings toolSettings, IEnumerable<string> servers)
+        public static DockerLogoutSettings ResetServer(this DockerLogoutSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal = servers.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerLogoutSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLogoutSettings AddServers(this DockerLogoutSettings toolSettings, params string[] servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.AddRange(servers);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerLogoutSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLogoutSettings AddServers(this DockerLogoutSettings toolSettings, IEnumerable<string> servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.AddRange(servers);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerLogoutSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLogoutSettings ClearServers(this DockerLogoutSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServersInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerLogoutSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLogoutSettings RemoveServers(this DockerLogoutSettings toolSettings, params string[] servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(servers);
-            toolSettings.ServersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerLogoutSettings.Servers"/>.</em></p><p>[SERVER]</p></summary>
-        [Pure]
-        public static DockerLogoutSettings RemoveServers(this DockerLogoutSettings toolSettings, IEnumerable<string> servers)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(servers);
-            toolSettings.ServersInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Server = null;
             return toolSettings;
         }
         #endregion
@@ -28936,7 +28199,7 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetDetails(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Details = default(bool);
+            toolSettings.Details = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerLogsSettings.Details"/>.</em></p><p>Show extra details provided to logs</p></summary>
@@ -28978,7 +28241,7 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetFollow(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Follow = default(bool);
+            toolSettings.Follow = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerLogsSettings.Follow"/>.</em></p><p>Follow log output</p></summary>
@@ -29020,7 +28283,7 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetSince(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Since = default(string);
+            toolSettings.Since = null;
             return toolSettings;
         }
         #endregion
@@ -29038,7 +28301,7 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetTail(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tail = default(string);
+            toolSettings.Tail = null;
             return toolSettings;
         }
         #endregion
@@ -29056,7 +28319,7 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetTimestamps(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Timestamps = default(bool);
+            toolSettings.Timestamps = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerLogsSettings.Timestamps"/>.</em></p><p>Show timestamps</p></summary>
@@ -29098,12 +28361,12 @@ namespace Nuke.Docker
         public static DockerLogsSettings ResetUntil(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Until = default(string);
+            toolSettings.Until = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerLogsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerLogsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerLogsSettings SetContainer(this DockerLogsSettings toolSettings, string container)
         {
@@ -29111,12 +28374,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerLogsSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerLogsSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerLogsSettings ResetContainer(this DockerLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -29129,7 +28392,7 @@ namespace Nuke.Docker
     public static partial class DockerManifestSettingsExtensions
     {
         #region Command
-        /// <summary><p><em>Sets <see cref="DockerManifestSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerManifestSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestSettings SetCommand(this DockerManifestSettings toolSettings, string command)
         {
@@ -29137,12 +28400,12 @@ namespace Nuke.Docker
             toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerManifestSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerManifestSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestSettings ResetCommand(this DockerManifestSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Command = default(string);
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -29168,7 +28431,7 @@ namespace Nuke.Docker
         public static DockerManifestAnnotateSettings ResetArch(this DockerManifestAnnotateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Arch = default(string);
+            toolSettings.Arch = null;
             return toolSettings;
         }
         #endregion
@@ -29186,7 +28449,7 @@ namespace Nuke.Docker
         public static DockerManifestAnnotateSettings ResetOs(this DockerManifestAnnotateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Os = default(string);
+            toolSettings.Os = null;
             return toolSettings;
         }
         #endregion
@@ -29264,12 +28527,30 @@ namespace Nuke.Docker
         public static DockerManifestAnnotateSettings ResetVariant(this DockerManifestAnnotateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variant = default(string);
+            toolSettings.Variant = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ManifestList
+        /// <summary><p><em>Sets <see cref="DockerManifestAnnotateSettings.ManifestList"/>.</em></p><p>MANIFEST_LIST</p></summary>
+        [Pure]
+        public static DockerManifestAnnotateSettings SetManifestList(this DockerManifestAnnotateSettings toolSettings, string manifestList)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ManifestList = manifestList;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerManifestAnnotateSettings.ManifestList"/>.</em></p><p>MANIFEST_LIST</p></summary>
+        [Pure]
+        public static DockerManifestAnnotateSettings ResetManifestList(this DockerManifestAnnotateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ManifestList = null;
             return toolSettings;
         }
         #endregion
         #region Manifest
-        /// <summary><p><em>Sets <see cref="DockerManifestAnnotateSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerManifestAnnotateSettings.Manifest"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestAnnotateSettings SetManifest(this DockerManifestAnnotateSettings toolSettings, string manifest)
         {
@@ -29277,12 +28558,12 @@ namespace Nuke.Docker
             toolSettings.Manifest = manifest;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerManifestAnnotateSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerManifestAnnotateSettings.Manifest"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestAnnotateSettings ResetManifest(this DockerManifestAnnotateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest = default(string);
+            toolSettings.Manifest = null;
             return toolSettings;
         }
         #endregion
@@ -29294,26 +28575,26 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerManifestCreateSettingsExtensions
     {
-        #region Manifest
-        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        #region ManfestList
+        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.ManfestList"/>.</em></p><p>MANFEST_LIST</p></summary>
         [Pure]
-        public static DockerManifestCreateSettings SetManifest(this DockerManifestCreateSettings toolSettings, string manifest)
+        public static DockerManifestCreateSettings SetManfestList(this DockerManifestCreateSettings toolSettings, string manfestList)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest = manifest;
+            toolSettings.ManfestList = manfestList;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerManifestCreateSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerManifestCreateSettings.ManfestList"/>.</em></p><p>MANFEST_LIST</p></summary>
         [Pure]
-        public static DockerManifestCreateSettings ResetManifest(this DockerManifestCreateSettings toolSettings)
+        public static DockerManifestCreateSettings ResetManfestList(this DockerManifestCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest = default(string);
+            toolSettings.ManfestList = null;
             return toolSettings;
         }
         #endregion
         #region Manifests
-        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.Manifests"/> to a new list.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.Manifests"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings SetManifests(this DockerManifestCreateSettings toolSettings, params string[] manifests)
         {
@@ -29321,7 +28602,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal = manifests.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.Manifests"/> to a new list.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerManifestCreateSettings.Manifests"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings SetManifests(this DockerManifestCreateSettings toolSettings, IEnumerable<string> manifests)
         {
@@ -29329,7 +28610,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal = manifests.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings AddManifests(this DockerManifestCreateSettings toolSettings, params string[] manifests)
         {
@@ -29337,7 +28618,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal.AddRange(manifests);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings AddManifests(this DockerManifestCreateSettings toolSettings, IEnumerable<string> manifests)
         {
@@ -29345,7 +28626,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal.AddRange(manifests);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings ClearManifests(this DockerManifestCreateSettings toolSettings)
         {
@@ -29353,7 +28634,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings RemoveManifests(this DockerManifestCreateSettings toolSettings, params string[] manifests)
         {
@@ -29362,7 +28643,7 @@ namespace Nuke.Docker
             toolSettings.ManifestsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p>[MANIFEST...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerManifestCreateSettings.Manifests"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestCreateSettings RemoveManifests(this DockerManifestCreateSettings toolSettings, IEnumerable<string> manifests)
         {
@@ -29394,7 +28675,7 @@ namespace Nuke.Docker
         public static DockerManifestInspectSettings ResetInsecure(this DockerManifestInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Insecure = default(bool);
+            toolSettings.Insecure = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerManifestInspectSettings.Insecure"/>.</em></p><p>allow communication with an insecure registry</p></summary>
@@ -29436,7 +28717,7 @@ namespace Nuke.Docker
         public static DockerManifestInspectSettings ResetVerbose(this DockerManifestInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = default(bool);
+            toolSettings.Verbose = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerManifestInspectSettings.Verbose"/>.</em></p><p>Output additional info including layers and platform</p></summary>
@@ -29464,68 +28745,26 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Manifest_lists
-        /// <summary><p><em>Sets <see cref="DockerManifestInspectSettings.Manifest_lists"/> to a new list.</em></p><p>[MANIFEST_LIST]</p></summary>
+        #region ManifestList
+        /// <summary><p><em>Sets <see cref="DockerManifestInspectSettings.ManifestList"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
         [Pure]
-        public static DockerManifestInspectSettings SetManifest_lists(this DockerManifestInspectSettings toolSettings, params string[] manifest_lists)
+        public static DockerManifestInspectSettings SetManifestList(this DockerManifestInspectSettings toolSettings, string manifestList)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest_listsInternal = manifest_lists.ToList();
+            toolSettings.ManifestList = manifestList;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerManifestInspectSettings.Manifest_lists"/> to a new list.</em></p><p>[MANIFEST_LIST]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerManifestInspectSettings.ManifestList"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
         [Pure]
-        public static DockerManifestInspectSettings SetManifest_lists(this DockerManifestInspectSettings toolSettings, IEnumerable<string> manifest_lists)
+        public static DockerManifestInspectSettings ResetManifestList(this DockerManifestInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest_listsInternal = manifest_lists.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerManifestInspectSettings.Manifest_lists"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
-        [Pure]
-        public static DockerManifestInspectSettings AddManifest_lists(this DockerManifestInspectSettings toolSettings, params string[] manifest_lists)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest_listsInternal.AddRange(manifest_lists);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerManifestInspectSettings.Manifest_lists"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
-        [Pure]
-        public static DockerManifestInspectSettings AddManifest_lists(this DockerManifestInspectSettings toolSettings, IEnumerable<string> manifest_lists)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest_listsInternal.AddRange(manifest_lists);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerManifestInspectSettings.Manifest_lists"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
-        [Pure]
-        public static DockerManifestInspectSettings ClearManifest_lists(this DockerManifestInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest_listsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerManifestInspectSettings.Manifest_lists"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
-        [Pure]
-        public static DockerManifestInspectSettings RemoveManifest_lists(this DockerManifestInspectSettings toolSettings, params string[] manifest_lists)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(manifest_lists);
-            toolSettings.Manifest_listsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerManifestInspectSettings.Manifest_lists"/>.</em></p><p>[MANIFEST_LIST]</p></summary>
-        [Pure]
-        public static DockerManifestInspectSettings RemoveManifest_lists(this DockerManifestInspectSettings toolSettings, IEnumerable<string> manifest_lists)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(manifest_lists);
-            toolSettings.Manifest_listsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.ManifestList = null;
             return toolSettings;
         }
         #endregion
         #region Manifest
-        /// <summary><p><em>Sets <see cref="DockerManifestInspectSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerManifestInspectSettings.Manifest"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestInspectSettings SetManifest(this DockerManifestInspectSettings toolSettings, string manifest)
         {
@@ -29533,12 +28772,12 @@ namespace Nuke.Docker
             toolSettings.Manifest = manifest;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerManifestInspectSettings.Manifest"/>.</em></p><p>MANIFEST</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerManifestInspectSettings.Manifest"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerManifestInspectSettings ResetManifest(this DockerManifestInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Manifest = default(string);
+            toolSettings.Manifest = null;
             return toolSettings;
         }
         #endregion
@@ -29564,7 +28803,7 @@ namespace Nuke.Docker
         public static DockerManifestPushSettings ResetInsecure(this DockerManifestPushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Insecure = default(bool);
+            toolSettings.Insecure = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerManifestPushSettings.Insecure"/>.</em></p><p>Allow push to an insecure registry</p></summary>
@@ -29606,7 +28845,7 @@ namespace Nuke.Docker
         public static DockerManifestPushSettings ResetPurge(this DockerManifestPushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Purge = default(bool);
+            toolSettings.Purge = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerManifestPushSettings.Purge"/>.</em></p><p>Remove the local manifest list after push</p></summary>
@@ -29631,6 +28870,24 @@ namespace Nuke.Docker
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = !toolSettings.Purge;
+            return toolSettings;
+        }
+        #endregion
+        #region ManifestList
+        /// <summary><p><em>Sets <see cref="DockerManifestPushSettings.ManifestList"/>.</em></p><p>MANIFEST_LIST</p></summary>
+        [Pure]
+        public static DockerManifestPushSettings SetManifestList(this DockerManifestPushSettings toolSettings, string manifestList)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ManifestList = manifestList;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerManifestPushSettings.ManifestList"/>.</em></p><p>MANIFEST_LIST</p></summary>
+        [Pure]
+        public static DockerManifestPushSettings ResetManifestList(this DockerManifestPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ManifestList = null;
             return toolSettings;
         }
         #endregion
@@ -29724,7 +28981,7 @@ namespace Nuke.Docker
         public static DockerNetworkConnectSettings ResetIp(this DockerNetworkConnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip = default(string);
+            toolSettings.Ip = null;
             return toolSettings;
         }
         #endregion
@@ -29742,7 +28999,7 @@ namespace Nuke.Docker
         public static DockerNetworkConnectSettings ResetIp6(this DockerNetworkConnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip6 = default(string);
+            toolSettings.Ip6 = null;
             return toolSettings;
         }
         #endregion
@@ -29867,7 +29124,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Network
-        /// <summary><p><em>Sets <see cref="DockerNetworkConnectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkConnectSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkConnectSettings SetNetwork(this DockerNetworkConnectSettings toolSettings, string network)
         {
@@ -29875,17 +29132,17 @@ namespace Nuke.Docker
             toolSettings.Network = network;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNetworkConnectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNetworkConnectSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkConnectSettings ResetNetwork(this DockerNetworkConnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerNetworkConnectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkConnectSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkConnectSettings SetContainer(this DockerNetworkConnectSettings toolSettings, string container)
         {
@@ -29893,12 +29150,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNetworkConnectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNetworkConnectSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkConnectSettings ResetContainer(this DockerNetworkConnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -29924,7 +29181,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetAttachable(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Attachable = default(bool);
+            toolSettings.Attachable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkCreateSettings.Attachable"/>.</em></p><p>Enable manual container attachment</p></summary>
@@ -30008,7 +29265,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetConfigFrom(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ConfigFrom = default(string);
+            toolSettings.ConfigFrom = null;
             return toolSettings;
         }
         #endregion
@@ -30026,7 +29283,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetConfigOnly(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ConfigOnly = default(bool);
+            toolSettings.ConfigOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkCreateSettings.ConfigOnly"/>.</em></p><p>Create a configuration only network</p></summary>
@@ -30068,7 +29325,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetDriver(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Driver = default(string);
+            toolSettings.Driver = null;
             return toolSettings;
         }
         #endregion
@@ -30146,7 +29403,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetIngress(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ingress = default(bool);
+            toolSettings.Ingress = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkCreateSettings.Ingress"/>.</em></p><p>Create swarm routing-mesh network</p></summary>
@@ -30188,7 +29445,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetInternal(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Internal = default(bool);
+            toolSettings.Internal = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkCreateSettings.Internal"/>.</em></p><p>Restrict external access to the network</p></summary>
@@ -30290,7 +29547,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetIpamDriver(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IpamDriver = default(string);
+            toolSettings.IpamDriver = null;
             return toolSettings;
         }
         #endregion
@@ -30350,7 +29607,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetIpv6(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ipv6 = default(bool);
+            toolSettings.Ipv6 = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkCreateSettings.Ipv6"/>.</em></p><p>Enable IPv6 networking</p></summary>
@@ -30494,7 +29751,7 @@ namespace Nuke.Docker
         public static DockerNetworkCreateSettings ResetScope(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Scope = default(string);
+            toolSettings.Scope = null;
             return toolSettings;
         }
         #endregion
@@ -30559,7 +29816,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Network
-        /// <summary><p><em>Sets <see cref="DockerNetworkCreateSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkCreateSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkCreateSettings SetNetwork(this DockerNetworkCreateSettings toolSettings, string network)
         {
@@ -30567,12 +29824,12 @@ namespace Nuke.Docker
             toolSettings.Network = network;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNetworkCreateSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNetworkCreateSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkCreateSettings ResetNetwork(this DockerNetworkCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -30598,7 +29855,7 @@ namespace Nuke.Docker
         public static DockerNetworkDisconnectSettings ResetForce(this DockerNetworkDisconnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkDisconnectSettings.Force"/>.</em></p><p>Force the container to disconnect from a network</p></summary>
@@ -30627,7 +29884,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Network
-        /// <summary><p><em>Sets <see cref="DockerNetworkDisconnectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkDisconnectSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkDisconnectSettings SetNetwork(this DockerNetworkDisconnectSettings toolSettings, string network)
         {
@@ -30635,17 +29892,17 @@ namespace Nuke.Docker
             toolSettings.Network = network;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNetworkDisconnectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNetworkDisconnectSettings.Network"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkDisconnectSettings ResetNetwork(this DockerNetworkDisconnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerNetworkDisconnectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkDisconnectSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkDisconnectSettings SetContainer(this DockerNetworkDisconnectSettings toolSettings, string container)
         {
@@ -30653,12 +29910,12 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNetworkDisconnectSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNetworkDisconnectSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkDisconnectSettings ResetContainer(this DockerNetworkDisconnectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
@@ -30684,7 +29941,7 @@ namespace Nuke.Docker
         public static DockerNetworkInspectSettings ResetFormat(this DockerNetworkInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -30702,7 +29959,7 @@ namespace Nuke.Docker
         public static DockerNetworkInspectSettings ResetVerbose(this DockerNetworkInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = default(bool);
+            toolSettings.Verbose = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkInspectSettings.Verbose"/>.</em></p><p>Verbose output for diagnostics</p></summary>
@@ -30730,26 +29987,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Network
-        /// <summary><p><em>Sets <see cref="DockerNetworkInspectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
-        [Pure]
-        public static DockerNetworkInspectSettings SetNetwork(this DockerNetworkInspectSettings toolSettings, string network)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = network;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerNetworkInspectSettings.Network"/>.</em></p><p>NETWORK</p></summary>
-        [Pure]
-        public static DockerNetworkInspectSettings ResetNetwork(this DockerNetworkInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Networks
-        /// <summary><p><em>Sets <see cref="DockerNetworkInspectSettings.Networks"/> to a new list.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkInspectSettings.Networks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings SetNetworks(this DockerNetworkInspectSettings toolSettings, params string[] networks)
         {
@@ -30757,7 +29996,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal = networks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNetworkInspectSettings.Networks"/> to a new list.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkInspectSettings.Networks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings SetNetworks(this DockerNetworkInspectSettings toolSettings, IEnumerable<string> networks)
         {
@@ -30765,7 +30004,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal = networks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings AddNetworks(this DockerNetworkInspectSettings toolSettings, params string[] networks)
         {
@@ -30773,7 +30012,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.AddRange(networks);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings AddNetworks(this DockerNetworkInspectSettings toolSettings, IEnumerable<string> networks)
         {
@@ -30781,7 +30020,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.AddRange(networks);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings ClearNetworks(this DockerNetworkInspectSettings toolSettings)
         {
@@ -30789,7 +30028,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings RemoveNetworks(this DockerNetworkInspectSettings toolSettings, params string[] networks)
         {
@@ -30798,7 +30037,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNetworkInspectSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkInspectSettings RemoveNetworks(this DockerNetworkInspectSettings toolSettings, IEnumerable<string> networks)
         {
@@ -30830,7 +30069,7 @@ namespace Nuke.Docker
         public static DockerNetworkLsSettings ResetFilter(this DockerNetworkLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -30848,7 +30087,7 @@ namespace Nuke.Docker
         public static DockerNetworkLsSettings ResetFormat(this DockerNetworkLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -30866,7 +30105,7 @@ namespace Nuke.Docker
         public static DockerNetworkLsSettings ResetNoTrunc(this DockerNetworkLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkLsSettings.NoTrunc"/>.</em></p><p>Do not truncate the output</p></summary>
@@ -30908,7 +30147,7 @@ namespace Nuke.Docker
         public static DockerNetworkLsSettings ResetQuiet(this DockerNetworkLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkLsSettings.Quiet"/>.</em></p><p>Only display network IDs</p></summary>
@@ -30958,7 +30197,7 @@ namespace Nuke.Docker
         public static DockerNetworkPruneSettings ResetFilter(this DockerNetworkPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -30976,7 +30215,7 @@ namespace Nuke.Docker
         public static DockerNetworkPruneSettings ResetForce(this DockerNetworkPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNetworkPruneSettings.Force"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -31012,26 +30251,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerNetworkRmSettingsExtensions
     {
-        #region Network
-        /// <summary><p><em>Sets <see cref="DockerNetworkRmSettings.Network"/>.</em></p><p>NETWORK</p></summary>
-        [Pure]
-        public static DockerNetworkRmSettings SetNetwork(this DockerNetworkRmSettings toolSettings, string network)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = network;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerNetworkRmSettings.Network"/>.</em></p><p>NETWORK</p></summary>
-        [Pure]
-        public static DockerNetworkRmSettings ResetNetwork(this DockerNetworkRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Networks
-        /// <summary><p><em>Sets <see cref="DockerNetworkRmSettings.Networks"/> to a new list.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkRmSettings.Networks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings SetNetworks(this DockerNetworkRmSettings toolSettings, params string[] networks)
         {
@@ -31039,7 +30260,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal = networks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNetworkRmSettings.Networks"/> to a new list.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNetworkRmSettings.Networks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings SetNetworks(this DockerNetworkRmSettings toolSettings, IEnumerable<string> networks)
         {
@@ -31047,7 +30268,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal = networks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings AddNetworks(this DockerNetworkRmSettings toolSettings, params string[] networks)
         {
@@ -31055,7 +30276,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.AddRange(networks);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings AddNetworks(this DockerNetworkRmSettings toolSettings, IEnumerable<string> networks)
         {
@@ -31063,7 +30284,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.AddRange(networks);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings ClearNetworks(this DockerNetworkRmSettings toolSettings)
         {
@@ -31071,7 +30292,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings RemoveNetworks(this DockerNetworkRmSettings toolSettings, params string[] networks)
         {
@@ -31080,7 +30301,7 @@ namespace Nuke.Docker
             toolSettings.NetworksInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p>[NETWORK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNetworkRmSettings.Networks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNetworkRmSettings RemoveNetworks(this DockerNetworkRmSettings toolSettings, IEnumerable<string> networks)
         {
@@ -31106,26 +30327,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerNodeDemoteSettingsExtensions
     {
-        #region Node
-        /// <summary><p><em>Sets <see cref="DockerNodeDemoteSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodeDemoteSettings SetNode(this DockerNodeDemoteSettings toolSettings, string node)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = node;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerNodeDemoteSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodeDemoteSettings ResetNode(this DockerNodeDemoteSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Nodes
-        /// <summary><p><em>Sets <see cref="DockerNodeDemoteSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeDemoteSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings SetNodes(this DockerNodeDemoteSettings toolSettings, params string[] nodes)
         {
@@ -31133,7 +30336,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNodeDemoteSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeDemoteSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings SetNodes(this DockerNodeDemoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31141,7 +30344,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings AddNodes(this DockerNodeDemoteSettings toolSettings, params string[] nodes)
         {
@@ -31149,7 +30352,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings AddNodes(this DockerNodeDemoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31157,7 +30360,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings ClearNodes(this DockerNodeDemoteSettings toolSettings)
         {
@@ -31165,7 +30368,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings RemoveNodes(this DockerNodeDemoteSettings toolSettings, params string[] nodes)
         {
@@ -31174,7 +30377,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeDemoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeDemoteSettings RemoveNodes(this DockerNodeDemoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31206,7 +30409,7 @@ namespace Nuke.Docker
         public static DockerNodeInspectSettings ResetFormat(this DockerNodeInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -31224,7 +30427,7 @@ namespace Nuke.Docker
         public static DockerNodeInspectSettings ResetPretty(this DockerNodeInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pretty = default(bool);
+            toolSettings.Pretty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodeInspectSettings.Pretty"/>.</em></p><p>Print the information in a human friendly format</p></summary>
@@ -31252,81 +30455,63 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Self
-        /// <summary><p><em>Sets <see cref="DockerNodeInspectSettings.Self"/>.</em></p><p>self|NODE</p></summary>
+        #region Selves
+        /// <summary><p><em>Sets <see cref="DockerNodeInspectSettings.Selves"/> to a new list.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings SetSelf(this DockerNodeInspectSettings toolSettings, string self)
+        public static DockerNodeInspectSettings SetSelves(this DockerNodeInspectSettings toolSettings, params string[] selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Self = self;
+            toolSettings.SelvesInternal = selves.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNodeInspectSettings.Self"/>.</em></p><p>self|NODE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeInspectSettings.Selves"/> to a new list.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings ResetSelf(this DockerNodeInspectSettings toolSettings)
+        public static DockerNodeInspectSettings SetSelves(this DockerNodeInspectSettings toolSettings, IEnumerable<string> selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Self = default(string);
+            toolSettings.SelvesInternal = selves.ToList();
             return toolSettings;
         }
-        #endregion
-        #region Nodes
-        /// <summary><p><em>Sets <see cref="DockerNodeInspectSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeInspectSettings.Selves"/>.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings SetNodes(this DockerNodeInspectSettings toolSettings, params string[] nodes)
+        public static DockerNodeInspectSettings AddSelves(this DockerNodeInspectSettings toolSettings, params string[] selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NodesInternal = nodes.ToList();
+            toolSettings.SelvesInternal.AddRange(selves);
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNodeInspectSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeInspectSettings.Selves"/>.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings SetNodes(this DockerNodeInspectSettings toolSettings, IEnumerable<string> nodes)
+        public static DockerNodeInspectSettings AddSelves(this DockerNodeInspectSettings toolSettings, IEnumerable<string> selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NodesInternal = nodes.ToList();
+            toolSettings.SelvesInternal.AddRange(selves);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeInspectSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNodeInspectSettings.Selves"/>.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings AddNodes(this DockerNodeInspectSettings toolSettings, params string[] nodes)
+        public static DockerNodeInspectSettings ClearSelves(this DockerNodeInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NodesInternal.AddRange(nodes);
+            toolSettings.SelvesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeInspectSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeInspectSettings.Selves"/>.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings AddNodes(this DockerNodeInspectSettings toolSettings, IEnumerable<string> nodes)
+        public static DockerNodeInspectSettings RemoveSelves(this DockerNodeInspectSettings toolSettings, params string[] selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NodesInternal.AddRange(nodes);
+            var hashSet = new HashSet<string>(selves);
+            toolSettings.SelvesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNodeInspectSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeInspectSettings.Selves"/>.</em></p><p>self|NODE</p></summary>
         [Pure]
-        public static DockerNodeInspectSettings ClearNodes(this DockerNodeInspectSettings toolSettings)
+        public static DockerNodeInspectSettings RemoveSelves(this DockerNodeInspectSettings toolSettings, IEnumerable<string> selves)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NodesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeInspectSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
-        [Pure]
-        public static DockerNodeInspectSettings RemoveNodes(this DockerNodeInspectSettings toolSettings, params string[] nodes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(nodes);
-            toolSettings.NodesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeInspectSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
-        [Pure]
-        public static DockerNodeInspectSettings RemoveNodes(this DockerNodeInspectSettings toolSettings, IEnumerable<string> nodes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(nodes);
-            toolSettings.NodesInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(selves);
+            toolSettings.SelvesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -31352,7 +30537,7 @@ namespace Nuke.Docker
         public static DockerNodeLsSettings ResetFilter(this DockerNodeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -31370,7 +30555,7 @@ namespace Nuke.Docker
         public static DockerNodeLsSettings ResetFormat(this DockerNodeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -31388,7 +30573,7 @@ namespace Nuke.Docker
         public static DockerNodeLsSettings ResetQuiet(this DockerNodeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodeLsSettings.Quiet"/>.</em></p><p>Only display IDs</p></summary>
@@ -31424,26 +30609,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerNodePromoteSettingsExtensions
     {
-        #region Node
-        /// <summary><p><em>Sets <see cref="DockerNodePromoteSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodePromoteSettings SetNode(this DockerNodePromoteSettings toolSettings, string node)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = node;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerNodePromoteSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodePromoteSettings ResetNode(this DockerNodePromoteSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Nodes
-        /// <summary><p><em>Sets <see cref="DockerNodePromoteSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodePromoteSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings SetNodes(this DockerNodePromoteSettings toolSettings, params string[] nodes)
         {
@@ -31451,7 +30618,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNodePromoteSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodePromoteSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings SetNodes(this DockerNodePromoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31459,7 +30626,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings AddNodes(this DockerNodePromoteSettings toolSettings, params string[] nodes)
         {
@@ -31467,7 +30634,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings AddNodes(this DockerNodePromoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31475,7 +30642,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings ClearNodes(this DockerNodePromoteSettings toolSettings)
         {
@@ -31483,7 +30650,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings RemoveNodes(this DockerNodePromoteSettings toolSettings, params string[] nodes)
         {
@@ -31492,7 +30659,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodePromoteSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodePromoteSettings RemoveNodes(this DockerNodePromoteSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31524,7 +30691,7 @@ namespace Nuke.Docker
         public static DockerNodePsSettings ResetFilter(this DockerNodePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -31542,7 +30709,7 @@ namespace Nuke.Docker
         public static DockerNodePsSettings ResetFormat(this DockerNodePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -31560,7 +30727,7 @@ namespace Nuke.Docker
         public static DockerNodePsSettings ResetNoResolve(this DockerNodePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolve = default(bool);
+            toolSettings.NoResolve = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodePsSettings.NoResolve"/>.</em></p><p>Do not map IDs to Names</p></summary>
@@ -31602,7 +30769,7 @@ namespace Nuke.Docker
         public static DockerNodePsSettings ResetNoTrunc(this DockerNodePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodePsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -31644,7 +30811,7 @@ namespace Nuke.Docker
         public static DockerNodePsSettings ResetQuiet(this DockerNodePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodePsSettings.Quiet"/>.</em></p><p>Only display task IDs</p></summary>
@@ -31754,7 +30921,7 @@ namespace Nuke.Docker
         public static DockerNodeRmSettings ResetForce(this DockerNodeRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerNodeRmSettings.Force"/>.</em></p><p>Force remove a node from the swarm</p></summary>
@@ -31782,26 +30949,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Node
-        /// <summary><p><em>Sets <see cref="DockerNodeRmSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodeRmSettings SetNode(this DockerNodeRmSettings toolSettings, string node)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = node;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerNodeRmSettings.Node"/>.</em></p><p>NODE</p></summary>
-        [Pure]
-        public static DockerNodeRmSettings ResetNode(this DockerNodeRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Nodes
-        /// <summary><p><em>Sets <see cref="DockerNodeRmSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeRmSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings SetNodes(this DockerNodeRmSettings toolSettings, params string[] nodes)
         {
@@ -31809,7 +30958,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerNodeRmSettings.Nodes"/> to a new list.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeRmSettings.Nodes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings SetNodes(this DockerNodeRmSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31817,7 +30966,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal = nodes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings AddNodes(this DockerNodeRmSettings toolSettings, params string[] nodes)
         {
@@ -31825,7 +30974,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings AddNodes(this DockerNodeRmSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31833,7 +30982,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.AddRange(nodes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings ClearNodes(this DockerNodeRmSettings toolSettings)
         {
@@ -31841,7 +30990,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings RemoveNodes(this DockerNodeRmSettings toolSettings, params string[] nodes)
         {
@@ -31850,7 +30999,7 @@ namespace Nuke.Docker
             toolSettings.NodesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p>[NODE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerNodeRmSettings.Nodes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeRmSettings RemoveNodes(this DockerNodeRmSettings toolSettings, IEnumerable<string> nodes)
         {
@@ -31882,7 +31031,7 @@ namespace Nuke.Docker
         public static DockerNodeUpdateSettings ResetAvailability(this DockerNodeUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Availability = default(Availability);
+            toolSettings.Availability = null;
             return toolSettings;
         }
         #endregion
@@ -32020,12 +31169,12 @@ namespace Nuke.Docker
         public static DockerNodeUpdateSettings ResetRole(this DockerNodeUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Role = default(Role);
+            toolSettings.Role = null;
             return toolSettings;
         }
         #endregion
         #region Node
-        /// <summary><p><em>Sets <see cref="DockerNodeUpdateSettings.Node"/>.</em></p><p>NODE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerNodeUpdateSettings.Node"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeUpdateSettings SetNode(this DockerNodeUpdateSettings toolSettings, string node)
         {
@@ -32033,12 +31182,12 @@ namespace Nuke.Docker
             toolSettings.Node = node;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerNodeUpdateSettings.Node"/>.</em></p><p>NODE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerNodeUpdateSettings.Node"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerNodeUpdateSettings ResetNode(this DockerNodeUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Node = default(string);
+            toolSettings.Node = null;
             return toolSettings;
         }
         #endregion
@@ -32050,26 +31199,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerPauseSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerPauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerPauseSettings SetContainer(this DockerPauseSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerPauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerPauseSettings ResetContainer(this DockerPauseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerPauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings SetContainers(this DockerPauseSettings toolSettings, params string[] containers)
         {
@@ -32077,7 +31208,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerPauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings SetContainers(this DockerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -32085,7 +31216,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings AddContainers(this DockerPauseSettings toolSettings, params string[] containers)
         {
@@ -32093,7 +31224,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings AddContainers(this DockerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -32101,7 +31232,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings ClearContainers(this DockerPauseSettings toolSettings)
         {
@@ -32109,7 +31240,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings RemoveContainers(this DockerPauseSettings toolSettings, params string[] containers)
         {
@@ -32118,7 +31249,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPauseSettings RemoveContainers(this DockerPauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -32158,7 +31289,7 @@ namespace Nuke.Docker
         public static DockerPluginCreateSettings ResetCompress(this DockerPluginCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Compress = default(bool);
+            toolSettings.Compress = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginCreateSettings.Compress"/>.</em></p><p>Compress the context using gzip</p></summary>
@@ -32187,7 +31318,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginCreateSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginCreateSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginCreateSettings SetPlugin(this DockerPluginCreateSettings toolSettings, string plugin)
         {
@@ -32195,12 +31326,30 @@ namespace Nuke.Docker
             toolSettings.Plugin = plugin;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPluginCreateSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPluginCreateSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginCreateSettings ResetPlugin(this DockerPluginCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
+            toolSettings.Plugin = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PluginDataDir
+        /// <summary><p><em>Sets <see cref="DockerPluginCreateSettings.PluginDataDir"/>.</em></p><p>PLUGIN-DATA-DIR</p></summary>
+        [Pure]
+        public static DockerPluginCreateSettings SetPluginDataDir(this DockerPluginCreateSettings toolSettings, string pluginDataDir)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PluginDataDir = pluginDataDir;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginCreateSettings.PluginDataDir"/>.</em></p><p>PLUGIN-DATA-DIR</p></summary>
+        [Pure]
+        public static DockerPluginCreateSettings ResetPluginDataDir(this DockerPluginCreateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PluginDataDir = null;
             return toolSettings;
         }
         #endregion
@@ -32226,7 +31375,7 @@ namespace Nuke.Docker
         public static DockerPluginDisableSettings ResetForce(this DockerPluginDisableSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginDisableSettings.Force"/>.</em></p><p>Force the disable of an active plugin</p></summary>
@@ -32255,7 +31404,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginDisableSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginDisableSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginDisableSettings SetPlugin(this DockerPluginDisableSettings toolSettings, string plugin)
         {
@@ -32263,12 +31412,12 @@ namespace Nuke.Docker
             toolSettings.Plugin = plugin;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPluginDisableSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPluginDisableSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginDisableSettings ResetPlugin(this DockerPluginDisableSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
+            toolSettings.Plugin = null;
             return toolSettings;
         }
         #endregion
@@ -32294,12 +31443,12 @@ namespace Nuke.Docker
         public static DockerPluginEnableSettings ResetTimeout(this DockerPluginEnableSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Timeout = default(int);
+            toolSettings.Timeout = null;
             return toolSettings;
         }
         #endregion
         #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginEnableSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginEnableSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginEnableSettings SetPlugin(this DockerPluginEnableSettings toolSettings, string plugin)
         {
@@ -32307,12 +31456,12 @@ namespace Nuke.Docker
             toolSettings.Plugin = plugin;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPluginEnableSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPluginEnableSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginEnableSettings ResetPlugin(this DockerPluginEnableSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
+            toolSettings.Plugin = null;
             return toolSettings;
         }
         #endregion
@@ -32338,30 +31487,12 @@ namespace Nuke.Docker
         public static DockerPluginInspectSettings ResetFormat(this DockerPluginInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginInspectSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
-        [Pure]
-        public static DockerPluginInspectSettings SetPlugin(this DockerPluginInspectSettings toolSettings, string plugin)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = plugin;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerPluginInspectSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
-        [Pure]
-        public static DockerPluginInspectSettings ResetPlugin(this DockerPluginInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
         #region Plugins
-        /// <summary><p><em>Sets <see cref="DockerPluginInspectSettings.Plugins"/> to a new list.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginInspectSettings.Plugins"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings SetPlugins(this DockerPluginInspectSettings toolSettings, params string[] plugins)
         {
@@ -32369,7 +31500,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal = plugins.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerPluginInspectSettings.Plugins"/> to a new list.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginInspectSettings.Plugins"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings SetPlugins(this DockerPluginInspectSettings toolSettings, IEnumerable<string> plugins)
         {
@@ -32377,7 +31508,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal = plugins.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings AddPlugins(this DockerPluginInspectSettings toolSettings, params string[] plugins)
         {
@@ -32385,7 +31516,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.AddRange(plugins);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings AddPlugins(this DockerPluginInspectSettings toolSettings, IEnumerable<string> plugins)
         {
@@ -32393,7 +31524,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.AddRange(plugins);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings ClearPlugins(this DockerPluginInspectSettings toolSettings)
         {
@@ -32401,7 +31532,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings RemovePlugins(this DockerPluginInspectSettings toolSettings, params string[] plugins)
         {
@@ -32410,13 +31541,225 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPluginInspectSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginInspectSettings RemovePlugins(this DockerPluginInspectSettings toolSettings, IEnumerable<string> plugins)
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
             toolSettings.PluginsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DockerPluginInstallSettingsExtensions
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerPluginInstallSettingsExtensions
+    {
+        #region Alias
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.Alias"/>.</em></p><p>Local name for plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetAlias(this DockerPluginInstallSettings toolSettings, string alias)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Alias = alias;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginInstallSettings.Alias"/>.</em></p><p>Local name for plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ResetAlias(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Alias = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Disable
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.Disable"/>.</em></p><p>Do not enable the plugin on install</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetDisable(this DockerPluginInstallSettings toolSettings, bool? disable)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disable = disable;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginInstallSettings.Disable"/>.</em></p><p>Do not enable the plugin on install</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ResetDisable(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disable = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerPluginInstallSettings.Disable"/>.</em></p><p>Do not enable the plugin on install</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings EnableDisable(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disable = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerPluginInstallSettings.Disable"/>.</em></p><p>Do not enable the plugin on install</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings DisableDisable(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disable = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerPluginInstallSettings.Disable"/>.</em></p><p>Do not enable the plugin on install</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ToggleDisable(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disable = !toolSettings.Disable;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableContentTrust
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetDisableContentTrust(this DockerPluginInstallSettings toolSettings, bool? disableContentTrust)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableContentTrust = disableContentTrust;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginInstallSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ResetDisableContentTrust(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableContentTrust = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerPluginInstallSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings EnableDisableContentTrust(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableContentTrust = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerPluginInstallSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings DisableDisableContentTrust(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableContentTrust = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerPluginInstallSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ToggleDisableContentTrust(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableContentTrust = !toolSettings.DisableContentTrust;
+            return toolSettings;
+        }
+        #endregion
+        #region GrantAllPermissions
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetGrantAllPermissions(this DockerPluginInstallSettings toolSettings, bool? grantAllPermissions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GrantAllPermissions = grantAllPermissions;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginInstallSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ResetGrantAllPermissions(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GrantAllPermissions = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerPluginInstallSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings EnableGrantAllPermissions(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GrantAllPermissions = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerPluginInstallSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings DisableGrantAllPermissions(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GrantAllPermissions = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerPluginInstallSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ToggleGrantAllPermissions(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GrantAllPermissions = !toolSettings.GrantAllPermissions;
+            return toolSettings;
+        }
+        #endregion
+        #region Plugin
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.Plugin"/>.</em></p><p></p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetPlugin(this DockerPluginInstallSettings toolSettings, string plugin)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = plugin;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginInstallSettings.Plugin"/>.</em></p><p></p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ResetPlugin(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = null;
+            return toolSettings;
+        }
+        #endregion
+        #region KeyValues
+        /// <summary><p><em>Sets <see cref="DockerPluginInstallSettings.KeyValues"/> to a new dictionary.</em></p><p>[KEY=VALUE...]</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetKeyValues(this DockerPluginInstallSettings toolSettings, IDictionary<string, string> keyValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal = keyValues.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DockerPluginInstallSettings.KeyValues"/>.</em></p><p>[KEY=VALUE...]</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings ClearKeyValues(this DockerPluginInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="DockerPluginInstallSettings.KeyValues"/>.</em></p><p>[KEY=VALUE...]</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings AddKeyValue(this DockerPluginInstallSettings toolSettings, string keyValueKey, string keyValueValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Add(keyValueKey, keyValueValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="DockerPluginInstallSettings.KeyValues"/>.</em></p><p>[KEY=VALUE...]</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings RemoveKeyValue(this DockerPluginInstallSettings toolSettings, string keyValueKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Remove(keyValueKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="DockerPluginInstallSettings.KeyValues"/>.</em></p><p>[KEY=VALUE...]</p></summary>
+        [Pure]
+        public static DockerPluginInstallSettings SetKeyValue(this DockerPluginInstallSettings toolSettings, string keyValueKey, string keyValueValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal[keyValueKey] = keyValueValue;
             return toolSettings;
         }
         #endregion
@@ -32442,7 +31785,7 @@ namespace Nuke.Docker
         public static DockerPluginLsSettings ResetFilter(this DockerPluginLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -32460,7 +31803,7 @@ namespace Nuke.Docker
         public static DockerPluginLsSettings ResetFormat(this DockerPluginLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -32478,7 +31821,7 @@ namespace Nuke.Docker
         public static DockerPluginLsSettings ResetNoTrunc(this DockerPluginLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginLsSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -32520,7 +31863,7 @@ namespace Nuke.Docker
         public static DockerPluginLsSettings ResetQuiet(this DockerPluginLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginLsSettings.Quiet"/>.</em></p><p>Only display plugin IDs</p></summary>
@@ -32570,7 +31913,7 @@ namespace Nuke.Docker
         public static DockerPluginPushSettings ResetDisableContentTrust(this DockerPluginPushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginPushSettings.DisableContentTrust"/>.</em></p><p>Skip image signing</p></summary>
@@ -32598,6 +31941,24 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
+        #region Plugin
+        /// <summary><p><em>Sets <see cref="DockerPluginPushSettings.Plugin"/>.</em></p><p>PLUGIN[:TAG]</p></summary>
+        [Pure]
+        public static DockerPluginPushSettings SetPlugin(this DockerPluginPushSettings toolSettings, string plugin)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = plugin;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginPushSettings.Plugin"/>.</em></p><p>PLUGIN[:TAG]</p></summary>
+        [Pure]
+        public static DockerPluginPushSettings ResetPlugin(this DockerPluginPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerPluginRmSettingsExtensions
@@ -32620,7 +31981,7 @@ namespace Nuke.Docker
         public static DockerPluginRmSettings ResetForce(this DockerPluginRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginRmSettings.Force"/>.</em></p><p>Force the removal of an active plugin</p></summary>
@@ -32648,26 +32009,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginRmSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
-        [Pure]
-        public static DockerPluginRmSettings SetPlugin(this DockerPluginRmSettings toolSettings, string plugin)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = plugin;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerPluginRmSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
-        [Pure]
-        public static DockerPluginRmSettings ResetPlugin(this DockerPluginRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Plugins
-        /// <summary><p><em>Sets <see cref="DockerPluginRmSettings.Plugins"/> to a new list.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginRmSettings.Plugins"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings SetPlugins(this DockerPluginRmSettings toolSettings, params string[] plugins)
         {
@@ -32675,7 +32018,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal = plugins.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerPluginRmSettings.Plugins"/> to a new list.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginRmSettings.Plugins"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings SetPlugins(this DockerPluginRmSettings toolSettings, IEnumerable<string> plugins)
         {
@@ -32683,7 +32026,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal = plugins.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings AddPlugins(this DockerPluginRmSettings toolSettings, params string[] plugins)
         {
@@ -32691,7 +32034,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.AddRange(plugins);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings AddPlugins(this DockerPluginRmSettings toolSettings, IEnumerable<string> plugins)
         {
@@ -32699,7 +32042,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.AddRange(plugins);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings ClearPlugins(this DockerPluginRmSettings toolSettings)
         {
@@ -32707,7 +32050,7 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings RemovePlugins(this DockerPluginRmSettings toolSettings, params string[] plugins)
         {
@@ -32716,13 +32059,81 @@ namespace Nuke.Docker
             toolSettings.PluginsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p>[PLUGIN...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerPluginRmSettings.Plugins"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginRmSettings RemovePlugins(this DockerPluginRmSettings toolSettings, IEnumerable<string> plugins)
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
             toolSettings.PluginsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DockerPluginSetSettingsExtensions
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerPluginSetSettingsExtensions
+    {
+        #region Plugin
+        /// <summary><p><em>Sets <see cref="DockerPluginSetSettings.Plugin"/>.</em></p><p></p></summary>
+        [Pure]
+        public static DockerPluginSetSettings SetPlugin(this DockerPluginSetSettings toolSettings, string plugin)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = plugin;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPluginSetSettings.Plugin"/>.</em></p><p></p></summary>
+        [Pure]
+        public static DockerPluginSetSettings ResetPlugin(this DockerPluginSetSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Plugin = null;
+            return toolSettings;
+        }
+        #endregion
+        #region KeyValues
+        /// <summary><p><em>Sets <see cref="DockerPluginSetSettings.KeyValues"/> to a new dictionary.</em></p><p>KEY=VALUE</p></summary>
+        [Pure]
+        public static DockerPluginSetSettings SetKeyValues(this DockerPluginSetSettings toolSettings, IDictionary<string, string> keyValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal = keyValues.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DockerPluginSetSettings.KeyValues"/>.</em></p><p>KEY=VALUE</p></summary>
+        [Pure]
+        public static DockerPluginSetSettings ClearKeyValues(this DockerPluginSetSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="DockerPluginSetSettings.KeyValues"/>.</em></p><p>KEY=VALUE</p></summary>
+        [Pure]
+        public static DockerPluginSetSettings AddKeyValue(this DockerPluginSetSettings toolSettings, string keyValueKey, string keyValueValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Add(keyValueKey, keyValueValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="DockerPluginSetSettings.KeyValues"/>.</em></p><p>KEY=VALUE</p></summary>
+        [Pure]
+        public static DockerPluginSetSettings RemoveKeyValue(this DockerPluginSetSettings toolSettings, string keyValueKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal.Remove(keyValueKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="DockerPluginSetSettings.KeyValues"/>.</em></p><p>KEY=VALUE</p></summary>
+        [Pure]
+        public static DockerPluginSetSettings SetKeyValue(this DockerPluginSetSettings toolSettings, string keyValueKey, string keyValueValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeyValuesInternal[keyValueKey] = keyValueValue;
             return toolSettings;
         }
         #endregion
@@ -32748,7 +32159,7 @@ namespace Nuke.Docker
         public static DockerPluginUpgradeSettings ResetDisableContentTrust(this DockerPluginUpgradeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginUpgradeSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -32790,7 +32201,7 @@ namespace Nuke.Docker
         public static DockerPluginUpgradeSettings ResetGrantAllPermissions(this DockerPluginUpgradeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GrantAllPermissions = default(bool);
+            toolSettings.GrantAllPermissions = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginUpgradeSettings.GrantAllPermissions"/>.</em></p><p>Grant all permissions necessary to run the plugin</p></summary>
@@ -32832,7 +32243,7 @@ namespace Nuke.Docker
         public static DockerPluginUpgradeSettings ResetSkipRemoteCheck(this DockerPluginUpgradeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SkipRemoteCheck = default(bool);
+            toolSettings.SkipRemoteCheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPluginUpgradeSettings.SkipRemoteCheck"/>.</em></p><p>Do not check if specified remote plugin matches existing plugin image</p></summary>
@@ -32861,7 +32272,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Plugin
-        /// <summary><p><em>Sets <see cref="DockerPluginUpgradeSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPluginUpgradeSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginUpgradeSettings SetPlugin(this DockerPluginUpgradeSettings toolSettings, string plugin)
         {
@@ -32869,72 +32280,30 @@ namespace Nuke.Docker
             toolSettings.Plugin = plugin;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPluginUpgradeSettings.Plugin"/>.</em></p><p>PLUGIN</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPluginUpgradeSettings.Plugin"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPluginUpgradeSettings ResetPlugin(this DockerPluginUpgradeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Plugin = default(string);
+            toolSettings.Plugin = null;
             return toolSettings;
         }
         #endregion
-        #region Remotes
-        /// <summary><p><em>Sets <see cref="DockerPluginUpgradeSettings.Remotes"/> to a new list.</em></p><p>[REMOTE]</p></summary>
+        #region Remote
+        /// <summary><p><em>Sets <see cref="DockerPluginUpgradeSettings.Remote"/>.</em></p><p>[REMOTE]</p></summary>
         [Pure]
-        public static DockerPluginUpgradeSettings SetRemotes(this DockerPluginUpgradeSettings toolSettings, params string[] remotes)
+        public static DockerPluginUpgradeSettings SetRemote(this DockerPluginUpgradeSettings toolSettings, string remote)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RemotesInternal = remotes.ToList();
+            toolSettings.Remote = remote;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerPluginUpgradeSettings.Remotes"/> to a new list.</em></p><p>[REMOTE]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPluginUpgradeSettings.Remote"/>.</em></p><p>[REMOTE]</p></summary>
         [Pure]
-        public static DockerPluginUpgradeSettings SetRemotes(this DockerPluginUpgradeSettings toolSettings, IEnumerable<string> remotes)
+        public static DockerPluginUpgradeSettings ResetRemote(this DockerPluginUpgradeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RemotesInternal = remotes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginUpgradeSettings.Remotes"/>.</em></p><p>[REMOTE]</p></summary>
-        [Pure]
-        public static DockerPluginUpgradeSettings AddRemotes(this DockerPluginUpgradeSettings toolSettings, params string[] remotes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RemotesInternal.AddRange(remotes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerPluginUpgradeSettings.Remotes"/>.</em></p><p>[REMOTE]</p></summary>
-        [Pure]
-        public static DockerPluginUpgradeSettings AddRemotes(this DockerPluginUpgradeSettings toolSettings, IEnumerable<string> remotes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RemotesInternal.AddRange(remotes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerPluginUpgradeSettings.Remotes"/>.</em></p><p>[REMOTE]</p></summary>
-        [Pure]
-        public static DockerPluginUpgradeSettings ClearRemotes(this DockerPluginUpgradeSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RemotesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginUpgradeSettings.Remotes"/>.</em></p><p>[REMOTE]</p></summary>
-        [Pure]
-        public static DockerPluginUpgradeSettings RemoveRemotes(this DockerPluginUpgradeSettings toolSettings, params string[] remotes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(remotes);
-            toolSettings.RemotesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerPluginUpgradeSettings.Remotes"/>.</em></p><p>[REMOTE]</p></summary>
-        [Pure]
-        public static DockerPluginUpgradeSettings RemoveRemotes(this DockerPluginUpgradeSettings toolSettings, IEnumerable<string> remotes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(remotes);
-            toolSettings.RemotesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Remote = null;
             return toolSettings;
         }
         #endregion
@@ -32947,7 +32316,7 @@ namespace Nuke.Docker
     public static partial class DockerPortSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerPortSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerPortSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPortSettings SetContainer(this DockerPortSettings toolSettings, string container)
         {
@@ -32955,72 +32324,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPortSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPortSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerPortSettings ResetContainer(this DockerPortSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Private_portprotos
-        /// <summary><p><em>Sets <see cref="DockerPortSettings.Private_portprotos"/> to a new list.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
+        #region PrivatePort
+        /// <summary><p><em>Sets <see cref="DockerPortSettings.PrivatePort"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
         [Pure]
-        public static DockerPortSettings SetPrivate_portprotos(this DockerPortSettings toolSettings, params string[] private_portprotos)
+        public static DockerPortSettings SetPrivatePort(this DockerPortSettings toolSettings, string privatePort)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal = private_portprotos.ToList();
+            toolSettings.PrivatePort = privatePort;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerPortSettings.Private_portprotos"/> to a new list.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPortSettings.PrivatePort"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
         [Pure]
-        public static DockerPortSettings SetPrivate_portprotos(this DockerPortSettings toolSettings, IEnumerable<string> private_portprotos)
+        public static DockerPortSettings ResetPrivatePort(this DockerPortSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal = private_portprotos.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerPortSettings AddPrivate_portprotos(this DockerPortSettings toolSettings, params string[] private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.AddRange(private_portprotos);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerPortSettings AddPrivate_portprotos(this DockerPortSettings toolSettings, IEnumerable<string> private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.AddRange(private_portprotos);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerPortSettings ClearPrivate_portprotos(this DockerPortSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Private_portprotosInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerPortSettings RemovePrivate_portprotos(this DockerPortSettings toolSettings, params string[] private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(private_portprotos);
-            toolSettings.Private_portprotosInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerPortSettings.Private_portprotos"/>.</em></p><p>[PRIVATE_PORT[/PROTO]]</p></summary>
-        [Pure]
-        public static DockerPortSettings RemovePrivate_portprotos(this DockerPortSettings toolSettings, IEnumerable<string> private_portprotos)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(private_portprotos);
-            toolSettings.Private_portprotosInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.PrivatePort = null;
             return toolSettings;
         }
         #endregion
@@ -33046,7 +32373,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetAll(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPsSettings.All"/>.</em></p><p>Show all containers (default shows just running)</p></summary>
@@ -33088,7 +32415,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetFilter(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -33106,7 +32433,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetFormat(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -33124,7 +32451,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetLast(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Last = default(int);
+            toolSettings.Last = null;
             return toolSettings;
         }
         #endregion
@@ -33142,7 +32469,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetLatest(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Latest = default(bool);
+            toolSettings.Latest = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPsSettings.Latest"/>.</em></p><p>Show the latest created container (includes all states)</p></summary>
@@ -33184,7 +32511,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetNoTrunc(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPsSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -33226,7 +32553,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetQuiet(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPsSettings.Quiet"/>.</em></p><p>Only display numeric IDs</p></summary>
@@ -33268,7 +32595,7 @@ namespace Nuke.Docker
         public static DockerPsSettings ResetSize(this DockerPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Size = default(bool);
+            toolSettings.Size = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPsSettings.Size"/>.</em></p><p>Display total file sizes</p></summary>
@@ -33318,7 +32645,7 @@ namespace Nuke.Docker
         public static DockerPullSettings ResetAllTags(this DockerPullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllTags = default(bool);
+            toolSettings.AllTags = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPullSettings.AllTags"/>.</em></p><p>Download all tagged images in the repository</p></summary>
@@ -33360,7 +32687,7 @@ namespace Nuke.Docker
         public static DockerPullSettings ResetDisableContentTrust(this DockerPullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPullSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -33402,25 +32729,25 @@ namespace Nuke.Docker
         public static DockerPullSettings ResetPlatform(this DockerPullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
-        #region Nametag
-        /// <summary><p><em>Sets <see cref="DockerPullSettings.Nametag"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
+        #region Name
+        /// <summary><p><em>Sets <see cref="DockerPullSettings.Name"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
         [Pure]
-        public static DockerPullSettings SetNametag(this DockerPullSettings toolSettings, string nametag)
+        public static DockerPullSettings SetName(this DockerPullSettings toolSettings, string name)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Nametag = nametag;
+            toolSettings.Name = name;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerPullSettings.Nametag"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerPullSettings.Name"/>.</em></p><p>NAME[:TAG|@DIGEST]</p></summary>
         [Pure]
-        public static DockerPullSettings ResetNametag(this DockerPullSettings toolSettings)
+        public static DockerPullSettings ResetName(this DockerPullSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Nametag = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -33446,7 +32773,7 @@ namespace Nuke.Docker
         public static DockerPushSettings ResetDisableContentTrust(this DockerPushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerPushSettings.DisableContentTrust"/>.</em></p><p>Skip image signing</p></summary>
@@ -33474,6 +32801,24 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="DockerPushSettings.Name"/>.</em></p><p>NAME[:TAG]</p></summary>
+        [Pure]
+        public static DockerPushSettings SetName(this DockerPushSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerPushSettings.Name"/>.</em></p><p>NAME[:TAG]</p></summary>
+        [Pure]
+        public static DockerPushSettings ResetName(this DockerPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerRenameSettingsExtensions
@@ -33483,7 +32828,7 @@ namespace Nuke.Docker
     public static partial class DockerRenameSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerRenameSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRenameSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRenameSettings SetContainer(this DockerRenameSettings toolSettings, string container)
         {
@@ -33491,12 +32836,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerRenameSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerRenameSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRenameSettings ResetContainer(this DockerRenameSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NewName
+        /// <summary><p><em>Sets <see cref="DockerRenameSettings.NewName"/>.</em></p><p>NEW_NAME</p></summary>
+        [Pure]
+        public static DockerRenameSettings SetNewName(this DockerRenameSettings toolSettings, string newName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NewName = newName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerRenameSettings.NewName"/>.</em></p><p>NEW_NAME</p></summary>
+        [Pure]
+        public static DockerRenameSettings ResetNewName(this DockerRenameSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NewName = null;
             return toolSettings;
         }
         #endregion
@@ -33522,30 +32885,12 @@ namespace Nuke.Docker
         public static DockerRestartSettings ResetTime(this DockerRestartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Time = default(int);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerRestartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerRestartSettings SetContainer(this DockerRestartSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerRestartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerRestartSettings ResetContainer(this DockerRestartSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Time = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerRestartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRestartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings SetContainers(this DockerRestartSettings toolSettings, params string[] containers)
         {
@@ -33553,7 +32898,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerRestartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRestartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings SetContainers(this DockerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33561,7 +32906,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings AddContainers(this DockerRestartSettings toolSettings, params string[] containers)
         {
@@ -33569,7 +32914,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings AddContainers(this DockerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33577,7 +32922,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings ClearContainers(this DockerRestartSettings toolSettings)
         {
@@ -33585,7 +32930,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings RemoveContainers(this DockerRestartSettings toolSettings, params string[] containers)
         {
@@ -33594,7 +32939,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRestartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRestartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRestartSettings RemoveContainers(this DockerRestartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33626,7 +32971,7 @@ namespace Nuke.Docker
         public static DockerRmSettings ResetForce(this DockerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRmSettings.Force"/>.</em></p><p>Force the removal of a running container (uses SIGKILL)</p></summary>
@@ -33668,7 +33013,7 @@ namespace Nuke.Docker
         public static DockerRmSettings ResetLink(this DockerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Link = default(bool);
+            toolSettings.Link = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRmSettings.Link"/>.</em></p><p>Remove the specified link</p></summary>
@@ -33710,7 +33055,7 @@ namespace Nuke.Docker
         public static DockerRmSettings ResetVolumes(this DockerRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Volumes = default(bool);
+            toolSettings.Volumes = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRmSettings.Volumes"/>.</em></p><p>Remove the volumes associated with the container</p></summary>
@@ -33738,26 +33083,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerRmSettings SetContainer(this DockerRmSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerRmSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerRmSettings ResetContainer(this DockerRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerRmSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRmSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings SetContainers(this DockerRmSettings toolSettings, params string[] containers)
         {
@@ -33765,7 +33092,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerRmSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRmSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings SetContainers(this DockerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33773,7 +33100,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings AddContainers(this DockerRmSettings toolSettings, params string[] containers)
         {
@@ -33781,7 +33108,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings AddContainers(this DockerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33789,7 +33116,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings ClearContainers(this DockerRmSettings toolSettings)
         {
@@ -33797,7 +33124,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings RemoveContainers(this DockerRmSettings toolSettings, params string[] containers)
         {
@@ -33806,7 +33133,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRmSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRmSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmSettings RemoveContainers(this DockerRmSettings toolSettings, IEnumerable<string> containers)
         {
@@ -33838,7 +33165,7 @@ namespace Nuke.Docker
         public static DockerRmiSettings ResetForce(this DockerRmiSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRmiSettings.Force"/>.</em></p><p>Force removal of the image</p></summary>
@@ -33880,7 +33207,7 @@ namespace Nuke.Docker
         public static DockerRmiSettings ResetNoPrune(this DockerRmiSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoPrune = default(bool);
+            toolSettings.NoPrune = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRmiSettings.NoPrune"/>.</em></p><p>Do not delete untagged parents</p></summary>
@@ -33908,26 +33235,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Image
-        /// <summary><p><em>Sets <see cref="DockerRmiSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerRmiSettings SetImage(this DockerRmiSettings toolSettings, string image)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = image;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerRmiSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerRmiSettings ResetImage(this DockerRmiSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Images
-        /// <summary><p><em>Sets <see cref="DockerRmiSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRmiSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings SetImages(this DockerRmiSettings toolSettings, params string[] images)
         {
@@ -33935,7 +33244,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerRmiSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRmiSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings SetImages(this DockerRmiSettings toolSettings, IEnumerable<string> images)
         {
@@ -33943,7 +33252,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRmiSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRmiSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings AddImages(this DockerRmiSettings toolSettings, params string[] images)
         {
@@ -33951,7 +33260,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerRmiSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerRmiSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings AddImages(this DockerRmiSettings toolSettings, IEnumerable<string> images)
         {
@@ -33959,7 +33268,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerRmiSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerRmiSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings ClearImages(this DockerRmiSettings toolSettings)
         {
@@ -33967,7 +33276,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRmiSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRmiSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings RemoveImages(this DockerRmiSettings toolSettings, params string[] images)
         {
@@ -33976,7 +33285,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerRmiSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerRmiSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRmiSettings RemoveImages(this DockerRmiSettings toolSettings, IEnumerable<string> images)
         {
@@ -34128,7 +33437,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetBlkioWeight(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
@@ -34326,7 +33635,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCgroupParent(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CgroupParent = default(string);
+            toolSettings.CgroupParent = null;
             return toolSettings;
         }
         #endregion
@@ -34344,14 +33653,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCidfile(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cidfile = default(string);
+            toolSettings.Cidfile = null;
             return toolSettings;
         }
         #endregion
         #region CpuCount
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuCount"/>.</em></p><p>CPU count (Windows only)</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuCount(this DockerRunSettings toolSettings, long cpuCount)
+        public static DockerRunSettings SetCpuCount(this DockerRunSettings toolSettings, long? cpuCount)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuCount = cpuCount;
@@ -34362,14 +33671,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuCount(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuCount = default(long);
+            toolSettings.CpuCount = null;
             return toolSettings;
         }
         #endregion
         #region CpuPercent
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuPercent"/>.</em></p><p>CPU percent (Windows only)</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuPercent(this DockerRunSettings toolSettings, long cpuPercent)
+        public static DockerRunSettings SetCpuPercent(this DockerRunSettings toolSettings, long? cpuPercent)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = cpuPercent;
@@ -34380,14 +33689,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuPercent(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPercent = default(long);
+            toolSettings.CpuPercent = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuPeriod(this DockerRunSettings toolSettings, long cpuPeriod)
+        public static DockerRunSettings SetCpuPeriod(this DockerRunSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -34398,14 +33707,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuPeriod(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuQuota(this DockerRunSettings toolSettings, long cpuQuota)
+        public static DockerRunSettings SetCpuQuota(this DockerRunSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -34416,14 +33725,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuQuota(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuRtPeriod"/>.</em></p><p>Limit CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuRtPeriod(this DockerRunSettings toolSettings, long cpuRtPeriod)
+        public static DockerRunSettings SetCpuRtPeriod(this DockerRunSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -34434,14 +33743,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuRtPeriod(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuRtRuntime"/>.</em></p><p>Limit CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuRtRuntime(this DockerRunSettings toolSettings, long cpuRtRuntime)
+        public static DockerRunSettings SetCpuRtRuntime(this DockerRunSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -34452,14 +33761,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuRtRuntime(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerRunSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpuShares(this DockerRunSettings toolSettings, long cpuShares)
+        public static DockerRunSettings SetCpuShares(this DockerRunSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -34470,14 +33779,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpuShares(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerRunSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerRunSettings SetCpus(this DockerRunSettings toolSettings, decimal cpus)
+        public static DockerRunSettings SetCpus(this DockerRunSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -34488,7 +33797,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpus(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -34506,7 +33815,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpusetCpus(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -34524,7 +33833,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetCpusetMems(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
@@ -34542,7 +33851,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetDetach(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Detach"/>.</em></p><p>Run container in background and print container ID</p></summary>
@@ -34584,7 +33893,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetDetachKeys(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -34962,7 +34271,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetDisableContentTrust(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableContentTrust = default(bool);
+            toolSettings.DisableContentTrust = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.DisableContentTrust"/>.</em></p><p>Skip image verification</p></summary>
@@ -35244,7 +34553,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetEntrypoint(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -35502,7 +34811,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHealthCmd(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -35520,7 +34829,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHealthInterval(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -35538,7 +34847,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHealthRetries(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -35556,7 +34865,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHealthStartPeriod(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -35574,7 +34883,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHealthTimeout(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -35592,7 +34901,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHelp(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Help = default(bool);
+            toolSettings.Help = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Help"/>.</em></p><p>Print usage</p></summary>
@@ -35634,7 +34943,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetHostname(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -35652,7 +34961,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetInit(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Init = default(bool);
+            toolSettings.Init = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Init"/>.</em></p><p>Run an init inside the container that forwards signals and reaps processes</p></summary>
@@ -35694,7 +35003,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetInteractive(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Interactive"/>.</em></p><p>Keep STDIN open even if not attached</p></summary>
@@ -35725,7 +35034,7 @@ namespace Nuke.Docker
         #region IoMaxbandwidth
         /// <summary><p><em>Sets <see cref="DockerRunSettings.IoMaxbandwidth"/>.</em></p><p>Maximum IO bandwidth limit for the system drive (Windows only)</p></summary>
         [Pure]
-        public static DockerRunSettings SetIoMaxbandwidth(this DockerRunSettings toolSettings, long ioMaxbandwidth)
+        public static DockerRunSettings SetIoMaxbandwidth(this DockerRunSettings toolSettings, long? ioMaxbandwidth)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IoMaxbandwidth = ioMaxbandwidth;
@@ -35736,7 +35045,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIoMaxbandwidth(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxbandwidth = default(long);
+            toolSettings.IoMaxbandwidth = null;
             return toolSettings;
         }
         #endregion
@@ -35754,7 +35063,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIoMaxiops(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IoMaxiops = default(int);
+            toolSettings.IoMaxiops = null;
             return toolSettings;
         }
         #endregion
@@ -35772,7 +35081,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIp(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip = default(string);
+            toolSettings.Ip = null;
             return toolSettings;
         }
         #endregion
@@ -35790,7 +35099,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIp6(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ip6 = default(string);
+            toolSettings.Ip6 = null;
             return toolSettings;
         }
         #endregion
@@ -35808,7 +35117,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIpc(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ipc = default(string);
+            toolSettings.Ipc = null;
             return toolSettings;
         }
         #endregion
@@ -35826,14 +35135,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetIsolation(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerRunSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerRunSettings SetKernelMemory(this DockerRunSettings toolSettings, long kernelMemory)
+        public static DockerRunSettings SetKernelMemory(this DockerRunSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -35844,7 +35153,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetKernelMemory(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
@@ -36102,7 +35411,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetLogDriver(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -36180,14 +35489,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMacAddress(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MacAddress = default(string);
+            toolSettings.MacAddress = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerRunSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerRunSettings SetMemory(this DockerRunSettings toolSettings, long memory)
+        public static DockerRunSettings SetMemory(this DockerRunSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -36198,14 +35507,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMemory(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerRunSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerRunSettings SetMemoryReservation(this DockerRunSettings toolSettings, long memoryReservation)
+        public static DockerRunSettings SetMemoryReservation(this DockerRunSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -36216,14 +35525,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMemoryReservation(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerRunSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerRunSettings SetMemorySwap(this DockerRunSettings toolSettings, long memorySwap)
+        public static DockerRunSettings SetMemorySwap(this DockerRunSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -36234,14 +35543,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMemorySwap(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwappiness
         /// <summary><p><em>Sets <see cref="DockerRunSettings.MemorySwappiness"/>.</em></p><p>Tune container memory swappiness (0 to 100)</p></summary>
         [Pure]
-        public static DockerRunSettings SetMemorySwappiness(this DockerRunSettings toolSettings, long memorySwappiness)
+        public static DockerRunSettings SetMemorySwappiness(this DockerRunSettings toolSettings, long? memorySwappiness)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwappiness = memorySwappiness;
@@ -36252,7 +35561,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMemorySwappiness(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwappiness = default(long);
+            toolSettings.MemorySwappiness = null;
             return toolSettings;
         }
         #endregion
@@ -36270,7 +35579,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetMount(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mount = default(string);
+            toolSettings.Mount = null;
             return toolSettings;
         }
         #endregion
@@ -36288,7 +35597,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetName(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -36306,7 +35615,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetNet(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Net = default(string);
+            toolSettings.Net = null;
             return toolSettings;
         }
         #endregion
@@ -36384,7 +35693,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetNetwork(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -36462,7 +35771,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetNoHealthcheck(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -36504,7 +35813,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetOomKillDisable(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomKillDisable = default(bool);
+            toolSettings.OomKillDisable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.OomKillDisable"/>.</em></p><p>Disable OOM Killer</p></summary>
@@ -36546,7 +35855,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetOomScoreAdj(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OomScoreAdj = default(int);
+            toolSettings.OomScoreAdj = null;
             return toolSettings;
         }
         #endregion
@@ -36564,14 +35873,14 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetPid(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pid = default(string);
+            toolSettings.Pid = null;
             return toolSettings;
         }
         #endregion
         #region PidsLimit
         /// <summary><p><em>Sets <see cref="DockerRunSettings.PidsLimit"/>.</em></p><p>Tune container pids limit (set -1 for unlimited)</p></summary>
         [Pure]
-        public static DockerRunSettings SetPidsLimit(this DockerRunSettings toolSettings, long pidsLimit)
+        public static DockerRunSettings SetPidsLimit(this DockerRunSettings toolSettings, long? pidsLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PidsLimit = pidsLimit;
@@ -36582,7 +35891,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetPidsLimit(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PidsLimit = default(long);
+            toolSettings.PidsLimit = null;
             return toolSettings;
         }
         #endregion
@@ -36600,7 +35909,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetPlatform(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Platform = default(string);
+            toolSettings.Platform = null;
             return toolSettings;
         }
         #endregion
@@ -36618,7 +35927,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetPrivileged(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Privileged = default(bool);
+            toolSettings.Privileged = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Privileged"/>.</em></p><p>Give extended privileges to this container</p></summary>
@@ -36720,7 +36029,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetPublishAll(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishAll = default(bool);
+            toolSettings.PublishAll = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.PublishAll"/>.</em></p><p>Publish all exposed ports to random ports</p></summary>
@@ -36762,7 +36071,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetReadOnly(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -36804,7 +36113,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetRestart(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
@@ -36822,7 +36131,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetRm(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rm = default(bool);
+            toolSettings.Rm = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Rm"/>.</em></p><p>Automatically remove the container when it exits</p></summary>
@@ -36864,7 +36173,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetRuntime(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = default(string);
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -36931,7 +36240,7 @@ namespace Nuke.Docker
         #region ShmSize
         /// <summary><p><em>Sets <see cref="DockerRunSettings.ShmSize"/>.</em></p><p>Size of /dev/shm</p></summary>
         [Pure]
-        public static DockerRunSettings SetShmSize(this DockerRunSettings toolSettings, long shmSize)
+        public static DockerRunSettings SetShmSize(this DockerRunSettings toolSettings, long? shmSize)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShmSize = shmSize;
@@ -36942,7 +36251,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetShmSize(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ShmSize = default(long);
+            toolSettings.ShmSize = null;
             return toolSettings;
         }
         #endregion
@@ -36960,7 +36269,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetSigProxy(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SigProxy = default(bool);
+            toolSettings.SigProxy = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.SigProxy"/>.</em></p><p>Proxy received signals to the process</p></summary>
@@ -37002,7 +36311,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetStopSignal(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -37020,7 +36329,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetStopTimeout(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopTimeout = default(int);
+            toolSettings.StopTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -37200,7 +36509,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetTty(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerRunSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -37242,7 +36551,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetUlimit(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ulimit = default(string);
+            toolSettings.Ulimit = null;
             return toolSettings;
         }
         #endregion
@@ -37260,7 +36569,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetUser(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -37278,7 +36587,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetUserns(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Userns = default(string);
+            toolSettings.Userns = null;
             return toolSettings;
         }
         #endregion
@@ -37296,7 +36605,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetUts(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Uts = default(string);
+            toolSettings.Uts = null;
             return toolSettings;
         }
         #endregion
@@ -37374,7 +36683,7 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetVolumeDriver(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumeDriver = default(string);
+            toolSettings.VolumeDriver = null;
             return toolSettings;
         }
         #endregion
@@ -37452,12 +36761,12 @@ namespace Nuke.Docker
         public static DockerRunSettings ResetWorkdir(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerRunSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerRunSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRunSettings SetImage(this DockerRunSettings toolSettings, string image)
         {
@@ -37465,72 +36774,30 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerRunSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerRunSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerRunSettings ResetImage(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
-        #region Commands
-        /// <summary><p><em>Sets <see cref="DockerRunSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        #region Command
+        /// <summary><p><em>Sets <see cref="DockerRunSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerRunSettings SetCommands(this DockerRunSettings toolSettings, params string[] commands)
+        public static DockerRunSettings SetCommand(this DockerRunSettings toolSettings, string command)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
+            toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerRunSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerRunSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerRunSettings SetCommands(this DockerRunSettings toolSettings, IEnumerable<string> commands)
+        public static DockerRunSettings ResetCommand(this DockerRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerRunSettings AddCommands(this DockerRunSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerRunSettings AddCommands(this DockerRunSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerRunSettings ClearCommands(this DockerRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerRunSettings RemoveCommands(this DockerRunSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerRunSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerRunSettings RemoveCommands(this DockerRunSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -37616,30 +36883,12 @@ namespace Nuke.Docker
         public static DockerSaveSettings ResetOutput(this DockerSaveSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Output = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Image
-        /// <summary><p><em>Sets <see cref="DockerSaveSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerSaveSettings SetImage(this DockerSaveSettings toolSettings, string image)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = image;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerSaveSettings.Image"/>.</em></p><p>IMAGE</p></summary>
-        [Pure]
-        public static DockerSaveSettings ResetImage(this DockerSaveSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Output = null;
             return toolSettings;
         }
         #endregion
         #region Images
-        /// <summary><p><em>Sets <see cref="DockerSaveSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSaveSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings SetImages(this DockerSaveSettings toolSettings, params string[] images)
         {
@@ -37647,7 +36896,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerSaveSettings.Images"/> to a new list.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSaveSettings.Images"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings SetImages(this DockerSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -37655,7 +36904,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings AddImages(this DockerSaveSettings toolSettings, params string[] images)
         {
@@ -37663,7 +36912,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings AddImages(this DockerSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -37671,7 +36920,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings ClearImages(this DockerSaveSettings toolSettings)
         {
@@ -37679,7 +36928,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings RemoveImages(this DockerSaveSettings toolSettings, params string[] images)
         {
@@ -37688,7 +36937,7 @@ namespace Nuke.Docker
             toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSaveSettings.Images"/>.</em></p><p>[IMAGE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSaveSettings.Images"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSaveSettings RemoveImages(this DockerSaveSettings toolSettings, IEnumerable<string> images)
         {
@@ -37720,7 +36969,7 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetAutomated(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Automated = default(bool);
+            toolSettings.Automated = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSearchSettings.Automated"/>.</em></p><p>Only show automated builds</p></summary>
@@ -37762,7 +37011,7 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetFilter(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -37780,7 +37029,7 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetFormat(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -37798,7 +37047,7 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetLimit(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Limit = default(int);
+            toolSettings.Limit = null;
             return toolSettings;
         }
         #endregion
@@ -37816,7 +37065,7 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetNoTrunc(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSearchSettings.NoTrunc"/>.</em></p><p>Don't truncate output</p></summary>
@@ -37858,12 +37107,12 @@ namespace Nuke.Docker
         public static DockerSearchSettings ResetStars(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stars = default(int);
+            toolSettings.Stars = null;
             return toolSettings;
         }
         #endregion
         #region Term
-        /// <summary><p><em>Sets <see cref="DockerSearchSettings.Term"/>.</em></p><p>TERM</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSearchSettings.Term"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSearchSettings SetTerm(this DockerSearchSettings toolSettings, string term)
         {
@@ -37871,12 +37120,12 @@ namespace Nuke.Docker
             toolSettings.Term = term;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerSearchSettings.Term"/>.</em></p><p>TERM</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerSearchSettings.Term"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSearchSettings ResetTerm(this DockerSearchSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Term = default(string);
+            toolSettings.Term = null;
             return toolSettings;
         }
         #endregion
@@ -37910,7 +37159,7 @@ namespace Nuke.Docker
         public static DockerSecretCreateSettings ResetDriver(this DockerSecretCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Driver = default(string);
+            toolSettings.Driver = null;
             return toolSettings;
         }
         #endregion
@@ -37988,12 +37237,12 @@ namespace Nuke.Docker
         public static DockerSecretCreateSettings ResetTemplateDriver(this DockerSecretCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TemplateDriver = default(string);
+            toolSettings.TemplateDriver = null;
             return toolSettings;
         }
         #endregion
         #region Secret
-        /// <summary><p><em>Sets <see cref="DockerSecretCreateSettings.Secret"/>.</em></p><p>SECRET</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSecretCreateSettings.Secret"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretCreateSettings SetSecret(this DockerSecretCreateSettings toolSettings, string secret)
         {
@@ -38001,72 +37250,30 @@ namespace Nuke.Docker
             toolSettings.Secret = secret;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerSecretCreateSettings.Secret"/>.</em></p><p>SECRET</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerSecretCreateSettings.Secret"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretCreateSettings ResetSecret(this DockerSecretCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = default(string);
+            toolSettings.Secret = null;
             return toolSettings;
         }
         #endregion
-        #region Files
-        /// <summary><p><em>Sets <see cref="DockerSecretCreateSettings.Files"/> to a new list.</em></p><p>[file|-]</p></summary>
+        #region File
+        /// <summary><p><em>Sets <see cref="DockerSecretCreateSettings.File"/>.</em></p><p>Path to file to create the secret from.</p></summary>
         [Pure]
-        public static DockerSecretCreateSettings SetFiles(this DockerSecretCreateSettings toolSettings, params string[] files)
+        public static DockerSecretCreateSettings SetFile(this DockerSecretCreateSettings toolSettings, string file)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FilesInternal = files.ToList();
+            toolSettings.File = file;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerSecretCreateSettings.Files"/> to a new list.</em></p><p>[file|-]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerSecretCreateSettings.File"/>.</em></p><p>Path to file to create the secret from.</p></summary>
         [Pure]
-        public static DockerSecretCreateSettings SetFiles(this DockerSecretCreateSettings toolSettings, IEnumerable<string> files)
+        public static DockerSecretCreateSettings ResetFile(this DockerSecretCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FilesInternal = files.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretCreateSettings.Files"/>.</em></p><p>[file|-]</p></summary>
-        [Pure]
-        public static DockerSecretCreateSettings AddFiles(this DockerSecretCreateSettings toolSettings, params string[] files)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FilesInternal.AddRange(files);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretCreateSettings.Files"/>.</em></p><p>[file|-]</p></summary>
-        [Pure]
-        public static DockerSecretCreateSettings AddFiles(this DockerSecretCreateSettings toolSettings, IEnumerable<string> files)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FilesInternal.AddRange(files);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerSecretCreateSettings.Files"/>.</em></p><p>[file|-]</p></summary>
-        [Pure]
-        public static DockerSecretCreateSettings ClearFiles(this DockerSecretCreateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FilesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretCreateSettings.Files"/>.</em></p><p>[file|-]</p></summary>
-        [Pure]
-        public static DockerSecretCreateSettings RemoveFiles(this DockerSecretCreateSettings toolSettings, params string[] files)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(files);
-            toolSettings.FilesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretCreateSettings.Files"/>.</em></p><p>[file|-]</p></summary>
-        [Pure]
-        public static DockerSecretCreateSettings RemoveFiles(this DockerSecretCreateSettings toolSettings, IEnumerable<string> files)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(files);
-            toolSettings.FilesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.File = null;
             return toolSettings;
         }
         #endregion
@@ -38092,7 +37299,7 @@ namespace Nuke.Docker
         public static DockerSecretInspectSettings ResetFormat(this DockerSecretInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -38110,7 +37317,7 @@ namespace Nuke.Docker
         public static DockerSecretInspectSettings ResetPretty(this DockerSecretInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pretty = default(bool);
+            toolSettings.Pretty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSecretInspectSettings.Pretty"/>.</em></p><p>Print the information in a human friendly format</p></summary>
@@ -38138,26 +37345,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Secret
-        /// <summary><p><em>Sets <see cref="DockerSecretInspectSettings.Secret"/>.</em></p><p>SECRET</p></summary>
-        [Pure]
-        public static DockerSecretInspectSettings SetSecret(this DockerSecretInspectSettings toolSettings, string secret)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = secret;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerSecretInspectSettings.Secret"/>.</em></p><p>SECRET</p></summary>
-        [Pure]
-        public static DockerSecretInspectSettings ResetSecret(this DockerSecretInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Secrets
-        /// <summary><p><em>Sets <see cref="DockerSecretInspectSettings.Secrets"/> to a new list.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSecretInspectSettings.Secrets"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings SetSecrets(this DockerSecretInspectSettings toolSettings, params string[] secrets)
         {
@@ -38165,7 +37354,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal = secrets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerSecretInspectSettings.Secrets"/> to a new list.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSecretInspectSettings.Secrets"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings SetSecrets(this DockerSecretInspectSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38173,7 +37362,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal = secrets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings AddSecrets(this DockerSecretInspectSettings toolSettings, params string[] secrets)
         {
@@ -38181,7 +37370,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.AddRange(secrets);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings AddSecrets(this DockerSecretInspectSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38189,7 +37378,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.AddRange(secrets);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings ClearSecrets(this DockerSecretInspectSettings toolSettings)
         {
@@ -38197,7 +37386,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings RemoveSecrets(this DockerSecretInspectSettings toolSettings, params string[] secrets)
         {
@@ -38206,7 +37395,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSecretInspectSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretInspectSettings RemoveSecrets(this DockerSecretInspectSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38238,7 +37427,7 @@ namespace Nuke.Docker
         public static DockerSecretLsSettings ResetFilter(this DockerSecretLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -38256,7 +37445,7 @@ namespace Nuke.Docker
         public static DockerSecretLsSettings ResetFormat(this DockerSecretLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -38274,7 +37463,7 @@ namespace Nuke.Docker
         public static DockerSecretLsSettings ResetQuiet(this DockerSecretLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSecretLsSettings.Quiet"/>.</em></p><p>Only display IDs</p></summary>
@@ -38310,26 +37499,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerSecretRmSettingsExtensions
     {
-        #region Secret
-        /// <summary><p><em>Sets <see cref="DockerSecretRmSettings.Secret"/>.</em></p><p>SECRET</p></summary>
-        [Pure]
-        public static DockerSecretRmSettings SetSecret(this DockerSecretRmSettings toolSettings, string secret)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = secret;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerSecretRmSettings.Secret"/>.</em></p><p>SECRET</p></summary>
-        [Pure]
-        public static DockerSecretRmSettings ResetSecret(this DockerSecretRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Secrets
-        /// <summary><p><em>Sets <see cref="DockerSecretRmSettings.Secrets"/> to a new list.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSecretRmSettings.Secrets"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings SetSecrets(this DockerSecretRmSettings toolSettings, params string[] secrets)
         {
@@ -38337,7 +37508,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal = secrets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerSecretRmSettings.Secrets"/> to a new list.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerSecretRmSettings.Secrets"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings SetSecrets(this DockerSecretRmSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38345,7 +37516,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal = secrets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings AddSecrets(this DockerSecretRmSettings toolSettings, params string[] secrets)
         {
@@ -38353,7 +37524,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.AddRange(secrets);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings AddSecrets(this DockerSecretRmSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38361,7 +37532,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.AddRange(secrets);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings ClearSecrets(this DockerSecretRmSettings toolSettings)
         {
@@ -38369,7 +37540,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings RemoveSecrets(this DockerSecretRmSettings toolSettings, params string[] secrets)
         {
@@ -38378,7 +37549,7 @@ namespace Nuke.Docker
             toolSettings.SecretsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p>[SECRET...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerSecretRmSettings.Secrets"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerSecretRmSettings RemoveSecrets(this DockerSecretRmSettings toolSettings, IEnumerable<string> secrets)
         {
@@ -38418,7 +37589,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetConfig(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = default(string);
+            toolSettings.Config = null;
             return toolSettings;
         }
         #endregion
@@ -38556,7 +37727,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetCredentialSpec(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CredentialSpec = default(string);
+            toolSettings.CredentialSpec = null;
             return toolSettings;
         }
         #endregion
@@ -38574,7 +37745,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetDetach(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.Detach"/>.</em></p><p>Exit immediately instead of waiting for the service to converge</p></summary>
@@ -38796,7 +37967,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetEndpointMode(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.EndpointMode = default(string);
+            toolSettings.EndpointMode = null;
             return toolSettings;
         }
         #endregion
@@ -38814,7 +37985,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetEntrypoint(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -39072,7 +38243,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHealthCmd(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -39090,7 +38261,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHealthInterval(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -39108,7 +38279,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHealthRetries(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -39126,7 +38297,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHealthStartPeriod(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -39144,7 +38315,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHealthTimeout(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -39222,7 +38393,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetHostname(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -39240,7 +38411,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetIsolation(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
@@ -39307,7 +38478,7 @@ namespace Nuke.Docker
         #region LimitCpu
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.LimitCpu"/>.</em></p><p>Limit CPUs</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetLimitCpu(this DockerServiceCreateSettings toolSettings, decimal limitCpu)
+        public static DockerServiceCreateSettings SetLimitCpu(this DockerServiceCreateSettings toolSettings, decimal? limitCpu)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitCpu = limitCpu;
@@ -39318,14 +38489,14 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetLimitCpu(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LimitCpu = default(decimal);
+            toolSettings.LimitCpu = null;
             return toolSettings;
         }
         #endregion
         #region LimitMemory
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.LimitMemory"/>.</em></p><p>Limit Memory</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetLimitMemory(this DockerServiceCreateSettings toolSettings, long limitMemory)
+        public static DockerServiceCreateSettings SetLimitMemory(this DockerServiceCreateSettings toolSettings, long? limitMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitMemory = limitMemory;
@@ -39336,7 +38507,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetLimitMemory(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LimitMemory = default(long);
+            toolSettings.LimitMemory = null;
             return toolSettings;
         }
         #endregion
@@ -39354,7 +38525,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetLogDriver(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -39432,7 +38603,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetMode(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mode = default(string);
+            toolSettings.Mode = null;
             return toolSettings;
         }
         #endregion
@@ -39450,7 +38621,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetMount(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Mount = default(string);
+            toolSettings.Mount = null;
             return toolSettings;
         }
         #endregion
@@ -39468,7 +38639,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetName(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -39486,7 +38657,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetNetwork(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Network = default(string);
+            toolSettings.Network = null;
             return toolSettings;
         }
         #endregion
@@ -39504,7 +38675,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetNoHealthcheck(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -39546,7 +38717,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetNoResolveImage(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolveImage = default(bool);
+            toolSettings.NoResolveImage = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.NoResolveImage"/>.</em></p><p>Do not query the registry to resolve image digest and supported platforms</p></summary>
@@ -39588,7 +38759,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetPlacementPref(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PlacementPref = default(string);
+            toolSettings.PlacementPref = null;
             return toolSettings;
         }
         #endregion
@@ -39606,7 +38777,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetPublish(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Publish = default(string);
+            toolSettings.Publish = null;
             return toolSettings;
         }
         #endregion
@@ -39624,7 +38795,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetQuiet(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.Quiet"/>.</em></p><p>Suppress progress output</p></summary>
@@ -39666,7 +38837,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetReadOnly(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -39708,14 +38879,14 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetReplicas(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Replicas = default(int);
+            toolSettings.Replicas = null;
             return toolSettings;
         }
         #endregion
         #region ReserveCpu
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.ReserveCpu"/>.</em></p><p>Reserve CPUs</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetReserveCpu(this DockerServiceCreateSettings toolSettings, decimal reserveCpu)
+        public static DockerServiceCreateSettings SetReserveCpu(this DockerServiceCreateSettings toolSettings, decimal? reserveCpu)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReserveCpu = reserveCpu;
@@ -39726,14 +38897,14 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetReserveCpu(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReserveCpu = default(decimal);
+            toolSettings.ReserveCpu = null;
             return toolSettings;
         }
         #endregion
         #region ReserveMemory
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.ReserveMemory"/>.</em></p><p>Reserve Memory</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetReserveMemory(this DockerServiceCreateSettings toolSettings, long reserveMemory)
+        public static DockerServiceCreateSettings SetReserveMemory(this DockerServiceCreateSettings toolSettings, long? reserveMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReserveMemory = reserveMemory;
@@ -39744,7 +38915,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetReserveMemory(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReserveMemory = default(long);
+            toolSettings.ReserveMemory = null;
             return toolSettings;
         }
         #endregion
@@ -39762,7 +38933,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRestartCondition(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartCondition = default(RestartCondition);
+            toolSettings.RestartCondition = null;
             return toolSettings;
         }
         #endregion
@@ -39780,7 +38951,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRestartDelay(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartDelay = default(string);
+            toolSettings.RestartDelay = null;
             return toolSettings;
         }
         #endregion
@@ -39798,7 +38969,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRestartMaxAttempts(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartMaxAttempts = default(int);
+            toolSettings.RestartMaxAttempts = null;
             return toolSettings;
         }
         #endregion
@@ -39816,7 +38987,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRestartWindow(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartWindow = default(string);
+            toolSettings.RestartWindow = null;
             return toolSettings;
         }
         #endregion
@@ -39834,7 +39005,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackDelay(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackDelay = default(string);
+            toolSettings.RollbackDelay = null;
             return toolSettings;
         }
         #endregion
@@ -39852,14 +39023,14 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackFailureAction(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackFailureAction = default(RollbackFailureAction);
+            toolSettings.RollbackFailureAction = null;
             return toolSettings;
         }
         #endregion
         #region RollbackMaxFailureRatio
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.RollbackMaxFailureRatio"/>.</em></p><p>Failure rate to tolerate during a rollback (default 0)</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetRollbackMaxFailureRatio(this DockerServiceCreateSettings toolSettings, float rollbackMaxFailureRatio)
+        public static DockerServiceCreateSettings SetRollbackMaxFailureRatio(this DockerServiceCreateSettings toolSettings, float? rollbackMaxFailureRatio)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RollbackMaxFailureRatio = rollbackMaxFailureRatio;
@@ -39870,7 +39041,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackMaxFailureRatio(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackMaxFailureRatio = default(float);
+            toolSettings.RollbackMaxFailureRatio = null;
             return toolSettings;
         }
         #endregion
@@ -39888,7 +39059,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackMonitor(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackMonitor = default(string);
+            toolSettings.RollbackMonitor = null;
             return toolSettings;
         }
         #endregion
@@ -39906,7 +39077,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackOrder(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackOrder = default(RollbackOrder);
+            toolSettings.RollbackOrder = null;
             return toolSettings;
         }
         #endregion
@@ -39924,7 +39095,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetRollbackParallelism(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackParallelism = default(int);
+            toolSettings.RollbackParallelism = null;
             return toolSettings;
         }
         #endregion
@@ -39942,7 +39113,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetSecret(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Secret = default(string);
+            toolSettings.Secret = null;
             return toolSettings;
         }
         #endregion
@@ -39960,7 +39131,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetStopGracePeriod(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopGracePeriod = default(string);
+            toolSettings.StopGracePeriod = null;
             return toolSettings;
         }
         #endregion
@@ -39978,7 +39149,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetStopSignal(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -39996,7 +39167,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetTty(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -40038,7 +39209,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateDelay(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateDelay = default(string);
+            toolSettings.UpdateDelay = null;
             return toolSettings;
         }
         #endregion
@@ -40056,14 +39227,14 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateFailureAction(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateFailureAction = default(UpdateFailureAction);
+            toolSettings.UpdateFailureAction = null;
             return toolSettings;
         }
         #endregion
         #region UpdateMaxFailureRatio
         /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.UpdateMaxFailureRatio"/>.</em></p><p>Failure rate to tolerate during an update (default 0)</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetUpdateMaxFailureRatio(this DockerServiceCreateSettings toolSettings, float updateMaxFailureRatio)
+        public static DockerServiceCreateSettings SetUpdateMaxFailureRatio(this DockerServiceCreateSettings toolSettings, float? updateMaxFailureRatio)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateMaxFailureRatio = updateMaxFailureRatio;
@@ -40074,7 +39245,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateMaxFailureRatio(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateMaxFailureRatio = default(float);
+            toolSettings.UpdateMaxFailureRatio = null;
             return toolSettings;
         }
         #endregion
@@ -40092,7 +39263,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateMonitor(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateMonitor = default(string);
+            toolSettings.UpdateMonitor = null;
             return toolSettings;
         }
         #endregion
@@ -40110,7 +39281,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateOrder(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateOrder = default(UpdateOrder);
+            toolSettings.UpdateOrder = null;
             return toolSettings;
         }
         #endregion
@@ -40128,7 +39299,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUpdateParallelism(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateParallelism = default(int);
+            toolSettings.UpdateParallelism = null;
             return toolSettings;
         }
         #endregion
@@ -40146,7 +39317,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetUser(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -40164,7 +39335,7 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetWithRegistryAuth(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WithRegistryAuth = default(bool);
+            toolSettings.WithRegistryAuth = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceCreateSettings.WithRegistryAuth"/>.</em></p><p>Send registry authentication details to swarm agents</p></summary>
@@ -40206,12 +39377,12 @@ namespace Nuke.Docker
         public static DockerServiceCreateSettings ResetWorkdir(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Image
-        /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceCreateSettings SetImage(this DockerServiceCreateSettings toolSettings, string image)
         {
@@ -40219,72 +39390,30 @@ namespace Nuke.Docker
             toolSettings.Image = image;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerServiceCreateSettings.Image"/>.</em></p><p>IMAGE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerServiceCreateSettings.Image"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceCreateSettings ResetImage(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
-        #region Commands
-        /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        #region Command
+        /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetCommands(this DockerServiceCreateSettings toolSettings, params string[] commands)
+        public static DockerServiceCreateSettings SetCommand(this DockerServiceCreateSettings toolSettings, string command)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
+            toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerServiceCreateSettings.Commands"/> to a new list.</em></p><p>[COMMAND]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerServiceCreateSettings.Command"/>.</em></p><p>[COMMAND]</p></summary>
         [Pure]
-        public static DockerServiceCreateSettings SetCommands(this DockerServiceCreateSettings toolSettings, IEnumerable<string> commands)
+        public static DockerServiceCreateSettings ResetCommand(this DockerServiceCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal = commands.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerServiceCreateSettings AddCommands(this DockerServiceCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerServiceCreateSettings AddCommands(this DockerServiceCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.AddRange(commands);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerServiceCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerServiceCreateSettings ClearCommands(this DockerServiceCreateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.CommandsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerServiceCreateSettings RemoveCommands(this DockerServiceCreateSettings toolSettings, params string[] commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceCreateSettings.Commands"/>.</em></p><p>[COMMAND]</p></summary>
-        [Pure]
-        public static DockerServiceCreateSettings RemoveCommands(this DockerServiceCreateSettings toolSettings, IEnumerable<string> commands)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(commands);
-            toolSettings.CommandsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -40370,7 +39499,7 @@ namespace Nuke.Docker
         public static DockerServiceInspectSettings ResetFormat(this DockerServiceInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -40388,7 +39517,7 @@ namespace Nuke.Docker
         public static DockerServiceInspectSettings ResetPretty(this DockerServiceInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Pretty = default(bool);
+            toolSettings.Pretty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceInspectSettings.Pretty"/>.</em></p><p>Print the information in a human friendly format</p></summary>
@@ -40416,26 +39545,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Service
-        /// <summary><p><em>Sets <see cref="DockerServiceInspectSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServiceInspectSettings SetService(this DockerServiceInspectSettings toolSettings, string service)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = service;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerServiceInspectSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServiceInspectSettings ResetService(this DockerServiceInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Services
-        /// <summary><p><em>Sets <see cref="DockerServiceInspectSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceInspectSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings SetServices(this DockerServiceInspectSettings toolSettings, params string[] services)
         {
@@ -40443,7 +39554,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerServiceInspectSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceInspectSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings SetServices(this DockerServiceInspectSettings toolSettings, IEnumerable<string> services)
         {
@@ -40451,7 +39562,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings AddServices(this DockerServiceInspectSettings toolSettings, params string[] services)
         {
@@ -40459,7 +39570,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings AddServices(this DockerServiceInspectSettings toolSettings, IEnumerable<string> services)
         {
@@ -40467,7 +39578,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings ClearServices(this DockerServiceInspectSettings toolSettings)
         {
@@ -40475,7 +39586,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings RemoveServices(this DockerServiceInspectSettings toolSettings, params string[] services)
         {
@@ -40484,7 +39595,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServiceInspectSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceInspectSettings RemoveServices(this DockerServiceInspectSettings toolSettings, IEnumerable<string> services)
         {
@@ -40516,7 +39627,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetDetails(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Details = default(bool);
+            toolSettings.Details = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.Details"/>.</em></p><p>Show extra details provided to logs</p></summary>
@@ -40558,7 +39669,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetFollow(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Follow = default(bool);
+            toolSettings.Follow = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.Follow"/>.</em></p><p>Follow log output</p></summary>
@@ -40600,7 +39711,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetNoResolve(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolve = default(bool);
+            toolSettings.NoResolve = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.NoResolve"/>.</em></p><p>Do not map IDs to Names in output</p></summary>
@@ -40642,7 +39753,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetNoTaskIds(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTaskIds = default(bool);
+            toolSettings.NoTaskIds = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.NoTaskIds"/>.</em></p><p>Do not include task IDs in output</p></summary>
@@ -40684,7 +39795,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetNoTrunc(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -40726,7 +39837,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetRaw(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Raw = default(bool);
+            toolSettings.Raw = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.Raw"/>.</em></p><p>Do not neatly format logs</p></summary>
@@ -40768,7 +39879,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetSince(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Since = default(string);
+            toolSettings.Since = null;
             return toolSettings;
         }
         #endregion
@@ -40786,7 +39897,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetTail(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tail = default(string);
+            toolSettings.Tail = null;
             return toolSettings;
         }
         #endregion
@@ -40804,7 +39915,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetTimestamps(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Timestamps = default(bool);
+            toolSettings.Timestamps = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLogsSettings.Timestamps"/>.</em></p><p>Show timestamps</p></summary>
@@ -40846,7 +39957,7 @@ namespace Nuke.Docker
         public static DockerServiceLogsSettings ResetService(this DockerServiceLogsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
+            toolSettings.Service = null;
             return toolSettings;
         }
         #endregion
@@ -40872,7 +39983,7 @@ namespace Nuke.Docker
         public static DockerServiceLsSettings ResetFilter(this DockerServiceLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -40890,7 +40001,7 @@ namespace Nuke.Docker
         public static DockerServiceLsSettings ResetFormat(this DockerServiceLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -40908,7 +40019,7 @@ namespace Nuke.Docker
         public static DockerServiceLsSettings ResetQuiet(this DockerServiceLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceLsSettings.Quiet"/>.</em></p><p>Only display IDs</p></summary>
@@ -40958,7 +40069,7 @@ namespace Nuke.Docker
         public static DockerServicePsSettings ResetFilter(this DockerServicePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -40976,7 +40087,7 @@ namespace Nuke.Docker
         public static DockerServicePsSettings ResetFormat(this DockerServicePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -40994,7 +40105,7 @@ namespace Nuke.Docker
         public static DockerServicePsSettings ResetNoResolve(this DockerServicePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolve = default(bool);
+            toolSettings.NoResolve = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServicePsSettings.NoResolve"/>.</em></p><p>Do not map IDs to Names</p></summary>
@@ -41036,7 +40147,7 @@ namespace Nuke.Docker
         public static DockerServicePsSettings ResetNoTrunc(this DockerServicePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServicePsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -41078,7 +40189,7 @@ namespace Nuke.Docker
         public static DockerServicePsSettings ResetQuiet(this DockerServicePsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServicePsSettings.Quiet"/>.</em></p><p>Only display task IDs</p></summary>
@@ -41106,26 +40217,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Service
-        /// <summary><p><em>Sets <see cref="DockerServicePsSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServicePsSettings SetService(this DockerServicePsSettings toolSettings, string service)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = service;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerServicePsSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServicePsSettings ResetService(this DockerServicePsSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Services
-        /// <summary><p><em>Sets <see cref="DockerServicePsSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServicePsSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings SetServices(this DockerServicePsSettings toolSettings, params string[] services)
         {
@@ -41133,7 +40226,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerServicePsSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServicePsSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings SetServices(this DockerServicePsSettings toolSettings, IEnumerable<string> services)
         {
@@ -41141,7 +40234,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServicePsSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServicePsSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings AddServices(this DockerServicePsSettings toolSettings, params string[] services)
         {
@@ -41149,7 +40242,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServicePsSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServicePsSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings AddServices(this DockerServicePsSettings toolSettings, IEnumerable<string> services)
         {
@@ -41157,7 +40250,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerServicePsSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerServicePsSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings ClearServices(this DockerServicePsSettings toolSettings)
         {
@@ -41165,7 +40258,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServicePsSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServicePsSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings RemoveServices(this DockerServicePsSettings toolSettings, params string[] services)
         {
@@ -41174,7 +40267,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServicePsSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServicePsSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServicePsSettings RemoveServices(this DockerServicePsSettings toolSettings, IEnumerable<string> services)
         {
@@ -41192,26 +40285,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerServiceRmSettingsExtensions
     {
-        #region Service
-        /// <summary><p><em>Sets <see cref="DockerServiceRmSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServiceRmSettings SetService(this DockerServiceRmSettings toolSettings, string service)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = service;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerServiceRmSettings.Service"/>.</em></p><p>SERVICE</p></summary>
-        [Pure]
-        public static DockerServiceRmSettings ResetService(this DockerServiceRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Services
-        /// <summary><p><em>Sets <see cref="DockerServiceRmSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceRmSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings SetServices(this DockerServiceRmSettings toolSettings, params string[] services)
         {
@@ -41219,7 +40294,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerServiceRmSettings.Services"/> to a new list.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceRmSettings.Services"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings SetServices(this DockerServiceRmSettings toolSettings, IEnumerable<string> services)
         {
@@ -41227,7 +40302,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal = services.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceRmSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServiceRmSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings AddServices(this DockerServiceRmSettings toolSettings, params string[] services)
         {
@@ -41235,7 +40310,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerServiceRmSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerServiceRmSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings AddServices(this DockerServiceRmSettings toolSettings, IEnumerable<string> services)
         {
@@ -41243,7 +40318,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.AddRange(services);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerServiceRmSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerServiceRmSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings ClearServices(this DockerServiceRmSettings toolSettings)
         {
@@ -41251,7 +40326,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceRmSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServiceRmSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings RemoveServices(this DockerServiceRmSettings toolSettings, params string[] services)
         {
@@ -41260,7 +40335,7 @@ namespace Nuke.Docker
             toolSettings.ServicesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerServiceRmSettings.Services"/>.</em></p><p>[SERVICE...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerServiceRmSettings.Services"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRmSettings RemoveServices(this DockerServiceRmSettings toolSettings, IEnumerable<string> services)
         {
@@ -41292,7 +40367,7 @@ namespace Nuke.Docker
         public static DockerServiceRollbackSettings ResetDetach(this DockerServiceRollbackSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceRollbackSettings.Detach"/>.</em></p><p>Exit immediately instead of waiting for the service to converge</p></summary>
@@ -41334,7 +40409,7 @@ namespace Nuke.Docker
         public static DockerServiceRollbackSettings ResetQuiet(this DockerServiceRollbackSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceRollbackSettings.Quiet"/>.</em></p><p>Suppress progress output</p></summary>
@@ -41363,7 +40438,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Service
-        /// <summary><p><em>Sets <see cref="DockerServiceRollbackSettings.Service"/>.</em></p><p>SERVICE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceRollbackSettings.Service"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRollbackSettings SetService(this DockerServiceRollbackSettings toolSettings, string service)
         {
@@ -41371,12 +40446,62 @@ namespace Nuke.Docker
             toolSettings.Service = service;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerServiceRollbackSettings.Service"/>.</em></p><p>SERVICE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerServiceRollbackSettings.Service"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceRollbackSettings ResetService(this DockerServiceRollbackSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
+            toolSettings.Service = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DockerServiceScaleSettingsExtensions
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerServiceScaleSettingsExtensions
+    {
+        #region ServiceReplicas
+        /// <summary><p><em>Sets <see cref="DockerServiceScaleSettings.ServiceReplicas"/> to a new dictionary.</em></p><p>SERVICE=REPLICAS</p></summary>
+        [Pure]
+        public static DockerServiceScaleSettings SetServiceReplicas(this DockerServiceScaleSettings toolSettings, IDictionary<string, string> serviceReplicas)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceReplicasInternal = serviceReplicas.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DockerServiceScaleSettings.ServiceReplicas"/>.</em></p><p>SERVICE=REPLICAS</p></summary>
+        [Pure]
+        public static DockerServiceScaleSettings ClearServiceReplicas(this DockerServiceScaleSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceReplicasInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="DockerServiceScaleSettings.ServiceReplicas"/>.</em></p><p>SERVICE=REPLICAS</p></summary>
+        [Pure]
+        public static DockerServiceScaleSettings AddServiceReplica(this DockerServiceScaleSettings toolSettings, string serviceReplicaKey, string serviceReplicaValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceReplicasInternal.Add(serviceReplicaKey, serviceReplicaValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="DockerServiceScaleSettings.ServiceReplicas"/>.</em></p><p>SERVICE=REPLICAS</p></summary>
+        [Pure]
+        public static DockerServiceScaleSettings RemoveServiceReplica(this DockerServiceScaleSettings toolSettings, string serviceReplicaKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceReplicasInternal.Remove(serviceReplicaKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="DockerServiceScaleSettings.ServiceReplicas"/>.</em></p><p>SERVICE=REPLICAS</p></summary>
+        [Pure]
+        public static DockerServiceScaleSettings SetServiceReplica(this DockerServiceScaleSettings toolSettings, string serviceReplicaKey, string serviceReplicaValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceReplicasInternal[serviceReplicaKey] = serviceReplicaValue;
             return toolSettings;
         }
         #endregion
@@ -41402,7 +40527,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetArgs(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Args = default(string);
+            toolSettings.Args = null;
             return toolSettings;
         }
         #endregion
@@ -41420,7 +40545,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetConfigAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ConfigAdd = default(string);
+            toolSettings.ConfigAdd = null;
             return toolSettings;
         }
         #endregion
@@ -41738,7 +40863,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetCredentialSpec(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CredentialSpec = default(string);
+            toolSettings.CredentialSpec = null;
             return toolSettings;
         }
         #endregion
@@ -41756,7 +40881,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetDetach(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.Detach"/>.</em></p><p>Exit immediately instead of waiting for the service to converge</p></summary>
@@ -42158,7 +41283,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetEndpointMode(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.EndpointMode = default(string);
+            toolSettings.EndpointMode = null;
             return toolSettings;
         }
         #endregion
@@ -42176,7 +41301,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetEntrypoint(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Entrypoint = default(string);
+            toolSettings.Entrypoint = null;
             return toolSettings;
         }
         #endregion
@@ -42314,7 +41439,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetForce(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.Force"/>.</em></p><p>Force update even if no changes require it</p></summary>
@@ -42596,7 +41721,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHealthCmd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthCmd = default(string);
+            toolSettings.HealthCmd = null;
             return toolSettings;
         }
         #endregion
@@ -42614,7 +41739,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHealthInterval(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthInterval = default(string);
+            toolSettings.HealthInterval = null;
             return toolSettings;
         }
         #endregion
@@ -42632,7 +41757,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHealthRetries(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthRetries = default(int);
+            toolSettings.HealthRetries = null;
             return toolSettings;
         }
         #endregion
@@ -42650,7 +41775,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHealthStartPeriod(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthStartPeriod = default(string);
+            toolSettings.HealthStartPeriod = null;
             return toolSettings;
         }
         #endregion
@@ -42668,7 +41793,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHealthTimeout(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HealthTimeout = default(string);
+            toolSettings.HealthTimeout = null;
             return toolSettings;
         }
         #endregion
@@ -42806,7 +41931,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetHostname(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Hostname = default(string);
+            toolSettings.Hostname = null;
             return toolSettings;
         }
         #endregion
@@ -42824,7 +41949,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetImage(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Image = default(string);
+            toolSettings.Image = null;
             return toolSettings;
         }
         #endregion
@@ -42842,7 +41967,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetIsolation(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Isolation = default(string);
+            toolSettings.Isolation = null;
             return toolSettings;
         }
         #endregion
@@ -42969,7 +42094,7 @@ namespace Nuke.Docker
         #region LimitCpu
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.LimitCpu"/>.</em></p><p>Limit CPUs</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetLimitCpu(this DockerServiceUpdateSettings toolSettings, decimal limitCpu)
+        public static DockerServiceUpdateSettings SetLimitCpu(this DockerServiceUpdateSettings toolSettings, decimal? limitCpu)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitCpu = limitCpu;
@@ -42980,14 +42105,14 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetLimitCpu(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LimitCpu = default(decimal);
+            toolSettings.LimitCpu = null;
             return toolSettings;
         }
         #endregion
         #region LimitMemory
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.LimitMemory"/>.</em></p><p>Limit Memory</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetLimitMemory(this DockerServiceUpdateSettings toolSettings, long limitMemory)
+        public static DockerServiceUpdateSettings SetLimitMemory(this DockerServiceUpdateSettings toolSettings, long? limitMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitMemory = limitMemory;
@@ -42998,7 +42123,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetLimitMemory(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LimitMemory = default(long);
+            toolSettings.LimitMemory = null;
             return toolSettings;
         }
         #endregion
@@ -43016,7 +42141,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetLogDriver(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogDriver = default(string);
+            toolSettings.LogDriver = null;
             return toolSettings;
         }
         #endregion
@@ -43094,7 +42219,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetMountAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MountAdd = default(string);
+            toolSettings.MountAdd = null;
             return toolSettings;
         }
         #endregion
@@ -43172,7 +42297,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetNetworkAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NetworkAdd = default(string);
+            toolSettings.NetworkAdd = null;
             return toolSettings;
         }
         #endregion
@@ -43250,7 +42375,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetNoHealthcheck(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoHealthcheck = default(bool);
+            toolSettings.NoHealthcheck = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.NoHealthcheck"/>.</em></p><p>Disable any container-specified HEALTHCHECK</p></summary>
@@ -43292,7 +42417,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetNoResolveImage(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolveImage = default(bool);
+            toolSettings.NoResolveImage = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.NoResolveImage"/>.</em></p><p>Do not query the registry to resolve image digest and supported platforms</p></summary>
@@ -43334,7 +42459,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetPlacementPrefAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PlacementPrefAdd = default(string);
+            toolSettings.PlacementPrefAdd = null;
             return toolSettings;
         }
         #endregion
@@ -43352,7 +42477,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetPlacementPrefRm(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PlacementPrefRm = default(string);
+            toolSettings.PlacementPrefRm = null;
             return toolSettings;
         }
         #endregion
@@ -43370,7 +42495,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetPublishAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishAdd = default(string);
+            toolSettings.PublishAdd = null;
             return toolSettings;
         }
         #endregion
@@ -43388,7 +42513,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetPublishRm(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PublishRm = default(string);
+            toolSettings.PublishRm = null;
             return toolSettings;
         }
         #endregion
@@ -43406,7 +42531,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetQuiet(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.Quiet"/>.</em></p><p>Suppress progress output</p></summary>
@@ -43448,7 +42573,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetReadOnly(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReadOnly = default(bool);
+            toolSettings.ReadOnly = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.ReadOnly"/>.</em></p><p>Mount the container's root filesystem as read only</p></summary>
@@ -43490,14 +42615,14 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetReplicas(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Replicas = default(int);
+            toolSettings.Replicas = null;
             return toolSettings;
         }
         #endregion
         #region ReserveCpu
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.ReserveCpu"/>.</em></p><p>Reserve CPUs</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetReserveCpu(this DockerServiceUpdateSettings toolSettings, decimal reserveCpu)
+        public static DockerServiceUpdateSettings SetReserveCpu(this DockerServiceUpdateSettings toolSettings, decimal? reserveCpu)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReserveCpu = reserveCpu;
@@ -43508,14 +42633,14 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetReserveCpu(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReserveCpu = default(decimal);
+            toolSettings.ReserveCpu = null;
             return toolSettings;
         }
         #endregion
         #region ReserveMemory
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.ReserveMemory"/>.</em></p><p>Reserve Memory</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetReserveMemory(this DockerServiceUpdateSettings toolSettings, long reserveMemory)
+        public static DockerServiceUpdateSettings SetReserveMemory(this DockerServiceUpdateSettings toolSettings, long? reserveMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReserveMemory = reserveMemory;
@@ -43526,7 +42651,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetReserveMemory(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReserveMemory = default(long);
+            toolSettings.ReserveMemory = null;
             return toolSettings;
         }
         #endregion
@@ -43544,7 +42669,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRestartCondition(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartCondition = default(RestartCondition);
+            toolSettings.RestartCondition = null;
             return toolSettings;
         }
         #endregion
@@ -43562,7 +42687,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRestartDelay(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartDelay = default(string);
+            toolSettings.RestartDelay = null;
             return toolSettings;
         }
         #endregion
@@ -43580,7 +42705,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRestartMaxAttempts(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartMaxAttempts = default(int);
+            toolSettings.RestartMaxAttempts = null;
             return toolSettings;
         }
         #endregion
@@ -43598,7 +42723,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRestartWindow(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RestartWindow = default(string);
+            toolSettings.RestartWindow = null;
             return toolSettings;
         }
         #endregion
@@ -43616,7 +42741,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollback(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rollback = default(bool);
+            toolSettings.Rollback = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.Rollback"/>.</em></p><p>Rollback to previous specification</p></summary>
@@ -43658,7 +42783,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackDelay(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackDelay = default(string);
+            toolSettings.RollbackDelay = null;
             return toolSettings;
         }
         #endregion
@@ -43676,14 +42801,14 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackFailureAction(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackFailureAction = default(RollbackFailureAction);
+            toolSettings.RollbackFailureAction = null;
             return toolSettings;
         }
         #endregion
         #region RollbackMaxFailureRatio
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.RollbackMaxFailureRatio"/>.</em></p><p>Failure rate to tolerate during a rollback</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetRollbackMaxFailureRatio(this DockerServiceUpdateSettings toolSettings, float rollbackMaxFailureRatio)
+        public static DockerServiceUpdateSettings SetRollbackMaxFailureRatio(this DockerServiceUpdateSettings toolSettings, float? rollbackMaxFailureRatio)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RollbackMaxFailureRatio = rollbackMaxFailureRatio;
@@ -43694,7 +42819,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackMaxFailureRatio(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackMaxFailureRatio = default(float);
+            toolSettings.RollbackMaxFailureRatio = null;
             return toolSettings;
         }
         #endregion
@@ -43712,7 +42837,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackMonitor(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackMonitor = default(string);
+            toolSettings.RollbackMonitor = null;
             return toolSettings;
         }
         #endregion
@@ -43730,7 +42855,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackOrder(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackOrder = default(RollbackOrder);
+            toolSettings.RollbackOrder = null;
             return toolSettings;
         }
         #endregion
@@ -43748,7 +42873,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetRollbackParallelism(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RollbackParallelism = default(int);
+            toolSettings.RollbackParallelism = null;
             return toolSettings;
         }
         #endregion
@@ -43766,7 +42891,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetSecretAdd(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SecretAdd = default(string);
+            toolSettings.SecretAdd = null;
             return toolSettings;
         }
         #endregion
@@ -43844,7 +42969,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetStopGracePeriod(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopGracePeriod = default(string);
+            toolSettings.StopGracePeriod = null;
             return toolSettings;
         }
         #endregion
@@ -43862,7 +42987,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetStopSignal(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.StopSignal = default(string);
+            toolSettings.StopSignal = null;
             return toolSettings;
         }
         #endregion
@@ -43880,7 +43005,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetTty(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Tty = default(bool);
+            toolSettings.Tty = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.Tty"/>.</em></p><p>Allocate a pseudo-TTY</p></summary>
@@ -43922,7 +43047,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateDelay(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateDelay = default(string);
+            toolSettings.UpdateDelay = null;
             return toolSettings;
         }
         #endregion
@@ -43940,14 +43065,14 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateFailureAction(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateFailureAction = default(UpdateFailureAction);
+            toolSettings.UpdateFailureAction = null;
             return toolSettings;
         }
         #endregion
         #region UpdateMaxFailureRatio
         /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.UpdateMaxFailureRatio"/>.</em></p><p>Failure rate to tolerate during an update</p></summary>
         [Pure]
-        public static DockerServiceUpdateSettings SetUpdateMaxFailureRatio(this DockerServiceUpdateSettings toolSettings, float updateMaxFailureRatio)
+        public static DockerServiceUpdateSettings SetUpdateMaxFailureRatio(this DockerServiceUpdateSettings toolSettings, float? updateMaxFailureRatio)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateMaxFailureRatio = updateMaxFailureRatio;
@@ -43958,7 +43083,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateMaxFailureRatio(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateMaxFailureRatio = default(float);
+            toolSettings.UpdateMaxFailureRatio = null;
             return toolSettings;
         }
         #endregion
@@ -43976,7 +43101,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateMonitor(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateMonitor = default(string);
+            toolSettings.UpdateMonitor = null;
             return toolSettings;
         }
         #endregion
@@ -43994,7 +43119,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateOrder(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateOrder = default(UpdateOrder);
+            toolSettings.UpdateOrder = null;
             return toolSettings;
         }
         #endregion
@@ -44012,7 +43137,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUpdateParallelism(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateParallelism = default(int);
+            toolSettings.UpdateParallelism = null;
             return toolSettings;
         }
         #endregion
@@ -44030,7 +43155,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetUser(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.User = default(string);
+            toolSettings.User = null;
             return toolSettings;
         }
         #endregion
@@ -44048,7 +43173,7 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetWithRegistryAuth(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WithRegistryAuth = default(bool);
+            toolSettings.WithRegistryAuth = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerServiceUpdateSettings.WithRegistryAuth"/>.</em></p><p>Send registry authentication details to swarm agents</p></summary>
@@ -44090,12 +43215,12 @@ namespace Nuke.Docker
         public static DockerServiceUpdateSettings ResetWorkdir(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Workdir = default(string);
+            toolSettings.Workdir = null;
             return toolSettings;
         }
         #endregion
         #region Service
-        /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.Service"/>.</em></p><p>SERVICE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerServiceUpdateSettings.Service"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceUpdateSettings SetService(this DockerServiceUpdateSettings toolSettings, string service)
         {
@@ -44103,12 +43228,12 @@ namespace Nuke.Docker
             toolSettings.Service = service;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerServiceUpdateSettings.Service"/>.</em></p><p>SERVICE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerServiceUpdateSettings.Service"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerServiceUpdateSettings ResetService(this DockerServiceUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Service = default(string);
+            toolSettings.Service = null;
             return toolSettings;
         }
         #endregion
@@ -44142,7 +43267,7 @@ namespace Nuke.Docker
         public static DockerStackDeploySettings ResetBundleFile(this DockerStackDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BundleFile = default(string);
+            toolSettings.BundleFile = null;
             return toolSettings;
         }
         #endregion
@@ -44220,7 +43345,7 @@ namespace Nuke.Docker
         public static DockerStackDeploySettings ResetPrune(this DockerStackDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Prune = default(bool);
+            toolSettings.Prune = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackDeploySettings.Prune"/>.</em></p><p>Prune services that are no longer referenced</p></summary>
@@ -44262,7 +43387,7 @@ namespace Nuke.Docker
         public static DockerStackDeploySettings ResetResolveImage(this DockerStackDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResolveImage = default(ResolveImage);
+            toolSettings.ResolveImage = null;
             return toolSettings;
         }
         #endregion
@@ -44280,7 +43405,7 @@ namespace Nuke.Docker
         public static DockerStackDeploySettings ResetWithRegistryAuth(this DockerStackDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WithRegistryAuth = default(bool);
+            toolSettings.WithRegistryAuth = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackDeploySettings.WithRegistryAuth"/>.</em></p><p>Send registry authentication details to Swarm agents</p></summary>
@@ -44309,7 +43434,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Stack
-        /// <summary><p><em>Sets <see cref="DockerStackDeploySettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStackDeploySettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackDeploySettings SetStack(this DockerStackDeploySettings toolSettings, string stack)
         {
@@ -44317,12 +43442,12 @@ namespace Nuke.Docker
             toolSettings.Stack = stack;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerStackDeploySettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerStackDeploySettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackDeploySettings ResetStack(this DockerStackDeploySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = default(string);
+            toolSettings.Stack = null;
             return toolSettings;
         }
         #endregion
@@ -44356,7 +43481,7 @@ namespace Nuke.Docker
         public static DockerStackPsSettings ResetFilter(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -44374,7 +43499,7 @@ namespace Nuke.Docker
         public static DockerStackPsSettings ResetFormat(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -44392,7 +43517,7 @@ namespace Nuke.Docker
         public static DockerStackPsSettings ResetNoResolve(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoResolve = default(bool);
+            toolSettings.NoResolve = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackPsSettings.NoResolve"/>.</em></p><p>Do not map IDs to Names</p></summary>
@@ -44434,7 +43559,7 @@ namespace Nuke.Docker
         public static DockerStackPsSettings ResetNoTrunc(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackPsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -44476,7 +43601,7 @@ namespace Nuke.Docker
         public static DockerStackPsSettings ResetQuiet(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackPsSettings.Quiet"/>.</em></p><p>Only display task IDs</p></summary>
@@ -44505,7 +43630,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Stack
-        /// <summary><p><em>Sets <see cref="DockerStackPsSettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStackPsSettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackPsSettings SetStack(this DockerStackPsSettings toolSettings, string stack)
         {
@@ -44513,12 +43638,12 @@ namespace Nuke.Docker
             toolSettings.Stack = stack;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerStackPsSettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerStackPsSettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackPsSettings ResetStack(this DockerStackPsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = default(string);
+            toolSettings.Stack = null;
             return toolSettings;
         }
         #endregion
@@ -44530,26 +43655,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerStackRmSettingsExtensions
     {
-        #region Stack
-        /// <summary><p><em>Sets <see cref="DockerStackRmSettings.Stack"/>.</em></p><p>STACK</p></summary>
-        [Pure]
-        public static DockerStackRmSettings SetStack(this DockerStackRmSettings toolSettings, string stack)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = stack;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerStackRmSettings.Stack"/>.</em></p><p>STACK</p></summary>
-        [Pure]
-        public static DockerStackRmSettings ResetStack(this DockerStackRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Stacks
-        /// <summary><p><em>Sets <see cref="DockerStackRmSettings.Stacks"/> to a new list.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStackRmSettings.Stacks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings SetStacks(this DockerStackRmSettings toolSettings, params string[] stacks)
         {
@@ -44557,7 +43664,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal = stacks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerStackRmSettings.Stacks"/> to a new list.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStackRmSettings.Stacks"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings SetStacks(this DockerStackRmSettings toolSettings, IEnumerable<string> stacks)
         {
@@ -44565,7 +43672,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal = stacks.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings AddStacks(this DockerStackRmSettings toolSettings, params string[] stacks)
         {
@@ -44573,7 +43680,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal.AddRange(stacks);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings AddStacks(this DockerStackRmSettings toolSettings, IEnumerable<string> stacks)
         {
@@ -44581,7 +43688,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal.AddRange(stacks);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings ClearStacks(this DockerStackRmSettings toolSettings)
         {
@@ -44589,7 +43696,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings RemoveStacks(this DockerStackRmSettings toolSettings, params string[] stacks)
         {
@@ -44598,7 +43705,7 @@ namespace Nuke.Docker
             toolSettings.StacksInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p>[STACK...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStackRmSettings.Stacks"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackRmSettings RemoveStacks(this DockerStackRmSettings toolSettings, IEnumerable<string> stacks)
         {
@@ -44630,7 +43737,7 @@ namespace Nuke.Docker
         public static DockerStackServicesSettings ResetFilter(this DockerStackServicesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -44648,7 +43755,7 @@ namespace Nuke.Docker
         public static DockerStackServicesSettings ResetFormat(this DockerStackServicesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -44666,7 +43773,7 @@ namespace Nuke.Docker
         public static DockerStackServicesSettings ResetQuiet(this DockerStackServicesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStackServicesSettings.Quiet"/>.</em></p><p>Only display IDs</p></summary>
@@ -44695,7 +43802,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Stack
-        /// <summary><p><em>Sets <see cref="DockerStackServicesSettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStackServicesSettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackServicesSettings SetStack(this DockerStackServicesSettings toolSettings, string stack)
         {
@@ -44703,12 +43810,12 @@ namespace Nuke.Docker
             toolSettings.Stack = stack;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerStackServicesSettings.Stack"/>.</em></p><p>STACK</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerStackServicesSettings.Stack"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStackServicesSettings ResetStack(this DockerStackServicesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Stack = default(string);
+            toolSettings.Stack = null;
             return toolSettings;
         }
         #endregion
@@ -44734,7 +43841,7 @@ namespace Nuke.Docker
         public static DockerStartSettings ResetAttach(this DockerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Attach = default(bool);
+            toolSettings.Attach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStartSettings.Attach"/>.</em></p><p>Attach STDOUT/STDERR and forward signals</p></summary>
@@ -44776,7 +43883,7 @@ namespace Nuke.Docker
         public static DockerStartSettings ResetCheckpoint(this DockerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Checkpoint = default(string);
+            toolSettings.Checkpoint = null;
             return toolSettings;
         }
         #endregion
@@ -44794,7 +43901,7 @@ namespace Nuke.Docker
         public static DockerStartSettings ResetCheckpointDir(this DockerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CheckpointDir = default(string);
+            toolSettings.CheckpointDir = null;
             return toolSettings;
         }
         #endregion
@@ -44812,7 +43919,7 @@ namespace Nuke.Docker
         public static DockerStartSettings ResetDetachKeys(this DockerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DetachKeys = default(string);
+            toolSettings.DetachKeys = null;
             return toolSettings;
         }
         #endregion
@@ -44830,7 +43937,7 @@ namespace Nuke.Docker
         public static DockerStartSettings ResetInteractive(this DockerStartSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Interactive = default(bool);
+            toolSettings.Interactive = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStartSettings.Interactive"/>.</em></p><p>Attach container's STDIN</p></summary>
@@ -44858,26 +43965,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerStartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerStartSettings SetContainer(this DockerStartSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerStartSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerStartSettings ResetContainer(this DockerStartSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerStartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings SetContainers(this DockerStartSettings toolSettings, params string[] containers)
         {
@@ -44885,7 +43974,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerStartSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStartSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings SetContainers(this DockerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -44893,7 +43982,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings AddContainers(this DockerStartSettings toolSettings, params string[] containers)
         {
@@ -44901,7 +43990,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings AddContainers(this DockerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -44909,7 +43998,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings ClearContainers(this DockerStartSettings toolSettings)
         {
@@ -44917,7 +44006,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings RemoveContainers(this DockerStartSettings toolSettings, params string[] containers)
         {
@@ -44926,7 +44015,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStartSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStartSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStartSettings RemoveContainers(this DockerStartSettings toolSettings, IEnumerable<string> containers)
         {
@@ -44958,7 +44047,7 @@ namespace Nuke.Docker
         public static DockerStatsSettings ResetAll(this DockerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStatsSettings.All"/>.</em></p><p>Show all containers (default shows just running)</p></summary>
@@ -45000,7 +44089,7 @@ namespace Nuke.Docker
         public static DockerStatsSettings ResetFormat(this DockerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -45018,7 +44107,7 @@ namespace Nuke.Docker
         public static DockerStatsSettings ResetNoStream(this DockerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoStream = default(bool);
+            toolSettings.NoStream = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStatsSettings.NoStream"/>.</em></p><p>Disable streaming stats and only pull the first result</p></summary>
@@ -45060,7 +44149,7 @@ namespace Nuke.Docker
         public static DockerStatsSettings ResetNoTrunc(this DockerStatsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = default(bool);
+            toolSettings.NoTrunc = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerStatsSettings.NoTrunc"/>.</em></p><p>Do not truncate output</p></summary>
@@ -45170,30 +44259,12 @@ namespace Nuke.Docker
         public static DockerStopSettings ResetTime(this DockerStopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Time = default(int);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerStopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerStopSettings SetContainer(this DockerStopSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerStopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerStopSettings ResetContainer(this DockerStopSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Time = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerStopSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStopSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings SetContainers(this DockerStopSettings toolSettings, params string[] containers)
         {
@@ -45201,7 +44272,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerStopSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerStopSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings SetContainers(this DockerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -45209,7 +44280,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings AddContainers(this DockerStopSettings toolSettings, params string[] containers)
         {
@@ -45217,7 +44288,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings AddContainers(this DockerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -45225,7 +44296,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings ClearContainers(this DockerStopSettings toolSettings)
         {
@@ -45233,7 +44304,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings RemoveContainers(this DockerStopSettings toolSettings, params string[] containers)
         {
@@ -45242,7 +44313,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerStopSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerStopSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerStopSettings RemoveContainers(this DockerStopSettings toolSettings, IEnumerable<string> containers)
         {
@@ -45282,7 +44353,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetCaCert(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CaCert = default(string);
+            toolSettings.CaCert = null;
             return toolSettings;
         }
         #endregion
@@ -45300,7 +44371,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetCaKey(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CaKey = default(string);
+            toolSettings.CaKey = null;
             return toolSettings;
         }
         #endregion
@@ -45318,7 +44389,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetCertExpiry(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CertExpiry = default(string);
+            toolSettings.CertExpiry = null;
             return toolSettings;
         }
         #endregion
@@ -45336,7 +44407,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetDetach(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Detach = default(bool);
+            toolSettings.Detach = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmCaSettings.Detach"/>.</em></p><p>Exit immediately instead of waiting for the root rotation to converge</p></summary>
@@ -45378,7 +44449,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetExternalCa(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExternalCa = default(string);
+            toolSettings.ExternalCa = null;
             return toolSettings;
         }
         #endregion
@@ -45396,7 +44467,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetQuiet(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmCaSettings.Quiet"/>.</em></p><p>Suppress progress output</p></summary>
@@ -45438,7 +44509,7 @@ namespace Nuke.Docker
         public static DockerSwarmCaSettings ResetRotate(this DockerSwarmCaSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rotate = default(bool);
+            toolSettings.Rotate = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmCaSettings.Rotate"/>.</em></p><p>Rotate the swarm CA - if no certificate or key are provided, new ones will be generated</p></summary>
@@ -45488,7 +44559,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetAdvertiseAddr(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdvertiseAddr = default(string);
+            toolSettings.AdvertiseAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45506,7 +44577,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetAutolock(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Autolock = default(bool);
+            toolSettings.Autolock = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmInitSettings.Autolock"/>.</em></p><p>Enable manager autolocking (requiring an unlock key to start a stopped manager)</p></summary>
@@ -45548,7 +44619,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetAvailability(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Availability = default(Availability);
+            toolSettings.Availability = null;
             return toolSettings;
         }
         #endregion
@@ -45566,7 +44637,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetCertExpiry(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CertExpiry = default(string);
+            toolSettings.CertExpiry = null;
             return toolSettings;
         }
         #endregion
@@ -45584,7 +44655,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetDataPathAddr(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DataPathAddr = default(string);
+            toolSettings.DataPathAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45602,7 +44673,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetDispatcherHeartbeat(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DispatcherHeartbeat = default(string);
+            toolSettings.DispatcherHeartbeat = null;
             return toolSettings;
         }
         #endregion
@@ -45620,7 +44691,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetExternalCa(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExternalCa = default(string);
+            toolSettings.ExternalCa = null;
             return toolSettings;
         }
         #endregion
@@ -45638,7 +44709,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetForceNewCluster(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ForceNewCluster = default(bool);
+            toolSettings.ForceNewCluster = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmInitSettings.ForceNewCluster"/>.</em></p><p>Force create a new cluster from current state</p></summary>
@@ -45680,7 +44751,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetListenAddr(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ListenAddr = default(string);
+            toolSettings.ListenAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45698,7 +44769,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetMaxSnapshots(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MaxSnapshots = default(int);
+            toolSettings.MaxSnapshots = null;
             return toolSettings;
         }
         #endregion
@@ -45716,14 +44787,14 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetSnapshotInterval(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SnapshotInterval = default(int);
+            toolSettings.SnapshotInterval = null;
             return toolSettings;
         }
         #endregion
         #region TaskHistoryLimit
         /// <summary><p><em>Sets <see cref="DockerSwarmInitSettings.TaskHistoryLimit"/>.</em></p><p>Task history retention limit</p></summary>
         [Pure]
-        public static DockerSwarmInitSettings SetTaskHistoryLimit(this DockerSwarmInitSettings toolSettings, long taskHistoryLimit)
+        public static DockerSwarmInitSettings SetTaskHistoryLimit(this DockerSwarmInitSettings toolSettings, long? taskHistoryLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaskHistoryLimit = taskHistoryLimit;
@@ -45734,7 +44805,7 @@ namespace Nuke.Docker
         public static DockerSwarmInitSettings ResetTaskHistoryLimit(this DockerSwarmInitSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TaskHistoryLimit = default(long);
+            toolSettings.TaskHistoryLimit = null;
             return toolSettings;
         }
         #endregion
@@ -45760,7 +44831,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinTokenSettings ResetQuiet(this DockerSwarmJoinTokenSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmJoinTokenSettings.Quiet"/>.</em></p><p>Only display token</p></summary>
@@ -45802,7 +44873,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinTokenSettings ResetRotate(this DockerSwarmJoinTokenSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rotate = default(bool);
+            toolSettings.Rotate = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmJoinTokenSettings.Rotate"/>.</em></p><p>Rotate join token</p></summary>
@@ -45830,21 +44901,21 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region worker
-        /// <summary><p><em>Sets <see cref="DockerSwarmJoinTokenSettings.worker"/>.</em></p><p>(worker|manager)</p></summary>
+        #region Worker
+        /// <summary><p><em>Sets <see cref="DockerSwarmJoinTokenSettings.Worker"/>.</em></p><p>(worker|manager)</p></summary>
         [Pure]
-        public static DockerSwarmJoinTokenSettings Setworker(this DockerSwarmJoinTokenSettings toolSettings, string worker)
+        public static DockerSwarmJoinTokenSettings SetWorker(this DockerSwarmJoinTokenSettings toolSettings, string worker)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.worker = worker;
+            toolSettings.Worker = worker;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerSwarmJoinTokenSettings.worker"/>.</em></p><p>(worker|manager)</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerSwarmJoinTokenSettings.Worker"/>.</em></p><p>(worker|manager)</p></summary>
         [Pure]
-        public static DockerSwarmJoinTokenSettings Resetworker(this DockerSwarmJoinTokenSettings toolSettings)
+        public static DockerSwarmJoinTokenSettings ResetWorker(this DockerSwarmJoinTokenSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.worker = default(string);
+            toolSettings.Worker = null;
             return toolSettings;
         }
         #endregion
@@ -45870,7 +44941,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinSettings ResetAdvertiseAddr(this DockerSwarmJoinSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdvertiseAddr = default(string);
+            toolSettings.AdvertiseAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45888,7 +44959,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinSettings ResetAvailability(this DockerSwarmJoinSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Availability = default(Availability);
+            toolSettings.Availability = null;
             return toolSettings;
         }
         #endregion
@@ -45906,7 +44977,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinSettings ResetDataPathAddr(this DockerSwarmJoinSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DataPathAddr = default(string);
+            toolSettings.DataPathAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45924,7 +44995,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinSettings ResetListenAddr(this DockerSwarmJoinSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ListenAddr = default(string);
+            toolSettings.ListenAddr = null;
             return toolSettings;
         }
         #endregion
@@ -45942,7 +45013,7 @@ namespace Nuke.Docker
         public static DockerSwarmJoinSettings ResetToken(this DockerSwarmJoinSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Token = default(string);
+            toolSettings.Token = null;
             return toolSettings;
         }
         #endregion
@@ -45968,7 +45039,7 @@ namespace Nuke.Docker
         public static DockerSwarmLeaveSettings ResetForce(this DockerSwarmLeaveSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmLeaveSettings.Force"/>.</em></p><p>Force this node to leave the swarm, ignoring warnings</p></summary>
@@ -46018,7 +45089,7 @@ namespace Nuke.Docker
         public static DockerSwarmUnlockKeySettings ResetQuiet(this DockerSwarmUnlockKeySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmUnlockKeySettings.Quiet"/>.</em></p><p>Only display token</p></summary>
@@ -46060,7 +45131,7 @@ namespace Nuke.Docker
         public static DockerSwarmUnlockKeySettings ResetRotate(this DockerSwarmUnlockKeySettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Rotate = default(bool);
+            toolSettings.Rotate = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmUnlockKeySettings.Rotate"/>.</em></p><p>Rotate unlock key</p></summary>
@@ -46118,7 +45189,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetAutolock(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Autolock = default(bool);
+            toolSettings.Autolock = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSwarmUpdateSettings.Autolock"/>.</em></p><p>Change manager autolocking setting (true|false)</p></summary>
@@ -46160,7 +45231,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetCertExpiry(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CertExpiry = default(string);
+            toolSettings.CertExpiry = null;
             return toolSettings;
         }
         #endregion
@@ -46178,7 +45249,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetDispatcherHeartbeat(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DispatcherHeartbeat = default(string);
+            toolSettings.DispatcherHeartbeat = null;
             return toolSettings;
         }
         #endregion
@@ -46196,7 +45267,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetExternalCa(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExternalCa = default(string);
+            toolSettings.ExternalCa = null;
             return toolSettings;
         }
         #endregion
@@ -46214,7 +45285,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetMaxSnapshots(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MaxSnapshots = default(int);
+            toolSettings.MaxSnapshots = null;
             return toolSettings;
         }
         #endregion
@@ -46232,14 +45303,14 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetSnapshotInterval(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SnapshotInterval = default(int);
+            toolSettings.SnapshotInterval = null;
             return toolSettings;
         }
         #endregion
         #region TaskHistoryLimit
         /// <summary><p><em>Sets <see cref="DockerSwarmUpdateSettings.TaskHistoryLimit"/>.</em></p><p>Task history retention limit</p></summary>
         [Pure]
-        public static DockerSwarmUpdateSettings SetTaskHistoryLimit(this DockerSwarmUpdateSettings toolSettings, long taskHistoryLimit)
+        public static DockerSwarmUpdateSettings SetTaskHistoryLimit(this DockerSwarmUpdateSettings toolSettings, long? taskHistoryLimit)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaskHistoryLimit = taskHistoryLimit;
@@ -46250,7 +45321,7 @@ namespace Nuke.Docker
         public static DockerSwarmUpdateSettings ResetTaskHistoryLimit(this DockerSwarmUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TaskHistoryLimit = default(long);
+            toolSettings.TaskHistoryLimit = null;
             return toolSettings;
         }
         #endregion
@@ -46284,7 +45355,7 @@ namespace Nuke.Docker
         public static DockerSystemDfSettings ResetFormat(this DockerSystemDfSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -46302,7 +45373,7 @@ namespace Nuke.Docker
         public static DockerSystemDfSettings ResetVerbose(this DockerSystemDfSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = default(bool);
+            toolSettings.Verbose = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSystemDfSettings.Verbose"/>.</em></p><p>Show detailed information on space usage</p></summary>
@@ -46352,7 +45423,7 @@ namespace Nuke.Docker
         public static DockerSystemEventsSettings ResetFilter(this DockerSystemEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -46370,7 +45441,7 @@ namespace Nuke.Docker
         public static DockerSystemEventsSettings ResetFormat(this DockerSystemEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -46388,7 +45459,7 @@ namespace Nuke.Docker
         public static DockerSystemEventsSettings ResetSince(this DockerSystemEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Since = default(string);
+            toolSettings.Since = null;
             return toolSettings;
         }
         #endregion
@@ -46406,7 +45477,7 @@ namespace Nuke.Docker
         public static DockerSystemEventsSettings ResetUntil(this DockerSystemEventsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Until = default(string);
+            toolSettings.Until = null;
             return toolSettings;
         }
         #endregion
@@ -46432,7 +45503,7 @@ namespace Nuke.Docker
         public static DockerSystemInfoSettings ResetFormat(this DockerSystemInfoSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -46458,7 +45529,7 @@ namespace Nuke.Docker
         public static DockerSystemPruneSettings ResetAll(this DockerSystemPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.All = default(bool);
+            toolSettings.All = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSystemPruneSettings.All"/>.</em></p><p>Remove all unused images not just dangling ones</p></summary>
@@ -46500,7 +45571,7 @@ namespace Nuke.Docker
         public static DockerSystemPruneSettings ResetFilter(this DockerSystemPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -46518,7 +45589,7 @@ namespace Nuke.Docker
         public static DockerSystemPruneSettings ResetForce(this DockerSystemPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSystemPruneSettings.Force"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -46560,7 +45631,7 @@ namespace Nuke.Docker
         public static DockerSystemPruneSettings ResetVolumes(this DockerSystemPruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Volumes = default(bool);
+            toolSettings.Volumes = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerSystemPruneSettings.Volumes"/>.</em></p><p>Prune volumes</p></summary>
@@ -46596,6 +45667,42 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerTagSettingsExtensions
     {
+        #region SourceImage
+        /// <summary><p><em>Sets <see cref="DockerTagSettings.SourceImage"/>.</em></p><p>SOURCE_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTagSettings SetSourceImage(this DockerTagSettings toolSettings, string sourceImage)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceImage = sourceImage;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerTagSettings.SourceImage"/>.</em></p><p>SOURCE_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTagSettings ResetSourceImage(this DockerTagSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceImage = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TargetImage
+        /// <summary><p><em>Sets <see cref="DockerTagSettings.TargetImage"/>.</em></p><p>TARGET_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTagSettings SetTargetImage(this DockerTagSettings toolSettings, string targetImage)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetImage = targetImage;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerTagSettings.TargetImage"/>.</em></p><p>TARGET_IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTagSettings ResetTargetImage(this DockerTagSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetImage = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerTopSettingsExtensions
@@ -46605,7 +45712,7 @@ namespace Nuke.Docker
     public static partial class DockerTopSettingsExtensions
     {
         #region Container
-        /// <summary><p><em>Sets <see cref="DockerTopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTopSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTopSettings SetContainer(this DockerTopSettings toolSettings, string container)
         {
@@ -46613,30 +45720,30 @@ namespace Nuke.Docker
             toolSettings.Container = container;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTopSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTopSettings.Container"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTopSettings ResetContainer(this DockerTopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Container = null;
             return toolSettings;
         }
         #endregion
-        #region Ps
-        /// <summary><p><em>Sets <see cref="DockerTopSettings.Ps"/>.</em></p><p>[ps</p></summary>
+        #region Options
+        /// <summary><p><em>Sets <see cref="DockerTopSettings.Options"/>.</em></p><p>OPTIONS]</p></summary>
         [Pure]
-        public static DockerTopSettings SetPs(this DockerTopSettings toolSettings, string ps)
+        public static DockerTopSettings SetOptions(this DockerTopSettings toolSettings, string options)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ps = ps;
+            toolSettings.Options = options;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTopSettings.Ps"/>.</em></p><p>[ps</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTopSettings.Options"/>.</em></p><p>OPTIONS]</p></summary>
         [Pure]
-        public static DockerTopSettings ResetPs(this DockerTopSettings toolSettings)
+        public static DockerTopSettings ResetOptions(this DockerTopSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Ps = default(string);
+            toolSettings.Options = null;
             return toolSettings;
         }
         #endregion
@@ -46656,63 +45763,63 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerTrustInspectSettingsExtensions
     {
-        #region Imagetags
-        /// <summary><p><em>Sets <see cref="DockerTrustInspectSettings.Imagetags"/> to a new list.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        #region Images
+        /// <summary><p><em>Sets <see cref="DockerTrustInspectSettings.Images"/> to a new list.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings SetImagetags(this DockerTrustInspectSettings toolSettings, params string[] imagetags)
+        public static DockerTrustInspectSettings SetImages(this DockerTrustInspectSettings toolSettings, params string[] images)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ImagetagsInternal = imagetags.ToList();
+            toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerTrustInspectSettings.Imagetags"/> to a new list.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustInspectSettings.Images"/> to a new list.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings SetImagetags(this DockerTrustInspectSettings toolSettings, IEnumerable<string> imagetags)
+        public static DockerTrustInspectSettings SetImages(this DockerTrustInspectSettings toolSettings, IEnumerable<string> images)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ImagetagsInternal = imagetags.ToList();
+            toolSettings.ImagesInternal = images.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustInspectSettings.Imagetags"/>.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustInspectSettings.Images"/>.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings AddImagetags(this DockerTrustInspectSettings toolSettings, params string[] imagetags)
+        public static DockerTrustInspectSettings AddImages(this DockerTrustInspectSettings toolSettings, params string[] images)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ImagetagsInternal.AddRange(imagetags);
+            toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustInspectSettings.Imagetags"/>.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustInspectSettings.Images"/>.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings AddImagetags(this DockerTrustInspectSettings toolSettings, IEnumerable<string> imagetags)
+        public static DockerTrustInspectSettings AddImages(this DockerTrustInspectSettings toolSettings, IEnumerable<string> images)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ImagetagsInternal.AddRange(imagetags);
+            toolSettings.ImagesInternal.AddRange(images);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerTrustInspectSettings.Imagetags"/>.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerTrustInspectSettings.Images"/>.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings ClearImagetags(this DockerTrustInspectSettings toolSettings)
+        public static DockerTrustInspectSettings ClearImages(this DockerTrustInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ImagetagsInternal.Clear();
+            toolSettings.ImagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustInspectSettings.Imagetags"/>.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustInspectSettings.Images"/>.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings RemoveImagetags(this DockerTrustInspectSettings toolSettings, params string[] imagetags)
+        public static DockerTrustInspectSettings RemoveImages(this DockerTrustInspectSettings toolSettings, params string[] images)
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(imagetags);
-            toolSettings.ImagetagsInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(images);
+            toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustInspectSettings.Imagetags"/>.</em></p><p>[IMAGE[:TAG]...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustInspectSettings.Images"/>.</em></p><p>IMAGE[:TAG]</p></summary>
         [Pure]
-        public static DockerTrustInspectSettings RemoveImagetags(this DockerTrustInspectSettings toolSettings, IEnumerable<string> imagetags)
+        public static DockerTrustInspectSettings RemoveImages(this DockerTrustInspectSettings toolSettings, IEnumerable<string> images)
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(imagetags);
-            toolSettings.ImagetagsInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(images);
+            toolSettings.ImagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -46733,7 +45840,7 @@ namespace Nuke.Docker
     public static partial class DockerTrustKeyGenerateSettingsExtensions
     {
         #region Name
-        /// <summary><p><em>Sets <see cref="DockerTrustKeyGenerateSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustKeyGenerateSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustKeyGenerateSettings SetName(this DockerTrustKeyGenerateSettings toolSettings, string name)
         {
@@ -46741,12 +45848,12 @@ namespace Nuke.Docker
             toolSettings.Name = name;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTrustKeyGenerateSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTrustKeyGenerateSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustKeyGenerateSettings ResetName(this DockerTrustKeyGenerateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -46772,12 +45879,12 @@ namespace Nuke.Docker
         public static DockerTrustKeyLoadSettings ResetName(this DockerTrustKeyLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
         #region Keyfile
-        /// <summary><p><em>Sets <see cref="DockerTrustKeyLoadSettings.Keyfile"/>.</em></p><p>KEYFILE</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustKeyLoadSettings.Keyfile"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustKeyLoadSettings SetKeyfile(this DockerTrustKeyLoadSettings toolSettings, string keyfile)
         {
@@ -46785,12 +45892,12 @@ namespace Nuke.Docker
             toolSettings.Keyfile = keyfile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTrustKeyLoadSettings.Keyfile"/>.</em></p><p>KEYFILE</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTrustKeyLoadSettings.Keyfile"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustKeyLoadSettings ResetKeyfile(this DockerTrustKeyLoadSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Keyfile = default(string);
+            toolSettings.Keyfile = null;
             return toolSettings;
         }
         #endregion
@@ -46816,7 +45923,7 @@ namespace Nuke.Docker
         public static DockerTrustRevokeSettings ResetYes(this DockerTrustRevokeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Yes = default(bool);
+            toolSettings.Yes = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerTrustRevokeSettings.Yes"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -46844,6 +45951,24 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
+        #region Image
+        /// <summary><p><em>Sets <see cref="DockerTrustRevokeSettings.Image"/>.</em></p><p>IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTrustRevokeSettings SetImage(this DockerTrustRevokeSettings toolSettings, string image)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Image = image;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerTrustRevokeSettings.Image"/>.</em></p><p>IMAGE[:TAG]</p></summary>
+        [Pure]
+        public static DockerTrustRevokeSettings ResetImage(this DockerTrustRevokeSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Image = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DockerTrustSignSettingsExtensions
@@ -46868,68 +45993,26 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerTrustSignerAddSettingsExtensions
     {
-        #region Key
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Key"/> to a new list.</em></p><p>Path to the signer's public key file</p></summary>
+        #region Options
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Options"/>.</em></p><p>OPTIONS</p></summary>
         [Pure]
-        public static DockerTrustSignerAddSettings SetKey(this DockerTrustSignerAddSettings toolSettings, params string[] key)
+        public static DockerTrustSignerAddSettings SetOptions(this DockerTrustSignerAddSettings toolSettings, string options)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KeyInternal = key.ToList();
+            toolSettings.Options = options;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Key"/> to a new list.</em></p><p>Path to the signer's public key file</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTrustSignerAddSettings.Options"/>.</em></p><p>OPTIONS</p></summary>
         [Pure]
-        public static DockerTrustSignerAddSettings SetKey(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> key)
+        public static DockerTrustSignerAddSettings ResetOptions(this DockerTrustSignerAddSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KeyInternal = key.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Key"/>.</em></p><p>Path to the signer's public key file</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings AddKey(this DockerTrustSignerAddSettings toolSettings, params string[] key)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.KeyInternal.AddRange(key);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Key"/>.</em></p><p>Path to the signer's public key file</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings AddKey(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> key)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.KeyInternal.AddRange(key);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerTrustSignerAddSettings.Key"/>.</em></p><p>Path to the signer's public key file</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings ClearKey(this DockerTrustSignerAddSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.KeyInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Key"/>.</em></p><p>Path to the signer's public key file</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings RemoveKey(this DockerTrustSignerAddSettings toolSettings, params string[] key)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(key);
-            toolSettings.KeyInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Key"/>.</em></p><p>Path to the signer's public key file</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings RemoveKey(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> key)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(key);
-            toolSettings.KeyInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Options = null;
             return toolSettings;
         }
         #endregion
         #region Name
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings SetName(this DockerTrustSignerAddSettings toolSettings, string name)
         {
@@ -46937,35 +46020,17 @@ namespace Nuke.Docker
             toolSettings.Name = name;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTrustSignerAddSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTrustSignerAddSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings ResetName(this DockerTrustSignerAddSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Repository
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Repository"/>.</em></p><p>REPOSITORY</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings SetRepository(this DockerTrustSignerAddSettings toolSettings, string repository)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = repository;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerTrustSignerAddSettings.Repository"/>.</em></p><p>REPOSITORY</p></summary>
-        [Pure]
-        public static DockerTrustSignerAddSettings ResetRepository(this DockerTrustSignerAddSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
         #region Repositories
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Repositories"/> to a new list.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Repositories"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings SetRepositories(this DockerTrustSignerAddSettings toolSettings, params string[] repositories)
         {
@@ -46973,7 +46038,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal = repositories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Repositories"/> to a new list.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerAddSettings.Repositories"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings SetRepositories(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -46981,7 +46046,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal = repositories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings AddRepositories(this DockerTrustSignerAddSettings toolSettings, params string[] repositories)
         {
@@ -46989,7 +46054,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.AddRange(repositories);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings AddRepositories(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -46997,7 +46062,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.AddRange(repositories);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings ClearRepositories(this DockerTrustSignerAddSettings toolSettings)
         {
@@ -47005,7 +46070,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings RemoveRepositories(this DockerTrustSignerAddSettings toolSettings, params string[] repositories)
         {
@@ -47014,7 +46079,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerAddSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerAddSettings RemoveRepositories(this DockerTrustSignerAddSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -47046,7 +46111,7 @@ namespace Nuke.Docker
         public static DockerTrustSignerRemoveSettings ResetForce(this DockerTrustSignerRemoveSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerTrustSignerRemoveSettings.Force"/>.</em></p><p>Do not prompt for confirmation before removing the most recent signer</p></summary>
@@ -47075,7 +46140,7 @@ namespace Nuke.Docker
         }
         #endregion
         #region Name
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings SetName(this DockerTrustSignerRemoveSettings toolSettings, string name)
         {
@@ -47083,35 +46148,17 @@ namespace Nuke.Docker
             toolSettings.Name = name;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerTrustSignerRemoveSettings.Name"/>.</em></p><p>NAME</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerTrustSignerRemoveSettings.Name"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings ResetName(this DockerTrustSignerRemoveSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Repository
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Repository"/>.</em></p><p>REPOSITORY</p></summary>
-        [Pure]
-        public static DockerTrustSignerRemoveSettings SetRepository(this DockerTrustSignerRemoveSettings toolSettings, string repository)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = repository;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerTrustSignerRemoveSettings.Repository"/>.</em></p><p>REPOSITORY</p></summary>
-        [Pure]
-        public static DockerTrustSignerRemoveSettings ResetRepository(this DockerTrustSignerRemoveSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
         #region Repositories
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Repositories"/> to a new list.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Repositories"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings SetRepositories(this DockerTrustSignerRemoveSettings toolSettings, params string[] repositories)
         {
@@ -47119,7 +46166,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal = repositories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Repositories"/> to a new list.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerTrustSignerRemoveSettings.Repositories"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings SetRepositories(this DockerTrustSignerRemoveSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -47127,7 +46174,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal = repositories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings AddRepositories(this DockerTrustSignerRemoveSettings toolSettings, params string[] repositories)
         {
@@ -47135,7 +46182,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.AddRange(repositories);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings AddRepositories(this DockerTrustSignerRemoveSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -47143,7 +46190,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.AddRange(repositories);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings ClearRepositories(this DockerTrustSignerRemoveSettings toolSettings)
         {
@@ -47151,7 +46198,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings RemoveRepositories(this DockerTrustSignerRemoveSettings toolSettings, params string[] repositories)
         {
@@ -47160,7 +46207,7 @@ namespace Nuke.Docker
             toolSettings.RepositoriesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p>[REPOSITORY...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerTrustSignerRemoveSettings.Repositories"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerTrustSignerRemoveSettings RemoveRepositories(this DockerTrustSignerRemoveSettings toolSettings, IEnumerable<string> repositories)
         {
@@ -47178,26 +46225,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerUnpauseSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerUnpauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerUnpauseSettings SetContainer(this DockerUnpauseSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerUnpauseSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerUnpauseSettings ResetContainer(this DockerUnpauseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerUnpauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerUnpauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings SetContainers(this DockerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -47205,7 +46234,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerUnpauseSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerUnpauseSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings SetContainers(this DockerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47213,7 +46242,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings AddContainers(this DockerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -47221,7 +46250,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings AddContainers(this DockerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47229,7 +46258,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings ClearContainers(this DockerUnpauseSettings toolSettings)
         {
@@ -47237,7 +46266,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings RemoveContainers(this DockerUnpauseSettings toolSettings, params string[] containers)
         {
@@ -47246,7 +46275,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerUnpauseSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUnpauseSettings RemoveContainers(this DockerUnpauseSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47278,14 +46307,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetBlkioWeight(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.BlkioWeight = default(int);
+            toolSettings.BlkioWeight = null;
             return toolSettings;
         }
         #endregion
         #region CpuPeriod
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.CpuPeriod"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) period</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpuPeriod(this DockerUpdateSettings toolSettings, long cpuPeriod)
+        public static DockerUpdateSettings SetCpuPeriod(this DockerUpdateSettings toolSettings, long? cpuPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPeriod = cpuPeriod;
@@ -47296,14 +46325,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpuPeriod(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuPeriod = default(long);
+            toolSettings.CpuPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuQuota
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.CpuQuota"/>.</em></p><p>Limit CPU CFS (Completely Fair Scheduler) quota</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpuQuota(this DockerUpdateSettings toolSettings, long cpuQuota)
+        public static DockerUpdateSettings SetCpuQuota(this DockerUpdateSettings toolSettings, long? cpuQuota)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuQuota = cpuQuota;
@@ -47314,14 +46343,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpuQuota(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuQuota = default(long);
+            toolSettings.CpuQuota = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtPeriod
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.CpuRtPeriod"/>.</em></p><p>Limit the CPU real-time period in microseconds</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpuRtPeriod(this DockerUpdateSettings toolSettings, long cpuRtPeriod)
+        public static DockerUpdateSettings SetCpuRtPeriod(this DockerUpdateSettings toolSettings, long? cpuRtPeriod)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtPeriod = cpuRtPeriod;
@@ -47332,14 +46361,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpuRtPeriod(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtPeriod = default(long);
+            toolSettings.CpuRtPeriod = null;
             return toolSettings;
         }
         #endregion
         #region CpuRtRuntime
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.CpuRtRuntime"/>.</em></p><p>Limit the CPU real-time runtime in microseconds</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpuRtRuntime(this DockerUpdateSettings toolSettings, long cpuRtRuntime)
+        public static DockerUpdateSettings SetCpuRtRuntime(this DockerUpdateSettings toolSettings, long? cpuRtRuntime)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuRtRuntime = cpuRtRuntime;
@@ -47350,14 +46379,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpuRtRuntime(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuRtRuntime = default(long);
+            toolSettings.CpuRtRuntime = null;
             return toolSettings;
         }
         #endregion
         #region CpuShares
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.CpuShares"/>.</em></p><p>CPU shares (relative weight)</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpuShares(this DockerUpdateSettings toolSettings, long cpuShares)
+        public static DockerUpdateSettings SetCpuShares(this DockerUpdateSettings toolSettings, long? cpuShares)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuShares = cpuShares;
@@ -47368,14 +46397,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpuShares(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpuShares = default(long);
+            toolSettings.CpuShares = null;
             return toolSettings;
         }
         #endregion
         #region Cpus
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Cpus"/>.</em></p><p>Number of CPUs</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetCpus(this DockerUpdateSettings toolSettings, decimal cpus)
+        public static DockerUpdateSettings SetCpus(this DockerUpdateSettings toolSettings, decimal? cpus)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cpus = cpus;
@@ -47386,7 +46415,7 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpus(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Cpus = default(decimal);
+            toolSettings.Cpus = null;
             return toolSettings;
         }
         #endregion
@@ -47404,7 +46433,7 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpusetCpus(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetCpus = default(string);
+            toolSettings.CpusetCpus = null;
             return toolSettings;
         }
         #endregion
@@ -47422,14 +46451,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetCpusetMems(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CpusetMems = default(string);
+            toolSettings.CpusetMems = null;
             return toolSettings;
         }
         #endregion
         #region KernelMemory
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.KernelMemory"/>.</em></p><p>Kernel memory limit</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetKernelMemory(this DockerUpdateSettings toolSettings, long kernelMemory)
+        public static DockerUpdateSettings SetKernelMemory(this DockerUpdateSettings toolSettings, long? kernelMemory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KernelMemory = kernelMemory;
@@ -47440,14 +46469,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetKernelMemory(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.KernelMemory = default(long);
+            toolSettings.KernelMemory = null;
             return toolSettings;
         }
         #endregion
         #region Memory
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Memory"/>.</em></p><p>Memory limit</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetMemory(this DockerUpdateSettings toolSettings, long memory)
+        public static DockerUpdateSettings SetMemory(this DockerUpdateSettings toolSettings, long? memory)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -47458,14 +46487,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetMemory(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Memory = default(long);
+            toolSettings.Memory = null;
             return toolSettings;
         }
         #endregion
         #region MemoryReservation
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.MemoryReservation"/>.</em></p><p>Memory soft limit</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetMemoryReservation(this DockerUpdateSettings toolSettings, long memoryReservation)
+        public static DockerUpdateSettings SetMemoryReservation(this DockerUpdateSettings toolSettings, long? memoryReservation)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemoryReservation = memoryReservation;
@@ -47476,14 +46505,14 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetMemoryReservation(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemoryReservation = default(long);
+            toolSettings.MemoryReservation = null;
             return toolSettings;
         }
         #endregion
         #region MemorySwap
         /// <summary><p><em>Sets <see cref="DockerUpdateSettings.MemorySwap"/>.</em></p><p>Swap limit equal to memory plus swap: '-1' to enable unlimited swap</p></summary>
         [Pure]
-        public static DockerUpdateSettings SetMemorySwap(this DockerUpdateSettings toolSettings, long memorySwap)
+        public static DockerUpdateSettings SetMemorySwap(this DockerUpdateSettings toolSettings, long? memorySwap)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MemorySwap = memorySwap;
@@ -47494,7 +46523,7 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetMemorySwap(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MemorySwap = default(long);
+            toolSettings.MemorySwap = null;
             return toolSettings;
         }
         #endregion
@@ -47512,30 +46541,12 @@ namespace Nuke.Docker
         public static DockerUpdateSettings ResetRestart(this DockerUpdateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Restart = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerUpdateSettings SetContainer(this DockerUpdateSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerUpdateSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerUpdateSettings ResetContainer(this DockerUpdateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
+            toolSettings.Restart = null;
             return toolSettings;
         }
         #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings SetContainers(this DockerUpdateSettings toolSettings, params string[] containers)
         {
@@ -47543,7 +46554,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerUpdateSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings SetContainers(this DockerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47551,7 +46562,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings AddContainers(this DockerUpdateSettings toolSettings, params string[] containers)
         {
@@ -47559,7 +46570,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings AddContainers(this DockerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47567,7 +46578,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings ClearContainers(this DockerUpdateSettings toolSettings)
         {
@@ -47575,7 +46586,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings RemoveContainers(this DockerUpdateSettings toolSettings, params string[] containers)
         {
@@ -47584,7 +46595,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerUpdateSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerUpdateSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerUpdateSettings RemoveContainers(this DockerUpdateSettings toolSettings, IEnumerable<string> containers)
         {
@@ -47616,7 +46627,7 @@ namespace Nuke.Docker
         public static DockerVersionSettings ResetFormat(this DockerVersionSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -47629,7 +46640,7 @@ namespace Nuke.Docker
     public static partial class DockerVolumeSettingsExtensions
     {
         #region Command
-        /// <summary><p><em>Sets <see cref="DockerVolumeSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerVolumeSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeSettings SetCommand(this DockerVolumeSettings toolSettings, string command)
         {
@@ -47637,12 +46648,12 @@ namespace Nuke.Docker
             toolSettings.Command = command;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DockerVolumeSettings.Command"/>.</em></p><p>COMMAND</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerVolumeSettings.Command"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeSettings ResetCommand(this DockerVolumeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Command = default(string);
+            toolSettings.Command = null;
             return toolSettings;
         }
         #endregion
@@ -47668,7 +46679,7 @@ namespace Nuke.Docker
         public static DockerVolumeCreateSettings ResetDriver(this DockerVolumeCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Driver = default(string);
+            toolSettings.Driver = null;
             return toolSettings;
         }
         #endregion
@@ -47746,7 +46757,7 @@ namespace Nuke.Docker
         public static DockerVolumeCreateSettings ResetName(this DockerVolumeCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Name = default(string);
+            toolSettings.Name = null;
             return toolSettings;
         }
         #endregion
@@ -47792,63 +46803,21 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Volumes
-        /// <summary><p><em>Sets <see cref="DockerVolumeCreateSettings.Volumes"/> to a new list.</em></p><p>[VOLUME]</p></summary>
+        #region Volume
+        /// <summary><p><em>Sets <see cref="DockerVolumeCreateSettings.Volume"/>.</em></p><p>[VOLUME]</p></summary>
         [Pure]
-        public static DockerVolumeCreateSettings SetVolumes(this DockerVolumeCreateSettings toolSettings, params string[] volumes)
+        public static DockerVolumeCreateSettings SetVolume(this DockerVolumeCreateSettings toolSettings, string volume)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumesInternal = volumes.ToList();
+            toolSettings.Volume = volume;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerVolumeCreateSettings.Volumes"/> to a new list.</em></p><p>[VOLUME]</p></summary>
+        /// <summary><p><em>Resets <see cref="DockerVolumeCreateSettings.Volume"/>.</em></p><p>[VOLUME]</p></summary>
         [Pure]
-        public static DockerVolumeCreateSettings SetVolumes(this DockerVolumeCreateSettings toolSettings, IEnumerable<string> volumes)
+        public static DockerVolumeCreateSettings ResetVolume(this DockerVolumeCreateSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumesInternal = volumes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeCreateSettings.Volumes"/>.</em></p><p>[VOLUME]</p></summary>
-        [Pure]
-        public static DockerVolumeCreateSettings AddVolumes(this DockerVolumeCreateSettings toolSettings, params string[] volumes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumesInternal.AddRange(volumes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeCreateSettings.Volumes"/>.</em></p><p>[VOLUME]</p></summary>
-        [Pure]
-        public static DockerVolumeCreateSettings AddVolumes(this DockerVolumeCreateSettings toolSettings, IEnumerable<string> volumes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumesInternal.AddRange(volumes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DockerVolumeCreateSettings.Volumes"/>.</em></p><p>[VOLUME]</p></summary>
-        [Pure]
-        public static DockerVolumeCreateSettings ClearVolumes(this DockerVolumeCreateSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.VolumesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeCreateSettings.Volumes"/>.</em></p><p>[VOLUME]</p></summary>
-        [Pure]
-        public static DockerVolumeCreateSettings RemoveVolumes(this DockerVolumeCreateSettings toolSettings, params string[] volumes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(volumes);
-            toolSettings.VolumesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeCreateSettings.Volumes"/>.</em></p><p>[VOLUME]</p></summary>
-        [Pure]
-        public static DockerVolumeCreateSettings RemoveVolumes(this DockerVolumeCreateSettings toolSettings, IEnumerable<string> volumes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(volumes);
-            toolSettings.VolumesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Volume = null;
             return toolSettings;
         }
         #endregion
@@ -47874,30 +46843,12 @@ namespace Nuke.Docker
         public static DockerVolumeInspectSettings ResetFormat(this DockerVolumeInspectSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
-            return toolSettings;
-        }
-        #endregion
-        #region Volume
-        /// <summary><p><em>Sets <see cref="DockerVolumeInspectSettings.Volume"/>.</em></p><p>VOLUME</p></summary>
-        [Pure]
-        public static DockerVolumeInspectSettings SetVolume(this DockerVolumeInspectSettings toolSettings, string volume)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Volume = volume;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerVolumeInspectSettings.Volume"/>.</em></p><p>VOLUME</p></summary>
-        [Pure]
-        public static DockerVolumeInspectSettings ResetVolume(this DockerVolumeInspectSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Volume = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
         #region Volumes
-        /// <summary><p><em>Sets <see cref="DockerVolumeInspectSettings.Volumes"/> to a new list.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerVolumeInspectSettings.Volumes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings SetVolumes(this DockerVolumeInspectSettings toolSettings, params string[] volumes)
         {
@@ -47905,7 +46856,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal = volumes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerVolumeInspectSettings.Volumes"/> to a new list.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerVolumeInspectSettings.Volumes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings SetVolumes(this DockerVolumeInspectSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -47913,7 +46864,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal = volumes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings AddVolumes(this DockerVolumeInspectSettings toolSettings, params string[] volumes)
         {
@@ -47921,7 +46872,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.AddRange(volumes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings AddVolumes(this DockerVolumeInspectSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -47929,7 +46880,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.AddRange(volumes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings ClearVolumes(this DockerVolumeInspectSettings toolSettings)
         {
@@ -47937,7 +46888,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings RemoveVolumes(this DockerVolumeInspectSettings toolSettings, params string[] volumes)
         {
@@ -47946,7 +46897,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerVolumeInspectSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeInspectSettings RemoveVolumes(this DockerVolumeInspectSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -47978,7 +46929,7 @@ namespace Nuke.Docker
         public static DockerVolumeLsSettings ResetFilter(this DockerVolumeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -47996,7 +46947,7 @@ namespace Nuke.Docker
         public static DockerVolumeLsSettings ResetFormat(this DockerVolumeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = default(string);
+            toolSettings.Format = null;
             return toolSettings;
         }
         #endregion
@@ -48014,7 +46965,7 @@ namespace Nuke.Docker
         public static DockerVolumeLsSettings ResetQuiet(this DockerVolumeLsSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = default(bool);
+            toolSettings.Quiet = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerVolumeLsSettings.Quiet"/>.</em></p><p>Only display volume names</p></summary>
@@ -48064,7 +47015,7 @@ namespace Nuke.Docker
         public static DockerVolumePruneSettings ResetFilter(this DockerVolumePruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = default(string);
+            toolSettings.Filter = null;
             return toolSettings;
         }
         #endregion
@@ -48082,7 +47033,7 @@ namespace Nuke.Docker
         public static DockerVolumePruneSettings ResetForce(this DockerVolumePruneSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerVolumePruneSettings.Force"/>.</em></p><p>Do not prompt for confirmation</p></summary>
@@ -48132,7 +47083,7 @@ namespace Nuke.Docker
         public static DockerVolumeRmSettings ResetForce(this DockerVolumeRmSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = default(bool);
+            toolSettings.Force = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DockerVolumeRmSettings.Force"/>.</em></p><p>Force the removal of one or more volumes</p></summary>
@@ -48160,26 +47111,8 @@ namespace Nuke.Docker
             return toolSettings;
         }
         #endregion
-        #region Volume
-        /// <summary><p><em>Sets <see cref="DockerVolumeRmSettings.Volume"/>.</em></p><p>VOLUME</p></summary>
-        [Pure]
-        public static DockerVolumeRmSettings SetVolume(this DockerVolumeRmSettings toolSettings, string volume)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Volume = volume;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerVolumeRmSettings.Volume"/>.</em></p><p>VOLUME</p></summary>
-        [Pure]
-        public static DockerVolumeRmSettings ResetVolume(this DockerVolumeRmSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Volume = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Volumes
-        /// <summary><p><em>Sets <see cref="DockerVolumeRmSettings.Volumes"/> to a new list.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerVolumeRmSettings.Volumes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings SetVolumes(this DockerVolumeRmSettings toolSettings, params string[] volumes)
         {
@@ -48187,7 +47120,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal = volumes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerVolumeRmSettings.Volumes"/> to a new list.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerVolumeRmSettings.Volumes"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings SetVolumes(this DockerVolumeRmSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -48195,7 +47128,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal = volumes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings AddVolumes(this DockerVolumeRmSettings toolSettings, params string[] volumes)
         {
@@ -48203,7 +47136,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.AddRange(volumes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings AddVolumes(this DockerVolumeRmSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -48211,7 +47144,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.AddRange(volumes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings ClearVolumes(this DockerVolumeRmSettings toolSettings)
         {
@@ -48219,7 +47152,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings RemoveVolumes(this DockerVolumeRmSettings toolSettings, params string[] volumes)
         {
@@ -48228,7 +47161,7 @@ namespace Nuke.Docker
             toolSettings.VolumesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p>[VOLUME...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerVolumeRmSettings.Volumes"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerVolumeRmSettings RemoveVolumes(this DockerVolumeRmSettings toolSettings, IEnumerable<string> volumes)
         {
@@ -48246,26 +47179,8 @@ namespace Nuke.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerWaitSettingsExtensions
     {
-        #region Container
-        /// <summary><p><em>Sets <see cref="DockerWaitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerWaitSettings SetContainer(this DockerWaitSettings toolSettings, string container)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = container;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerWaitSettings.Container"/>.</em></p><p>CONTAINER</p></summary>
-        [Pure]
-        public static DockerWaitSettings ResetContainer(this DockerWaitSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Container = default(string);
-            return toolSettings;
-        }
-        #endregion
         #region Containers
-        /// <summary><p><em>Sets <see cref="DockerWaitSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerWaitSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings SetContainers(this DockerWaitSettings toolSettings, params string[] containers)
         {
@@ -48273,7 +47188,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="DockerWaitSettings.Containers"/> to a new list.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Sets <see cref="DockerWaitSettings.Containers"/> to a new list.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings SetContainers(this DockerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -48281,7 +47196,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal = containers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings AddContainers(this DockerWaitSettings toolSettings, params string[] containers)
         {
@@ -48289,7 +47204,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="DockerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DockerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings AddContainers(this DockerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -48297,7 +47212,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.AddRange(containers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="DockerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Clears <see cref="DockerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings ClearContainers(this DockerWaitSettings toolSettings)
         {
@@ -48305,7 +47220,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings RemoveContainers(this DockerWaitSettings toolSettings, params string[] containers)
         {
@@ -48314,7 +47229,7 @@ namespace Nuke.Docker
             toolSettings.ContainersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="DockerWaitSettings.Containers"/>.</em></p><p>[CONTAINER...]</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DockerWaitSettings.Containers"/>.</em></p><p></p></summary>
         [Pure]
         public static DockerWaitSettings RemoveContainers(this DockerWaitSettings toolSettings, IEnumerable<string> containers)
         {
@@ -48346,7 +47261,7 @@ namespace Nuke.Docker
         public static CliSettings ResetLogLevel(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LogLevel = default(LogLevel);
+            toolSettings.LogLevel = null;
             return toolSettings;
         }
         #endregion
@@ -48364,7 +47279,7 @@ namespace Nuke.Docker
         public static CliSettings ResetConfig(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = default(string);
+            toolSettings.Config = null;
             return toolSettings;
         }
         #endregion
@@ -48382,7 +47297,7 @@ namespace Nuke.Docker
         public static CliSettings ResetDebug(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = default(bool);
+            toolSettings.Debug = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
@@ -48424,7 +47339,7 @@ namespace Nuke.Docker
         public static CliSettings ResetTLS(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = default(bool);
+            toolSettings.TLS = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
@@ -48466,7 +47381,7 @@ namespace Nuke.Docker
         public static CliSettings ResetTLSVerify(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = default(bool);
+            toolSettings.TLSVerify = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
@@ -48508,7 +47423,7 @@ namespace Nuke.Docker
         public static CliSettings ResetTLSCaCert(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCaCert = default(string);
+            toolSettings.TLSCaCert = null;
             return toolSettings;
         }
         #endregion
@@ -48526,7 +47441,7 @@ namespace Nuke.Docker
         public static CliSettings ResetTLSCert(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCert = default(string);
+            toolSettings.TLSCert = null;
             return toolSettings;
         }
         #endregion
@@ -48544,7 +47459,7 @@ namespace Nuke.Docker
         public static CliSettings ResetTLSKey(this CliSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSKey = default(string);
+            toolSettings.TLSKey = null;
             return toolSettings;
         }
         #endregion

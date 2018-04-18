@@ -22,11 +22,7 @@ namespace Nuke.Docker
 
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            if (CliSettings != null)
-            {
-                arguments = CliSettings.CreateArguments().Concatenate(arguments);
-            }
-
+            if (CliSettings != null) arguments = CliSettings.CreateArguments().Concatenate(arguments);
             return base.ConfigureArguments(arguments);
         }
     }
