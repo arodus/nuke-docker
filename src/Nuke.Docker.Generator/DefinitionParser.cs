@@ -119,7 +119,7 @@ namespace Nuke.Docker.Generator
                                Name = propertyName,
                                Help = argument.Description.RemoveNewLines(),
                                DataClass = settingsClass,
-                               Format = $"--{argument.Name} {{value}}"
+                               Format = $"--{argument.Name}={{value}}"
                            };
             if (isEnumeration)
             {
