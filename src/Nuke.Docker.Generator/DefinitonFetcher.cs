@@ -63,6 +63,7 @@ namespace Nuke.Docker.Generator
         {
             var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
+            Console.WriteLine($"Successfully downloaded: {url}");
             var definitionYaml = await response.Content.ReadAsStringAsync();
             return new KeyValuePair<string, string>(url, definitionYaml);
         }

@@ -2,15 +2,15 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.4.0 [CommitSha: c27f4265].
-// Generated from https://github.com/arodus/nuke-docker/blob/master/.tmp/Docker.json.
+// Generated with Nuke.CodeGeneration, Version: 0.4.0 [CommitSha: 5d0cde5f].
+// Generated from https://github.com/arodus/nuke-docker/blob/develop/.tmp/Docker.json.
 
 using JetBrains.Annotations;
+using Nuke.Common;
+using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools;
-using Nuke.Core;
-using Nuke.Core.Execution;
-using Nuke.Core.Tooling;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -12,7 +12,7 @@ namespace Nuke.Docker.Generator
     {
         public string RawValue { get; internal set; }
 
-        public bool IsArgument => IsList || IsDictionary || RawValue.EndsWith(value: ']') || RawValue.Contains(value: '|')
+        public bool IsArgument => IsList || IsDictionary || RawValue.EndsWith("]") || RawValue.Contains(value: '|')
                                   || RawValue.All(x => char.IsUpper(x) || x == '_' || x == '-');
 
         public bool IsList { get; internal set; }

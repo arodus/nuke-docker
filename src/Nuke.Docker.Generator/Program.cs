@@ -22,7 +22,7 @@ namespace Nuke.Docker.Generator
             if (args.Length == 2 && args[1].Contains(value: ' '))
             {
                 var newArgs = new List<string> { args[0] };
-                newArgs.AddRange(args[1].Trim(trimChar: '\"').Split(separator: ' ').ToList());
+                newArgs.AddRange(args[1].Trim(trimChars: '\"').Split(separator: ' ').ToList());
                 args = newArgs.ToArray();
             }
 
@@ -53,8 +53,8 @@ namespace Nuke.Docker.Generator
             Console.WriteLine();
             Console.WriteLine("Generation finished.");
             Console.WriteLine($"Created Tasks: {tool.Tasks.Count}");
-            Console.WriteLine($"Created data classed: {tool.DataClasses.Count}");
-            Console.WriteLine($"Created enumerations: {tool.Enumerations.Count}");
+            Console.WriteLine($"Created Data Classes: {tool.DataClasses.Count}");
+            Console.WriteLine($"Created Enumerations: {tool.Enumerations.Count}");
         }
     }
 }

@@ -309,7 +309,7 @@ namespace Nuke.Docker.Generator
             var match = regex.Match(argument.Description);
             return !match.Success
                 ? new List<string>()
-                : match.Groups[groupnum: 1].Value.Split(separator: '|').Select(x => x.Trim(trimChar: '"')).ToList();
+                : match.Groups[groupnum: 1].Value.Split(separator: '|').Select(x => x.Trim(trimChars: '"')).ToList();
         }
 
         private static string GetPositionalArgumentHelp(UsageParameter usageParameter, CommandDefinition commandDefinition)

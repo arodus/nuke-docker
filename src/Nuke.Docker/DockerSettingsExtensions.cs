@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Tooling;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Docker
 {

@@ -14,9 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.4.0-alpha0029" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.4.0-alpha0029" />
+    <PackageReference Include="Nuke.Common" Version="0.4" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.4" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
+    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="xunit.runner.console" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>

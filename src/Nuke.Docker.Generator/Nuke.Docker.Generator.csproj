@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <Authors>Sebastian Karasek, Matthias Koch</Authors>
     <Company>Nuke.build</Company>
     <Description>Generator for the docker extension of Nuke.</Description>
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.4.0-alpha0029" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.4" />
     <PackageReference Include="Octokit" Version="0.29.0" />
     <PackageReference Include="YamlDotNet" Version="4.3.1" />
   </ItemGroup>

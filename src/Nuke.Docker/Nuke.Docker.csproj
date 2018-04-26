@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.4.0-alpha0029" />
+    <PackageReference Include="Nuke.Common" Version="[0.4,1)" />
   </ItemGroup>
 
 </Project>
