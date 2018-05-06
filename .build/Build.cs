@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Nuke.CodeGeneration;
 using Nuke.Common.Git;
@@ -17,6 +18,8 @@ using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
+
 
 class Build : NukeBuild
 {
@@ -28,6 +31,7 @@ class Build : NukeBuild
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
+    string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
@@ -101,6 +105,17 @@ class Build : NukeBuild
 
     string DockerProject => SourceDirectory / "Nuke.Docker" / "Nuke.Docker.csproj";
 
+    Target Changelog => _ => _
+        .OnlyWhen(() => InvokedTargets.Contains(nameof(Changelog)))
+        .Executes(() =>
+        {
+            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
+
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
+            Git($"tag -f {GitVersion.SemVer}");
+        });
+
     Target CompilePlugin => _ => _
         .DependsOn(Generate)
         .Executes(() =>
@@ -113,11 +128,18 @@ class Build : NukeBuild
         .DependsOn(CompilePlugin)
         .Executes(() =>
         {
+            var releaseNotes = ExtractChangelogSectionNotes(ChangelogFile)
+                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C"))
+                .Concat(string.Empty)
+                .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
+                .JoinNewLine();
+
             DotNetPack(s => DefaultDotNetPack
                 .SetProject(DockerProject)
                 .EnableNoBuild()
                 .EnableNoRestore()
-                .SetVersion(GitVersion.NuGetVersionV2));
+                .SetVersion(GitVersion.NuGetVersionV2)
+                .SetPackageReleaseNotes(releaseNotes));
         });
 
     Target Push => _ => _

@@ -13,7 +13,10 @@
     <RepositoryUrl>https://github.com/nuke-build/docker</RepositoryUrl>
     <PackageTags>build automation continuous-integration tools orchestration nuke.build docker</PackageTags>
     <Product>Nuke.Docker</Product>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
+
+  <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="[0.4,1)" />

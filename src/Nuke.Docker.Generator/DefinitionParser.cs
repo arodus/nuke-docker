@@ -50,7 +50,7 @@ namespace Nuke.Docker.Generator
                 var task = new Task
                            {
                                Postfix = GetPostfix(definition),
-                               Help = definition.ShortDescription,
+                               Help = definition.ShortDescription.FormatForXmlDoc(),
                                Tool = _tool
                            };
 
@@ -117,7 +117,7 @@ namespace Nuke.Docker.Generator
             var property = new Property
                            {
                                Name = propertyName,
-                               Help = argument.Description.RemoveNewLines(),
+                               Help = argument.Description.RemoveNewLines().FormatForXmlDoc(),
                                DataClass = settingsClass,
                                Format = $"--{argument.Name}={{value}}"
                            };
