@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
+using Nuke.Docker.Generator.Model;
 using Nuke.Docker.Generator.Utility;
 
 namespace Nuke.Docker.Generator

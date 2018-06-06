@@ -8,7 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using YamlDotNet.Serialization;
 
-namespace Nuke.Docker.Generator
+namespace Nuke.Docker.Generator.Model
 {
     [UsedImplicitly]
     internal class CommandDefinition : DefinitionBase

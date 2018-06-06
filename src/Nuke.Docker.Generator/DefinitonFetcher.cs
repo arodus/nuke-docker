@@ -6,21 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Octokit;
+using Nuke.Docker.Generator.Model;
 using YamlDotNet.Serialization;
 
 namespace Nuke.Docker.Generator
 {
     internal static class DefinitionFetcher
     {
-        private const string c_dockerRepositoryOwner = "Docker";
-        private const string c_dockerDocRepositoryName = "docker.github.io";
-        private const string c_dockerCliDefinitionPath = "_data/engine-cli";
+        private const string c_referenceUrl = "https://raw.githubusercontent.com/docker/docker.github.io/{0}/_data/engine-cli/{1}";
 
         public static List<CommandDefinition> GetCommandDefinitionsFromFolder(
             string path,
+            string reference,
             params string[] commandsToSkip)
         {
             var files = Directory.EnumerateFiles(path, "*.yaml").ToList();
@@ -29,49 +26,16 @@ namespace Nuke.Docker.Generator
             foreach (var file in files)
             {
                 if (commandsToSkip.Contains(Path.GetFileNameWithoutExtension(file))) continue;
-                definitions.Add(ParseDefinition(File.ReadAllText(file), file));
+                definitions.Add(ParseDefinition(File.ReadAllText(file), reference, Path.GetFileName(file)));
             }
 
             return definitions;
         }
 
-        public static async Task<List<CommandDefinition>> GetCommandDefinitionsFromGitHub(string branch, params string[] commandsToSkip)
-        {
-            var definitions = await GetDefinitionUrls(branch, commandsToSkip);
-            using (var client = new HttpClient())
-            {
-                // ReSharper disable AccessToDisposedClosure
-                return (await Task.WhenAll(definitions.Where(x => !commandsToSkip.Contains(x.Key.Replace(".yaml", string.Empty)))
-                        .Select(x => DownloadDefinition(x.Value, client))))
-                    .Select(x => ParseDefinition(x.Value, x.Key)).ToList();
-                // ReSharper restore AccessToDisposedClosure
-            }
-        }
-
-        private static async Task<IEnumerable<KeyValuePair<string, string>>> GetDefinitionUrls(string branch, params string[] commandsToSkip)
-        {
-            var client = new GitHubClient(new ProductHeaderValue("Nuke.Docker.Generator"));
-            var content = await client.Repository.Content.GetAllContentsByRef(c_dockerRepositoryOwner,
-                c_dockerDocRepositoryName,
-                c_dockerCliDefinitionPath,
-                branch);
-
-            return content.Where(x => !commandsToSkip.Contains(x.Name)).Select(x => new KeyValuePair<string, string>(x.Name, x.DownloadUrl));
-        }
-
-        private static async Task<KeyValuePair<string, string>> DownloadDefinition(string url, HttpClient client)
-        {
-            var response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            Console.WriteLine($"Successfully downloaded: {url}");
-            var definitionYaml = await response.Content.ReadAsStringAsync();
-            return new KeyValuePair<string, string>(url, definitionYaml);
-        }
-
-        private static CommandDefinition ParseDefinition(string definitionYaml, string reference)
+        private static CommandDefinition ParseDefinition(string definitionYaml, string reference, string fileName)
         {
             var definiton = new Deserializer().Deserialize<CommandDefinition>(definitionYaml);
-            definiton.ReferenceUrl = reference;
+            definiton.ReferenceUrl = string.Format(c_referenceUrl, reference, fileName);
             return definiton;
         }
     }

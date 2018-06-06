@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,8 +14,7 @@
   <Import Project="..\..\shared\Configuration.props" />
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.4" />
-    <PackageReference Include="Octokit" Version="0.29.0" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.5" />
     <PackageReference Include="YamlDotNet" Version="4.3.1" />
   </ItemGroup>
 
