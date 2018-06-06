@@ -99,7 +99,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            Git($"clone {DockerCliDocsRepository} -b {DockerDocGitBranch} --single-branch --depth 1 --no-tags {DefinitonRepositoryPath}");
+            Git($"clone {DockerCliDocsRepository} -b {DockerDocGitBranch} --single-branch --depth 1 {DefinitonRepositoryPath}");
         });
 
     Target Generate => _ => _
