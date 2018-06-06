@@ -2,8 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.4.0 [CommitSha: c494ebb7].
-// Generated from https://github.com/nuke-build/nuke-docker/blob/master/.tmp/Docker.json.
+// Generated with Nuke.CodeGeneration, Version: 0.5.0 [CommitSha: 3eaf2b72].
+// Generated from https://github.com/docker/docker.github.io/blob/master/src/Nuke.Docker/specifications/Docker.json.
 
 using JetBrains.Annotations;
 using Nuke.Common;
@@ -27,6 +27,13 @@ namespace Nuke.Docker
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
         public static string DockerPath => ToolPathResolver.GetPathExecutable("docker");
+        /// <summary><p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p></summary>
+        public static IEnumerable<string> Docker(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(DockerAttachSettings toolSettings);
         static partial void PostProcess(DockerAttachSettings toolSettings);
         /// <summary><p>Attach local standard input, output, and error streams to a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
@@ -522,6 +529,17 @@ namespace Nuke.Docker
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
+        static partial void PreProcess(DockerImagesSettings toolSettings);
+        static partial void PostProcess(DockerImagesSettings toolSettings);
+        /// <summary><p>List images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
+        public static void DockerImages(Configure<DockerImagesSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DockerImagesSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
         static partial void PreProcess(DockerImageBuildSettings toolSettings);
         static partial void PostProcess(DockerImageBuildSettings toolSettings);
         /// <summary><p>Build an image from a Dockerfile.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
@@ -649,17 +667,6 @@ namespace Nuke.Docker
         public static void DockerImageTag(Configure<DockerImageTagSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageTagSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
-            process.AssertZeroExitCode();
-            PostProcess(toolSettings);
-        }
-        static partial void PreProcess(DockerImagesSettings toolSettings);
-        static partial void PostProcess(DockerImagesSettings toolSettings);
-        /// <summary><p>List images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImages(Configure<DockerImagesSettings> configurator = null, ProcessSettings processSettings = null)
-        {
-            var toolSettings = configurator.InvokeSafe(new DockerImagesSettings());
             PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
@@ -4277,6 +4284,45 @@ namespace Nuke.Docker
         }
     }
     #endregion
+    #region DockerImagesSettings
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerImagesSettings : DockerSettings
+    {
+        /// <summary><p>Path to the Docker executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
+        /// <summary><p>Show all images (default hides intermediate images).</p></summary>
+        public virtual bool? All { get; internal set; }
+        /// <summary><p>Show digests.</p></summary>
+        public virtual bool? Digests { get; internal set; }
+        /// <summary><p>Filter output based on conditions provided.</p></summary>
+        public virtual string Filter { get; internal set; }
+        /// <summary><p>Pretty-print images using a Go template.</p></summary>
+        public virtual string Format { get; internal set; }
+        /// <summary><p>Don't truncate output.</p></summary>
+        public virtual bool? NoTrunc { get; internal set; }
+        /// <summary><p>Only show numeric IDs.</p></summary>
+        public virtual bool? Quiet { get; internal set; }
+        /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
+        public virtual string Repository { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("images")
+              .Add("--all={value}", All)
+              .Add("--digests={value}", Digests)
+              .Add("--filter={value}", Filter)
+              .Add("--format={value}", Format)
+              .Add("--no-trunc={value}", NoTrunc)
+              .Add("--quiet={value}", Quiet)
+              .Add("{value}", Repository)
+              .Add("{value}", GetCliSettings(), customValue: true);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
     #region DockerImageBuildSettings
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
@@ -4702,45 +4748,6 @@ namespace Nuke.Docker
               .Add("image tag")
               .Add("{value}", SourceImage)
               .Add("{value}", TargetImage)
-              .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
-        }
-    }
-    #endregion
-    #region DockerImagesSettings
-    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public partial class DockerImagesSettings : DockerSettings
-    {
-        /// <summary><p>Path to the Docker executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        /// <summary><p>Show all images (default hides intermediate images).</p></summary>
-        public virtual bool? All { get; internal set; }
-        /// <summary><p>Show digests.</p></summary>
-        public virtual bool? Digests { get; internal set; }
-        /// <summary><p>Filter output based on conditions provided.</p></summary>
-        public virtual string Filter { get; internal set; }
-        /// <summary><p>Pretty-print images using a Go template.</p></summary>
-        public virtual string Format { get; internal set; }
-        /// <summary><p>Don't truncate output.</p></summary>
-        public virtual bool? NoTrunc { get; internal set; }
-        /// <summary><p>Only show numeric IDs.</p></summary>
-        public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>[REPOSITORY[:TAG]]</p></summary>
-        public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
-        {
-            arguments
-              .Add("images")
-              .Add("--all={value}", All)
-              .Add("--digests={value}", Digests)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
-              .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -25055,6 +25062,236 @@ namespace Nuke.Docker
     {
     }
     #endregion
+    #region DockerImagesSettingsExtensions
+    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerImagesSettingsExtensions
+    {
+        #region All
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetAll(this DockerImagesSettings toolSettings, bool? all)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = all;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetAll(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
+        [Pure]
+        public static DockerImagesSettings EnableAll(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
+        [Pure]
+        public static DockerImagesSettings DisableAll(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
+        [Pure]
+        public static DockerImagesSettings ToggleAll(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = !toolSettings.All;
+            return toolSettings;
+        }
+        #endregion
+        #region Digests
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetDigests(this DockerImagesSettings toolSettings, bool? digests)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Digests = digests;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetDigests(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Digests = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
+        [Pure]
+        public static DockerImagesSettings EnableDigests(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Digests = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
+        [Pure]
+        public static DockerImagesSettings DisableDigests(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Digests = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ToggleDigests(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Digests = !toolSettings.Digests;
+            return toolSettings;
+        }
+        #endregion
+        #region Filter
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Filter"/>.</em></p><p>Filter output based on conditions provided.</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetFilter(this DockerImagesSettings toolSettings, string filter)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = filter;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Filter"/>.</em></p><p>Filter output based on conditions provided.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetFilter(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Format
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Format"/>.</em></p><p>Pretty-print images using a Go template.</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetFormat(this DockerImagesSettings toolSettings, string format)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = format;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Format"/>.</em></p><p>Pretty-print images using a Go template.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetFormat(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoTrunc
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetNoTrunc(this DockerImagesSettings toolSettings, bool? noTrunc)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTrunc = noTrunc;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetNoTrunc(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTrunc = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
+        [Pure]
+        public static DockerImagesSettings EnableNoTrunc(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTrunc = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
+        [Pure]
+        public static DockerImagesSettings DisableNoTrunc(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTrunc = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ToggleNoTrunc(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTrunc = !toolSettings.NoTrunc;
+            return toolSettings;
+        }
+        #endregion
+        #region Quiet
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetQuiet(this DockerImagesSettings toolSettings, bool? quiet)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = quiet;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetQuiet(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
+        [Pure]
+        public static DockerImagesSettings EnableQuiet(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
+        [Pure]
+        public static DockerImagesSettings DisableQuiet(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
+        [Pure]
+        public static DockerImagesSettings ToggleQuiet(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = !toolSettings.Quiet;
+            return toolSettings;
+        }
+        #endregion
+        #region Repository
+        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        [Pure]
+        public static DockerImagesSettings SetRepository(this DockerImagesSettings toolSettings, string repository)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Repository = repository;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
+        [Pure]
+        public static DockerImagesSettings ResetRepository(this DockerImagesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Repository = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region DockerImageBuildSettingsExtensions
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
@@ -27366,236 +27603,6 @@ namespace Nuke.Docker
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetImage = null;
-            return toolSettings;
-        }
-        #endregion
-    }
-    #endregion
-    #region DockerImagesSettingsExtensions
-    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    public static partial class DockerImagesSettingsExtensions
-    {
-        #region All
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetAll(this DockerImagesSettings toolSettings, bool? all)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.All = all;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetAll(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.All = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
-        [Pure]
-        public static DockerImagesSettings EnableAll(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.All = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
-        [Pure]
-        public static DockerImagesSettings DisableAll(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.All = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.All"/>.</em></p><p>Show all images (default hides intermediate images).</p></summary>
-        [Pure]
-        public static DockerImagesSettings ToggleAll(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.All = !toolSettings.All;
-            return toolSettings;
-        }
-        #endregion
-        #region Digests
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetDigests(this DockerImagesSettings toolSettings, bool? digests)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = digests;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetDigests(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
-        [Pure]
-        public static DockerImagesSettings EnableDigests(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
-        [Pure]
-        public static DockerImagesSettings DisableDigests(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.Digests"/>.</em></p><p>Show digests.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ToggleDigests(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Digests = !toolSettings.Digests;
-            return toolSettings;
-        }
-        #endregion
-        #region Filter
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Filter"/>.</em></p><p>Filter output based on conditions provided.</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetFilter(this DockerImagesSettings toolSettings, string filter)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = filter;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Filter"/>.</em></p><p>Filter output based on conditions provided.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetFilter(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Filter = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Format
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Format"/>.</em></p><p>Pretty-print images using a Go template.</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetFormat(this DockerImagesSettings toolSettings, string format)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = format;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Format"/>.</em></p><p>Pretty-print images using a Go template.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetFormat(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Format = null;
-            return toolSettings;
-        }
-        #endregion
-        #region NoTrunc
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetNoTrunc(this DockerImagesSettings toolSettings, bool? noTrunc)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = noTrunc;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetNoTrunc(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
-        [Pure]
-        public static DockerImagesSettings EnableNoTrunc(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
-        [Pure]
-        public static DockerImagesSettings DisableNoTrunc(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.NoTrunc"/>.</em></p><p>Don't truncate output.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ToggleNoTrunc(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoTrunc = !toolSettings.NoTrunc;
-            return toolSettings;
-        }
-        #endregion
-        #region Quiet
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetQuiet(this DockerImagesSettings toolSettings, bool? quiet)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = quiet;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetQuiet(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
-        [Pure]
-        public static DockerImagesSettings EnableQuiet(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
-        [Pure]
-        public static DockerImagesSettings DisableQuiet(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DockerImagesSettings.Quiet"/>.</em></p><p>Only show numeric IDs.</p></summary>
-        [Pure]
-        public static DockerImagesSettings ToggleQuiet(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Quiet = !toolSettings.Quiet;
-            return toolSettings;
-        }
-        #endregion
-        #region Repository
-        /// <summary><p><em>Sets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings SetRepository(this DockerImagesSettings toolSettings, string repository)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = repository;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerImagesSettings.Repository"/>.</em></p><p>[REPOSITORY[:TAG]]</p></summary>
-        [Pure]
-        public static DockerImagesSettings ResetRepository(this DockerImagesSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Repository = null;
             return toolSettings;
         }
         #endregion
