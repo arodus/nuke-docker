@@ -106,7 +106,7 @@ class Build : NukeBuild
         .DependsOn(Clone)
         .Executes(() =>
         {
-            var reference = Git($"rev-parse --short {DockerDocGitBranch}", DefinitonRepositoryPath).Single();
+            var reference = Git($"rev-parse --short {DockerDocGitBranch}", DefinitonRepositoryPath, redirectOutput: true).Single();
 
             var commandsToSkip = new[]
                                  {
