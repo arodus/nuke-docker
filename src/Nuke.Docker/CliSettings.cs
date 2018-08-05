@@ -10,6 +10,8 @@ namespace Nuke.Docker
 {
     public partial class CliSettings
     {
+
+        
         public Arguments CreateArguments()
         {
             return ConfigureArguments(new Arguments());

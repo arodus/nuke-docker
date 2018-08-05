@@ -2,10 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.5.0 [CommitSha: 3eaf2b72].
-// Generated from https://github.com/docker/docker.github.io/blob/master/src/Nuke.Docker/specifications/Docker.json.
+// Generated with Nuke.CodeGeneration, Version: 0.6.0 [CommitSha: 5a428f0d].
+// Generated from https://github.com/nuke-build/docker/blob/master/src/Nuke.Docker/specifications/Docker.json.
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
@@ -28,1881 +29,1371 @@ namespace Nuke.Docker
         /// <summary><p>Path to the Docker executable.</p></summary>
         public static string DockerPath => ToolPathResolver.GetPathExecutable("docker");
         /// <summary><p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p></summary>
-        public static IEnumerable<string> Docker(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.Output;
         }
-        static partial void PreProcess(DockerAttachSettings toolSettings);
-        static partial void PostProcess(DockerAttachSettings toolSettings);
         /// <summary><p>Attach local standard input, output, and error streams to a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerAttach(Configure<DockerAttachSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerAttach(Configure<DockerAttachSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerAttachSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerBuildSettings toolSettings);
-        static partial void PostProcess(DockerBuildSettings toolSettings);
         /// <summary><p>Build an image from a Dockerfile.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerBuild(Configure<DockerBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerBuild(Configure<DockerBuildSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerBuildSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCheckpointSettings toolSettings);
-        static partial void PostProcess(DockerCheckpointSettings toolSettings);
         /// <summary><p>Manage checkpoints.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCheckpoint(Configure<DockerCheckpointSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCheckpoint(Configure<DockerCheckpointSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCheckpointSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCheckpointCreateSettings toolSettings);
-        static partial void PostProcess(DockerCheckpointCreateSettings toolSettings);
         /// <summary><p>Create a checkpoint from a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCheckpointCreate(Configure<DockerCheckpointCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCheckpointCreate(Configure<DockerCheckpointCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCheckpointCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCheckpointLsSettings toolSettings);
-        static partial void PostProcess(DockerCheckpointLsSettings toolSettings);
         /// <summary><p>List checkpoints for a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCheckpointLs(Configure<DockerCheckpointLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCheckpointLs(Configure<DockerCheckpointLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCheckpointLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCheckpointRmSettings toolSettings);
-        static partial void PostProcess(DockerCheckpointRmSettings toolSettings);
         /// <summary><p>Remove a checkpoint.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCheckpointRm(Configure<DockerCheckpointRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCheckpointRm(Configure<DockerCheckpointRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCheckpointRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCommitSettings toolSettings);
-        static partial void PostProcess(DockerCommitSettings toolSettings);
         /// <summary><p>Create a new image from a container's changes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCommit(Configure<DockerCommitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCommit(Configure<DockerCommitSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCommitSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerConfigSettings toolSettings);
-        static partial void PostProcess(DockerConfigSettings toolSettings);
         /// <summary><p>Manage Docker configs.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerConfig(Configure<DockerConfigSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerConfig(Configure<DockerConfigSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerConfigSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerConfigCreateSettings toolSettings);
-        static partial void PostProcess(DockerConfigCreateSettings toolSettings);
         /// <summary><p>Create a config from a file or STDIN.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerConfigCreate(Configure<DockerConfigCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerConfigCreate(Configure<DockerConfigCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerConfigCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerConfigInspectSettings toolSettings);
-        static partial void PostProcess(DockerConfigInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more configs.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerConfigInspect(Configure<DockerConfigInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerConfigInspect(Configure<DockerConfigInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerConfigInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerConfigLsSettings toolSettings);
-        static partial void PostProcess(DockerConfigLsSettings toolSettings);
         /// <summary><p>List configs.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerConfigLs(Configure<DockerConfigLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerConfigLs(Configure<DockerConfigLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerConfigLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerConfigRmSettings toolSettings);
-        static partial void PostProcess(DockerConfigRmSettings toolSettings);
         /// <summary><p>Remove one or more configs.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerConfigRm(Configure<DockerConfigRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerConfigRm(Configure<DockerConfigRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerConfigRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerSettings toolSettings);
-        static partial void PostProcess(DockerContainerSettings toolSettings);
         /// <summary><p>Manage containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainer(Configure<DockerContainerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainer(Configure<DockerContainerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerAttachSettings toolSettings);
-        static partial void PostProcess(DockerContainerAttachSettings toolSettings);
         /// <summary><p>Attach local standard input, output, and error streams to a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerAttach(Configure<DockerContainerAttachSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerAttach(Configure<DockerContainerAttachSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerAttachSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerCommitSettings toolSettings);
-        static partial void PostProcess(DockerContainerCommitSettings toolSettings);
         /// <summary><p>Create a new image from a container's changes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerCommit(Configure<DockerContainerCommitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerCommit(Configure<DockerContainerCommitSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerCommitSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerCreateSettings toolSettings);
-        static partial void PostProcess(DockerContainerCreateSettings toolSettings);
         /// <summary><p>Create a new container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerCreate(Configure<DockerContainerCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerCreate(Configure<DockerContainerCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerDiffSettings toolSettings);
-        static partial void PostProcess(DockerContainerDiffSettings toolSettings);
         /// <summary><p>Inspect changes to files or directories on a container's filesystem.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerDiff(Configure<DockerContainerDiffSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerDiff(Configure<DockerContainerDiffSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerDiffSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerExecSettings toolSettings);
-        static partial void PostProcess(DockerContainerExecSettings toolSettings);
         /// <summary><p>Run a command in a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerExec(Configure<DockerContainerExecSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerExec(Configure<DockerContainerExecSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerExecSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerExportSettings toolSettings);
-        static partial void PostProcess(DockerContainerExportSettings toolSettings);
         /// <summary><p>Export a container's filesystem as a tar archive.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerExport(Configure<DockerContainerExportSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerExport(Configure<DockerContainerExportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerExportSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerInspectSettings toolSettings);
-        static partial void PostProcess(DockerContainerInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerInspect(Configure<DockerContainerInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerInspect(Configure<DockerContainerInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerKillSettings toolSettings);
-        static partial void PostProcess(DockerContainerKillSettings toolSettings);
         /// <summary><p>Kill one or more running containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerKill(Configure<DockerContainerKillSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerKill(Configure<DockerContainerKillSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerKillSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerLogsSettings toolSettings);
-        static partial void PostProcess(DockerContainerLogsSettings toolSettings);
         /// <summary><p>Fetch the logs of a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerLogs(Configure<DockerContainerLogsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerLogs(Configure<DockerContainerLogsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerLogsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerLsSettings toolSettings);
-        static partial void PostProcess(DockerContainerLsSettings toolSettings);
         /// <summary><p>List containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerLs(Configure<DockerContainerLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerLs(Configure<DockerContainerLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerPauseSettings toolSettings);
-        static partial void PostProcess(DockerContainerPauseSettings toolSettings);
         /// <summary><p>Pause all processes within one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerPause(Configure<DockerContainerPauseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerPause(Configure<DockerContainerPauseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerPauseSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerPortSettings toolSettings);
-        static partial void PostProcess(DockerContainerPortSettings toolSettings);
         /// <summary><p>List port mappings or a specific mapping for the container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerPort(Configure<DockerContainerPortSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerPort(Configure<DockerContainerPortSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerPortSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerPruneSettings toolSettings);
-        static partial void PostProcess(DockerContainerPruneSettings toolSettings);
         /// <summary><p>Remove all stopped containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerPrune(Configure<DockerContainerPruneSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerPrune(Configure<DockerContainerPruneSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerPruneSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerRenameSettings toolSettings);
-        static partial void PostProcess(DockerContainerRenameSettings toolSettings);
         /// <summary><p>Rename a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerRename(Configure<DockerContainerRenameSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerRename(Configure<DockerContainerRenameSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerRenameSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerRestartSettings toolSettings);
-        static partial void PostProcess(DockerContainerRestartSettings toolSettings);
         /// <summary><p>Restart one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerRestart(Configure<DockerContainerRestartSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerRestart(Configure<DockerContainerRestartSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerRestartSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerRmSettings toolSettings);
-        static partial void PostProcess(DockerContainerRmSettings toolSettings);
         /// <summary><p>Remove one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerRm(Configure<DockerContainerRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerRm(Configure<DockerContainerRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerRunSettings toolSettings);
-        static partial void PostProcess(DockerContainerRunSettings toolSettings);
         /// <summary><p>Run a command in a new container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerRun(Configure<DockerContainerRunSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerRun(Configure<DockerContainerRunSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerRunSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerStartSettings toolSettings);
-        static partial void PostProcess(DockerContainerStartSettings toolSettings);
         /// <summary><p>Start one or more stopped containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerStart(Configure<DockerContainerStartSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerStart(Configure<DockerContainerStartSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerStartSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerStatsSettings toolSettings);
-        static partial void PostProcess(DockerContainerStatsSettings toolSettings);
         /// <summary><p>Display a live stream of container(s) resource usage statistics.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerStats(Configure<DockerContainerStatsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerStats(Configure<DockerContainerStatsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerStatsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerStopSettings toolSettings);
-        static partial void PostProcess(DockerContainerStopSettings toolSettings);
         /// <summary><p>Stop one or more running containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerStop(Configure<DockerContainerStopSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerStop(Configure<DockerContainerStopSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerStopSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerTopSettings toolSettings);
-        static partial void PostProcess(DockerContainerTopSettings toolSettings);
         /// <summary><p>Display the running processes of a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerTop(Configure<DockerContainerTopSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerTop(Configure<DockerContainerTopSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerTopSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerUnpauseSettings toolSettings);
-        static partial void PostProcess(DockerContainerUnpauseSettings toolSettings);
         /// <summary><p>Unpause all processes within one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerUnpause(Configure<DockerContainerUnpauseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerUnpause(Configure<DockerContainerUnpauseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerUnpauseSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerUpdateSettings toolSettings);
-        static partial void PostProcess(DockerContainerUpdateSettings toolSettings);
         /// <summary><p>Update configuration of one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerUpdate(Configure<DockerContainerUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerUpdate(Configure<DockerContainerUpdateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerUpdateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerContainerWaitSettings toolSettings);
-        static partial void PostProcess(DockerContainerWaitSettings toolSettings);
         /// <summary><p>Block until one or more containers stop, then print their exit codes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerContainerWait(Configure<DockerContainerWaitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerContainerWait(Configure<DockerContainerWaitSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerContainerWaitSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerCreateSettings toolSettings);
-        static partial void PostProcess(DockerCreateSettings toolSettings);
         /// <summary><p>Create a new container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerCreate(Configure<DockerCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerCreate(Configure<DockerCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerDeploySettings toolSettings);
-        static partial void PostProcess(DockerDeploySettings toolSettings);
         /// <summary><p>Deploy a new stack or update an existing stack.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerDeploy(Configure<DockerDeploySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerDeploy(Configure<DockerDeploySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerDeploySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerDiffSettings toolSettings);
-        static partial void PostProcess(DockerDiffSettings toolSettings);
         /// <summary><p>Inspect changes to files or directories on a container's filesystem.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerDiff(Configure<DockerDiffSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerDiff(Configure<DockerDiffSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerDiffSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerEventsSettings toolSettings);
-        static partial void PostProcess(DockerEventsSettings toolSettings);
         /// <summary><p>Get real time events from the server.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerEvents(Configure<DockerEventsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerEvents(Configure<DockerEventsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerEventsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerExecSettings toolSettings);
-        static partial void PostProcess(DockerExecSettings toolSettings);
         /// <summary><p>Run a command in a running container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerExec(Configure<DockerExecSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerExec(Configure<DockerExecSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerExecSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerExportSettings toolSettings);
-        static partial void PostProcess(DockerExportSettings toolSettings);
         /// <summary><p>Export a container's filesystem as a tar archive.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerExport(Configure<DockerExportSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerExport(Configure<DockerExportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerExportSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerHistorySettings toolSettings);
-        static partial void PostProcess(DockerHistorySettings toolSettings);
         /// <summary><p>Show the history of an image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerHistory(Configure<DockerHistorySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerHistory(Configure<DockerHistorySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerHistorySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageSettings toolSettings);
-        static partial void PostProcess(DockerImageSettings toolSettings);
         /// <summary><p>Manage images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImage(Configure<DockerImageSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImage(Configure<DockerImageSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImagesSettings toolSettings);
-        static partial void PostProcess(DockerImagesSettings toolSettings);
         /// <summary><p>List images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImages(Configure<DockerImagesSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImages(Configure<DockerImagesSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImagesSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageBuildSettings toolSettings);
-        static partial void PostProcess(DockerImageBuildSettings toolSettings);
         /// <summary><p>Build an image from a Dockerfile.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageBuild(Configure<DockerImageBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageBuild(Configure<DockerImageBuildSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageBuildSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageHistorySettings toolSettings);
-        static partial void PostProcess(DockerImageHistorySettings toolSettings);
         /// <summary><p>Show the history of an image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageHistory(Configure<DockerImageHistorySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageHistory(Configure<DockerImageHistorySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageHistorySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageImportSettings toolSettings);
-        static partial void PostProcess(DockerImageImportSettings toolSettings);
         /// <summary><p>Import the contents from a tarball to create a filesystem image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageImport(Configure<DockerImageImportSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageImport(Configure<DockerImageImportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageImportSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageInspectSettings toolSettings);
-        static partial void PostProcess(DockerImageInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageInspect(Configure<DockerImageInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageInspect(Configure<DockerImageInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageLoadSettings toolSettings);
-        static partial void PostProcess(DockerImageLoadSettings toolSettings);
         /// <summary><p>Load an image from a tar archive or STDIN.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageLoad(Configure<DockerImageLoadSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageLoad(Configure<DockerImageLoadSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageLoadSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageLsSettings toolSettings);
-        static partial void PostProcess(DockerImageLsSettings toolSettings);
         /// <summary><p>List images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageLs(Configure<DockerImageLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageLs(Configure<DockerImageLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImagePruneSettings toolSettings);
-        static partial void PostProcess(DockerImagePruneSettings toolSettings);
         /// <summary><p>Remove unused images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImagePrune(Configure<DockerImagePruneSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImagePrune(Configure<DockerImagePruneSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImagePruneSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImagePullSettings toolSettings);
-        static partial void PostProcess(DockerImagePullSettings toolSettings);
         /// <summary><p>Pull an image or a repository from a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImagePull(Configure<DockerImagePullSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImagePull(Configure<DockerImagePullSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImagePullSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImagePushSettings toolSettings);
-        static partial void PostProcess(DockerImagePushSettings toolSettings);
         /// <summary><p>Push an image or a repository to a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImagePush(Configure<DockerImagePushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImagePush(Configure<DockerImagePushSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImagePushSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageRmSettings toolSettings);
-        static partial void PostProcess(DockerImageRmSettings toolSettings);
         /// <summary><p>Remove one or more images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageRm(Configure<DockerImageRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageRm(Configure<DockerImageRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageSaveSettings toolSettings);
-        static partial void PostProcess(DockerImageSaveSettings toolSettings);
         /// <summary><p>Save one or more images to a tar archive (streamed to STDOUT by default).</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageSave(Configure<DockerImageSaveSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageSave(Configure<DockerImageSaveSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageSaveSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImageTagSettings toolSettings);
-        static partial void PostProcess(DockerImageTagSettings toolSettings);
         /// <summary><p>Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImageTag(Configure<DockerImageTagSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImageTag(Configure<DockerImageTagSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImageTagSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerImportSettings toolSettings);
-        static partial void PostProcess(DockerImportSettings toolSettings);
         /// <summary><p>Import the contents from a tarball to create a filesystem image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerImport(Configure<DockerImportSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerImport(Configure<DockerImportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerImportSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerInfoSettings toolSettings);
-        static partial void PostProcess(DockerInfoSettings toolSettings);
         /// <summary><p>Display system-wide information.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerInfo(Configure<DockerInfoSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerInfo(Configure<DockerInfoSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerInfoSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerInspectSettings toolSettings);
-        static partial void PostProcess(DockerInspectSettings toolSettings);
         /// <summary><p>Return low-level information on Docker objects.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerInspect(Configure<DockerInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerInspect(Configure<DockerInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerKillSettings toolSettings);
-        static partial void PostProcess(DockerKillSettings toolSettings);
         /// <summary><p>Kill one or more running containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerKill(Configure<DockerKillSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerKill(Configure<DockerKillSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerKillSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerLoadSettings toolSettings);
-        static partial void PostProcess(DockerLoadSettings toolSettings);
         /// <summary><p>Load an image from a tar archive or STDIN.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerLoad(Configure<DockerLoadSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerLoad(Configure<DockerLoadSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerLoadSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerLoginSettings toolSettings);
-        static partial void PostProcess(DockerLoginSettings toolSettings);
         /// <summary><p>Log in to a Docker registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerLogin(Configure<DockerLoginSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerLogin(Configure<DockerLoginSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerLoginSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerLogoutSettings toolSettings);
-        static partial void PostProcess(DockerLogoutSettings toolSettings);
         /// <summary><p>Log out from a Docker registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerLogout(Configure<DockerLogoutSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerLogout(Configure<DockerLogoutSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerLogoutSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerLogsSettings toolSettings);
-        static partial void PostProcess(DockerLogsSettings toolSettings);
         /// <summary><p>Fetch the logs of a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerLogs(Configure<DockerLogsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerLogs(Configure<DockerLogsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerLogsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerManifestSettings toolSettings);
-        static partial void PostProcess(DockerManifestSettings toolSettings);
         /// <summary><p>Manage Docker image manifests and manifest lists.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerManifest(Configure<DockerManifestSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerManifest(Configure<DockerManifestSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerManifestSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerManifestAnnotateSettings toolSettings);
-        static partial void PostProcess(DockerManifestAnnotateSettings toolSettings);
         /// <summary><p>Add additional information to a local image manifest.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerManifestAnnotate(Configure<DockerManifestAnnotateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerManifestAnnotate(Configure<DockerManifestAnnotateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerManifestAnnotateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerManifestCreateSettings toolSettings);
-        static partial void PostProcess(DockerManifestCreateSettings toolSettings);
         /// <summary><p>Create a local manifest list for annotating and pushing to a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerManifestCreate(Configure<DockerManifestCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerManifestCreate(Configure<DockerManifestCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerManifestCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerManifestInspectSettings toolSettings);
-        static partial void PostProcess(DockerManifestInspectSettings toolSettings);
         /// <summary><p>Display an image manifest, or manifest list.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerManifestInspect(Configure<DockerManifestInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerManifestInspect(Configure<DockerManifestInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerManifestInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerManifestPushSettings toolSettings);
-        static partial void PostProcess(DockerManifestPushSettings toolSettings);
         /// <summary><p>Push a manifest list to a repository.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerManifestPush(Configure<DockerManifestPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerManifestPush(Configure<DockerManifestPushSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerManifestPushSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkSettings toolSettings);
-        static partial void PostProcess(DockerNetworkSettings toolSettings);
         /// <summary><p>Manage networks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetwork(Configure<DockerNetworkSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetwork(Configure<DockerNetworkSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkConnectSettings toolSettings);
-        static partial void PostProcess(DockerNetworkConnectSettings toolSettings);
         /// <summary><p>Connect a container to a network.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkConnect(Configure<DockerNetworkConnectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkConnect(Configure<DockerNetworkConnectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkConnectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkCreateSettings toolSettings);
-        static partial void PostProcess(DockerNetworkCreateSettings toolSettings);
         /// <summary><p>Create a network.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkCreate(Configure<DockerNetworkCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkCreate(Configure<DockerNetworkCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkDisconnectSettings toolSettings);
-        static partial void PostProcess(DockerNetworkDisconnectSettings toolSettings);
         /// <summary><p>Disconnect a container from a network.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkDisconnect(Configure<DockerNetworkDisconnectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkDisconnect(Configure<DockerNetworkDisconnectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkDisconnectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkInspectSettings toolSettings);
-        static partial void PostProcess(DockerNetworkInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more networks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkInspect(Configure<DockerNetworkInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkInspect(Configure<DockerNetworkInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkLsSettings toolSettings);
-        static partial void PostProcess(DockerNetworkLsSettings toolSettings);
         /// <summary><p>List networks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkLs(Configure<DockerNetworkLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkLs(Configure<DockerNetworkLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkPruneSettings toolSettings);
-        static partial void PostProcess(DockerNetworkPruneSettings toolSettings);
         /// <summary><p>Remove all unused networks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkPrune(Configure<DockerNetworkPruneSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkPrune(Configure<DockerNetworkPruneSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkPruneSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNetworkRmSettings toolSettings);
-        static partial void PostProcess(DockerNetworkRmSettings toolSettings);
         /// <summary><p>Remove one or more networks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNetworkRm(Configure<DockerNetworkRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNetworkRm(Configure<DockerNetworkRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNetworkRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeSettings toolSettings);
-        static partial void PostProcess(DockerNodeSettings toolSettings);
         /// <summary><p>Manage Swarm nodes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNode(Configure<DockerNodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNode(Configure<DockerNodeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeDemoteSettings toolSettings);
-        static partial void PostProcess(DockerNodeDemoteSettings toolSettings);
         /// <summary><p>Demote one or more nodes from manager in the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodeDemote(Configure<DockerNodeDemoteSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodeDemote(Configure<DockerNodeDemoteSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeDemoteSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeInspectSettings toolSettings);
-        static partial void PostProcess(DockerNodeInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more nodes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodeInspect(Configure<DockerNodeInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodeInspect(Configure<DockerNodeInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeLsSettings toolSettings);
-        static partial void PostProcess(DockerNodeLsSettings toolSettings);
         /// <summary><p>List nodes in the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodeLs(Configure<DockerNodeLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodeLs(Configure<DockerNodeLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodePromoteSettings toolSettings);
-        static partial void PostProcess(DockerNodePromoteSettings toolSettings);
         /// <summary><p>Promote one or more nodes to manager in the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodePromote(Configure<DockerNodePromoteSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodePromote(Configure<DockerNodePromoteSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodePromoteSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodePsSettings toolSettings);
-        static partial void PostProcess(DockerNodePsSettings toolSettings);
         /// <summary><p>List tasks running on one or more nodes, defaults to current node.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodePs(Configure<DockerNodePsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodePs(Configure<DockerNodePsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodePsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeRmSettings toolSettings);
-        static partial void PostProcess(DockerNodeRmSettings toolSettings);
         /// <summary><p>Remove one or more nodes from the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodeRm(Configure<DockerNodeRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodeRm(Configure<DockerNodeRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerNodeUpdateSettings toolSettings);
-        static partial void PostProcess(DockerNodeUpdateSettings toolSettings);
         /// <summary><p>Update a node.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerNodeUpdate(Configure<DockerNodeUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerNodeUpdate(Configure<DockerNodeUpdateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerNodeUpdateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPauseSettings toolSettings);
-        static partial void PostProcess(DockerPauseSettings toolSettings);
         /// <summary><p>Pause all processes within one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPause(Configure<DockerPauseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPause(Configure<DockerPauseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPauseSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginSettings toolSettings);
-        static partial void PostProcess(DockerPluginSettings toolSettings);
         /// <summary><p>Manage plugins.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPlugin(Configure<DockerPluginSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPlugin(Configure<DockerPluginSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginCreateSettings toolSettings);
-        static partial void PostProcess(DockerPluginCreateSettings toolSettings);
         /// <summary><p>Create a plugin from a rootfs and configuration. Plugin data directory must contain config.json and rootfs directory.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginCreate(Configure<DockerPluginCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginCreate(Configure<DockerPluginCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginDisableSettings toolSettings);
-        static partial void PostProcess(DockerPluginDisableSettings toolSettings);
         /// <summary><p>Disable a plugin.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginDisable(Configure<DockerPluginDisableSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginDisable(Configure<DockerPluginDisableSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginDisableSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginEnableSettings toolSettings);
-        static partial void PostProcess(DockerPluginEnableSettings toolSettings);
         /// <summary><p>Enable a plugin.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginEnable(Configure<DockerPluginEnableSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginEnable(Configure<DockerPluginEnableSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginEnableSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginInspectSettings toolSettings);
-        static partial void PostProcess(DockerPluginInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more plugins.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginInspect(Configure<DockerPluginInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginInspect(Configure<DockerPluginInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginInstallSettings toolSettings);
-        static partial void PostProcess(DockerPluginInstallSettings toolSettings);
         /// <summary><p>Install a plugin.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginInstall(Configure<DockerPluginInstallSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginInstall(Configure<DockerPluginInstallSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginInstallSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginLsSettings toolSettings);
-        static partial void PostProcess(DockerPluginLsSettings toolSettings);
         /// <summary><p>List plugins.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginLs(Configure<DockerPluginLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginLs(Configure<DockerPluginLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginPushSettings toolSettings);
-        static partial void PostProcess(DockerPluginPushSettings toolSettings);
         /// <summary><p>Push a plugin to a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginPush(Configure<DockerPluginPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginPush(Configure<DockerPluginPushSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginPushSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginRmSettings toolSettings);
-        static partial void PostProcess(DockerPluginRmSettings toolSettings);
         /// <summary><p>Remove one or more plugins.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginRm(Configure<DockerPluginRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginRm(Configure<DockerPluginRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginSetSettings toolSettings);
-        static partial void PostProcess(DockerPluginSetSettings toolSettings);
         /// <summary><p>Change settings for a plugin.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginSet(Configure<DockerPluginSetSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginSet(Configure<DockerPluginSetSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginSetSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPluginUpgradeSettings toolSettings);
-        static partial void PostProcess(DockerPluginUpgradeSettings toolSettings);
         /// <summary><p>Upgrade an existing plugin.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPluginUpgrade(Configure<DockerPluginUpgradeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPluginUpgrade(Configure<DockerPluginUpgradeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPluginUpgradeSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPortSettings toolSettings);
-        static partial void PostProcess(DockerPortSettings toolSettings);
         /// <summary><p>List port mappings or a specific mapping for the container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPort(Configure<DockerPortSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPort(Configure<DockerPortSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPortSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPsSettings toolSettings);
-        static partial void PostProcess(DockerPsSettings toolSettings);
         /// <summary><p>List containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPs(Configure<DockerPsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPs(Configure<DockerPsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPullSettings toolSettings);
-        static partial void PostProcess(DockerPullSettings toolSettings);
         /// <summary><p>Pull an image or a repository from a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPull(Configure<DockerPullSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPull(Configure<DockerPullSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPullSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerPushSettings toolSettings);
-        static partial void PostProcess(DockerPushSettings toolSettings);
         /// <summary><p>Push an image or a repository to a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerPush(Configure<DockerPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerPush(Configure<DockerPushSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerPushSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerRenameSettings toolSettings);
-        static partial void PostProcess(DockerRenameSettings toolSettings);
         /// <summary><p>Rename a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerRename(Configure<DockerRenameSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerRename(Configure<DockerRenameSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerRenameSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerRestartSettings toolSettings);
-        static partial void PostProcess(DockerRestartSettings toolSettings);
         /// <summary><p>Restart one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerRestart(Configure<DockerRestartSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerRestart(Configure<DockerRestartSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerRestartSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerRmSettings toolSettings);
-        static partial void PostProcess(DockerRmSettings toolSettings);
         /// <summary><p>Remove one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerRm(Configure<DockerRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerRm(Configure<DockerRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerRmiSettings toolSettings);
-        static partial void PostProcess(DockerRmiSettings toolSettings);
         /// <summary><p>Remove one or more images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerRmi(Configure<DockerRmiSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerRmi(Configure<DockerRmiSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerRmiSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerRunSettings toolSettings);
-        static partial void PostProcess(DockerRunSettings toolSettings);
         /// <summary><p>Run a command in a new container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerRun(Configure<DockerRunSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerRun(Configure<DockerRunSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerRunSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSaveSettings toolSettings);
-        static partial void PostProcess(DockerSaveSettings toolSettings);
         /// <summary><p>Save one or more images to a tar archive (streamed to STDOUT by default).</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSave(Configure<DockerSaveSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSave(Configure<DockerSaveSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSaveSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSearchSettings toolSettings);
-        static partial void PostProcess(DockerSearchSettings toolSettings);
         /// <summary><p>Search the Docker Hub for images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSearch(Configure<DockerSearchSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSearch(Configure<DockerSearchSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSearchSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSecretSettings toolSettings);
-        static partial void PostProcess(DockerSecretSettings toolSettings);
         /// <summary><p>Manage Docker secrets.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSecret(Configure<DockerSecretSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSecret(Configure<DockerSecretSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSecretSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSecretCreateSettings toolSettings);
-        static partial void PostProcess(DockerSecretCreateSettings toolSettings);
         /// <summary><p>Create a secret from a file or STDIN as content.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSecretCreate(Configure<DockerSecretCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSecretCreate(Configure<DockerSecretCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSecretCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSecretInspectSettings toolSettings);
-        static partial void PostProcess(DockerSecretInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more secrets.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSecretInspect(Configure<DockerSecretInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSecretInspect(Configure<DockerSecretInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSecretInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSecretLsSettings toolSettings);
-        static partial void PostProcess(DockerSecretLsSettings toolSettings);
         /// <summary><p>List secrets.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSecretLs(Configure<DockerSecretLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSecretLs(Configure<DockerSecretLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSecretLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSecretRmSettings toolSettings);
-        static partial void PostProcess(DockerSecretRmSettings toolSettings);
         /// <summary><p>Remove one or more secrets.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSecretRm(Configure<DockerSecretRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSecretRm(Configure<DockerSecretRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSecretRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceSettings toolSettings);
-        static partial void PostProcess(DockerServiceSettings toolSettings);
         /// <summary><p>Manage services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerService(Configure<DockerServiceSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerService(Configure<DockerServiceSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceCreateSettings toolSettings);
-        static partial void PostProcess(DockerServiceCreateSettings toolSettings);
         /// <summary><p>Create a new service.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceCreate(Configure<DockerServiceCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceCreate(Configure<DockerServiceCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceInspectSettings toolSettings);
-        static partial void PostProcess(DockerServiceInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceInspect(Configure<DockerServiceInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceInspect(Configure<DockerServiceInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceLogsSettings toolSettings);
-        static partial void PostProcess(DockerServiceLogsSettings toolSettings);
         /// <summary><p>Fetch the logs of a service or task.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceLogs(Configure<DockerServiceLogsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceLogs(Configure<DockerServiceLogsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceLogsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceLsSettings toolSettings);
-        static partial void PostProcess(DockerServiceLsSettings toolSettings);
         /// <summary><p>List services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceLs(Configure<DockerServiceLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceLs(Configure<DockerServiceLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServicePsSettings toolSettings);
-        static partial void PostProcess(DockerServicePsSettings toolSettings);
         /// <summary><p>List the tasks of one or more services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServicePs(Configure<DockerServicePsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServicePs(Configure<DockerServicePsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServicePsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceRmSettings toolSettings);
-        static partial void PostProcess(DockerServiceRmSettings toolSettings);
         /// <summary><p>Remove one or more services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceRm(Configure<DockerServiceRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceRm(Configure<DockerServiceRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceRollbackSettings toolSettings);
-        static partial void PostProcess(DockerServiceRollbackSettings toolSettings);
         /// <summary><p>Revert changes to a service's configuration.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceRollback(Configure<DockerServiceRollbackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceRollback(Configure<DockerServiceRollbackSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceRollbackSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceScaleSettings toolSettings);
-        static partial void PostProcess(DockerServiceScaleSettings toolSettings);
         /// <summary><p>Scale one or multiple replicated services.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceScale(Configure<DockerServiceScaleSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceScale(Configure<DockerServiceScaleSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceScaleSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerServiceUpdateSettings toolSettings);
-        static partial void PostProcess(DockerServiceUpdateSettings toolSettings);
         /// <summary><p>Update a service.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerServiceUpdate(Configure<DockerServiceUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerServiceUpdate(Configure<DockerServiceUpdateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerServiceUpdateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackSettings toolSettings);
-        static partial void PostProcess(DockerStackSettings toolSettings);
         /// <summary><p>Manage Docker stacks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStack(Configure<DockerStackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStack(Configure<DockerStackSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackDeploySettings toolSettings);
-        static partial void PostProcess(DockerStackDeploySettings toolSettings);
         /// <summary><p>Deploy a new stack or update an existing stack.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStackDeploy(Configure<DockerStackDeploySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStackDeploy(Configure<DockerStackDeploySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackDeploySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackLsSettings toolSettings);
-        static partial void PostProcess(DockerStackLsSettings toolSettings);
         /// <summary><p>List stacks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStackLs(Configure<DockerStackLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStackLs(Configure<DockerStackLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackPsSettings toolSettings);
-        static partial void PostProcess(DockerStackPsSettings toolSettings);
         /// <summary><p>List the tasks in the stack.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStackPs(Configure<DockerStackPsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStackPs(Configure<DockerStackPsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackPsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackRmSettings toolSettings);
-        static partial void PostProcess(DockerStackRmSettings toolSettings);
         /// <summary><p>Remove one or more stacks.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStackRm(Configure<DockerStackRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStackRm(Configure<DockerStackRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStackServicesSettings toolSettings);
-        static partial void PostProcess(DockerStackServicesSettings toolSettings);
         /// <summary><p>List the services in the stack.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStackServices(Configure<DockerStackServicesSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStackServices(Configure<DockerStackServicesSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStackServicesSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStartSettings toolSettings);
-        static partial void PostProcess(DockerStartSettings toolSettings);
         /// <summary><p>Start one or more stopped containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStart(Configure<DockerStartSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStart(Configure<DockerStartSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStartSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStatsSettings toolSettings);
-        static partial void PostProcess(DockerStatsSettings toolSettings);
         /// <summary><p>Display a live stream of container(s) resource usage statistics.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStats(Configure<DockerStatsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStats(Configure<DockerStatsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStatsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerStopSettings toolSettings);
-        static partial void PostProcess(DockerStopSettings toolSettings);
         /// <summary><p>Stop one or more running containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerStop(Configure<DockerStopSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerStop(Configure<DockerStopSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerStopSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmSettings toolSettings);
-        static partial void PostProcess(DockerSwarmSettings toolSettings);
         /// <summary><p>Manage Swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarm(Configure<DockerSwarmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarm(Configure<DockerSwarmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmCaSettings toolSettings);
-        static partial void PostProcess(DockerSwarmCaSettings toolSettings);
         /// <summary><p>Display and rotate the root CA.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmCa(Configure<DockerSwarmCaSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmCa(Configure<DockerSwarmCaSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmCaSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmInitSettings toolSettings);
-        static partial void PostProcess(DockerSwarmInitSettings toolSettings);
         /// <summary><p>Initialize a swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmInit(Configure<DockerSwarmInitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmInit(Configure<DockerSwarmInitSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmInitSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmJoinTokenSettings toolSettings);
-        static partial void PostProcess(DockerSwarmJoinTokenSettings toolSettings);
         /// <summary><p>Manage join tokens.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmJoinToken(Configure<DockerSwarmJoinTokenSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmJoinToken(Configure<DockerSwarmJoinTokenSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmJoinTokenSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmJoinSettings toolSettings);
-        static partial void PostProcess(DockerSwarmJoinSettings toolSettings);
         /// <summary><p>Join a swarm as a node and/or manager.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmJoin(Configure<DockerSwarmJoinSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmJoin(Configure<DockerSwarmJoinSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmJoinSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmLeaveSettings toolSettings);
-        static partial void PostProcess(DockerSwarmLeaveSettings toolSettings);
         /// <summary><p>Leave the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmLeave(Configure<DockerSwarmLeaveSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmLeave(Configure<DockerSwarmLeaveSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmLeaveSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmUnlockKeySettings toolSettings);
-        static partial void PostProcess(DockerSwarmUnlockKeySettings toolSettings);
         /// <summary><p>Manage the unlock key.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmUnlockKey(Configure<DockerSwarmUnlockKeySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmUnlockKey(Configure<DockerSwarmUnlockKeySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmUnlockKeySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmUnlockSettings toolSettings);
-        static partial void PostProcess(DockerSwarmUnlockSettings toolSettings);
         /// <summary><p>Unlock swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmUnlock(Configure<DockerSwarmUnlockSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmUnlock(Configure<DockerSwarmUnlockSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmUnlockSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSwarmUpdateSettings toolSettings);
-        static partial void PostProcess(DockerSwarmUpdateSettings toolSettings);
         /// <summary><p>Update the swarm.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSwarmUpdate(Configure<DockerSwarmUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSwarmUpdate(Configure<DockerSwarmUpdateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSwarmUpdateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSystemSettings toolSettings);
-        static partial void PostProcess(DockerSystemSettings toolSettings);
         /// <summary><p>Manage Docker.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSystem(Configure<DockerSystemSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSystem(Configure<DockerSystemSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSystemSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSystemDfSettings toolSettings);
-        static partial void PostProcess(DockerSystemDfSettings toolSettings);
         /// <summary><p>Show docker disk usage.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSystemDf(Configure<DockerSystemDfSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSystemDf(Configure<DockerSystemDfSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSystemDfSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSystemEventsSettings toolSettings);
-        static partial void PostProcess(DockerSystemEventsSettings toolSettings);
         /// <summary><p>Get real time events from the server.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSystemEvents(Configure<DockerSystemEventsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSystemEvents(Configure<DockerSystemEventsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSystemEventsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSystemInfoSettings toolSettings);
-        static partial void PostProcess(DockerSystemInfoSettings toolSettings);
         /// <summary><p>Display system-wide information.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSystemInfo(Configure<DockerSystemInfoSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSystemInfo(Configure<DockerSystemInfoSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSystemInfoSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerSystemPruneSettings toolSettings);
-        static partial void PostProcess(DockerSystemPruneSettings toolSettings);
         /// <summary><p>Remove unused data.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerSystemPrune(Configure<DockerSystemPruneSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerSystemPrune(Configure<DockerSystemPruneSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerSystemPruneSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTagSettings toolSettings);
-        static partial void PostProcess(DockerTagSettings toolSettings);
         /// <summary><p>Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTag(Configure<DockerTagSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTag(Configure<DockerTagSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTagSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTopSettings toolSettings);
-        static partial void PostProcess(DockerTopSettings toolSettings);
         /// <summary><p>Display the running processes of a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTop(Configure<DockerTopSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTop(Configure<DockerTopSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTopSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustSettings toolSettings);
-        static partial void PostProcess(DockerTrustSettings toolSettings);
         /// <summary><p>Manage trust on Docker images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrust(Configure<DockerTrustSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrust(Configure<DockerTrustSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustInspectSettings toolSettings);
-        static partial void PostProcess(DockerTrustInspectSettings toolSettings);
         /// <summary><p>Return low-level information about keys and signatures.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustInspect(Configure<DockerTrustInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustInspect(Configure<DockerTrustInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustKeySettings toolSettings);
-        static partial void PostProcess(DockerTrustKeySettings toolSettings);
         /// <summary><p>Manage keys for signing Docker images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustKey(Configure<DockerTrustKeySettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustKey(Configure<DockerTrustKeySettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustKeySettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustKeyGenerateSettings toolSettings);
-        static partial void PostProcess(DockerTrustKeyGenerateSettings toolSettings);
         /// <summary><p>Generate and load a signing key-pair.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustKeyGenerate(Configure<DockerTrustKeyGenerateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustKeyGenerate(Configure<DockerTrustKeyGenerateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustKeyGenerateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustKeyLoadSettings toolSettings);
-        static partial void PostProcess(DockerTrustKeyLoadSettings toolSettings);
         /// <summary><p>Load a private key file for signing.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustKeyLoad(Configure<DockerTrustKeyLoadSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustKeyLoad(Configure<DockerTrustKeyLoadSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustKeyLoadSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustRevokeSettings toolSettings);
-        static partial void PostProcess(DockerTrustRevokeSettings toolSettings);
         /// <summary><p>Remove trust for an image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustRevoke(Configure<DockerTrustRevokeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustRevoke(Configure<DockerTrustRevokeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustRevokeSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustSignSettings toolSettings);
-        static partial void PostProcess(DockerTrustSignSettings toolSettings);
         /// <summary><p>Sign an image.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustSign(Configure<DockerTrustSignSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustSign(Configure<DockerTrustSignSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustSignSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustSignerSettings toolSettings);
-        static partial void PostProcess(DockerTrustSignerSettings toolSettings);
         /// <summary><p>Manage entities who can sign Docker images.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustSigner(Configure<DockerTrustSignerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustSigner(Configure<DockerTrustSignerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustSignerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustSignerAddSettings toolSettings);
-        static partial void PostProcess(DockerTrustSignerAddSettings toolSettings);
         /// <summary><p>Add a signer.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustSignerAdd(Configure<DockerTrustSignerAddSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustSignerAdd(Configure<DockerTrustSignerAddSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustSignerAddSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerTrustSignerRemoveSettings toolSettings);
-        static partial void PostProcess(DockerTrustSignerRemoveSettings toolSettings);
         /// <summary><p>Remove a signer.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerTrustSignerRemove(Configure<DockerTrustSignerRemoveSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerTrustSignerRemove(Configure<DockerTrustSignerRemoveSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerTrustSignerRemoveSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerUnpauseSettings toolSettings);
-        static partial void PostProcess(DockerUnpauseSettings toolSettings);
         /// <summary><p>Unpause all processes within one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerUnpause(Configure<DockerUnpauseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerUnpause(Configure<DockerUnpauseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerUnpauseSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerUpdateSettings toolSettings);
-        static partial void PostProcess(DockerUpdateSettings toolSettings);
         /// <summary><p>Update configuration of one or more containers.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerUpdate(Configure<DockerUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerUpdate(Configure<DockerUpdateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerUpdateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVersionSettings toolSettings);
-        static partial void PostProcess(DockerVersionSettings toolSettings);
         /// <summary><p>Show the Docker version information.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVersion(Configure<DockerVersionSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVersion(Configure<DockerVersionSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVersionSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumeSettings toolSettings);
-        static partial void PostProcess(DockerVolumeSettings toolSettings);
         /// <summary><p>Manage volumes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolume(Configure<DockerVolumeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolume(Configure<DockerVolumeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumeSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumeCreateSettings toolSettings);
-        static partial void PostProcess(DockerVolumeCreateSettings toolSettings);
         /// <summary><p>Create a volume.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolumeCreate(Configure<DockerVolumeCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolumeCreate(Configure<DockerVolumeCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumeCreateSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumeInspectSettings toolSettings);
-        static partial void PostProcess(DockerVolumeInspectSettings toolSettings);
         /// <summary><p>Display detailed information on one or more volumes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolumeInspect(Configure<DockerVolumeInspectSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolumeInspect(Configure<DockerVolumeInspectSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumeInspectSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumeLsSettings toolSettings);
-        static partial void PostProcess(DockerVolumeLsSettings toolSettings);
         /// <summary><p>List volumes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolumeLs(Configure<DockerVolumeLsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolumeLs(Configure<DockerVolumeLsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumeLsSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumePruneSettings toolSettings);
-        static partial void PostProcess(DockerVolumePruneSettings toolSettings);
         /// <summary><p>Remove all unused local volumes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolumePrune(Configure<DockerVolumePruneSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolumePrune(Configure<DockerVolumePruneSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumePruneSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerVolumeRmSettings toolSettings);
-        static partial void PostProcess(DockerVolumeRmSettings toolSettings);
         /// <summary><p>Remove one or more volumes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerVolumeRm(Configure<DockerVolumeRmSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerVolumeRm(Configure<DockerVolumeRmSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerVolumeRmSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(DockerWaitSettings toolSettings);
-        static partial void PostProcess(DockerWaitSettings toolSettings);
         /// <summary><p>Block until one or more containers stop, then print their exit codes.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-        public static void DockerWait(Configure<DockerWaitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> DockerWait(Configure<DockerWaitSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DockerWaitSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
     }
     #region DockerAttachSettings
@@ -47248,234 +46739,11 @@ namespace Nuke.Docker
         #endregion
     }
     #endregion
-    #region CliSettingsExtensions
-    /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    public static partial class CliSettingsExtensions
-    {
-        #region LogLevel
-        /// <summary><p><em>Sets <see cref="CliSettings.LogLevel"/>.</em></p><p>Set the logging level.</p></summary>
-        [Pure]
-        public static CliSettings SetLogLevel(this CliSettings toolSettings, LogLevel logLevel)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogLevel = logLevel;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.LogLevel"/>.</em></p><p>Set the logging level.</p></summary>
-        [Pure]
-        public static CliSettings ResetLogLevel(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogLevel = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Config
-        /// <summary><p><em>Sets <see cref="CliSettings.Config"/>.</em></p><p>Location of client config files (default ~/.docker).</p></summary>
-        [Pure]
-        public static CliSettings SetConfig(this CliSettings toolSettings, string config)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = config;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.Config"/>.</em></p><p>Location of client config files (default ~/.docker).</p></summary>
-        [Pure]
-        public static CliSettings ResetConfig(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Config = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Debug
-        /// <summary><p><em>Sets <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
-        [Pure]
-        public static CliSettings SetDebug(this CliSettings toolSettings, bool? debug)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = debug;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
-        [Pure]
-        public static CliSettings ResetDebug(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
-        [Pure]
-        public static CliSettings EnableDebug(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
-        [Pure]
-        public static CliSettings DisableDebug(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="CliSettings.Debug"/>.</em></p><p>Enable debug mode.</p></summary>
-        [Pure]
-        public static CliSettings ToggleDebug(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Debug = !toolSettings.Debug;
-            return toolSettings;
-        }
-        #endregion
-        #region TLS
-        /// <summary><p><em>Sets <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
-        [Pure]
-        public static CliSettings SetTLS(this CliSettings toolSettings, bool? tls)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = tls;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
-        [Pure]
-        public static CliSettings ResetTLS(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
-        [Pure]
-        public static CliSettings EnableTLS(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
-        [Pure]
-        public static CliSettings DisableTLS(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="CliSettings.TLS"/>.</em></p><p>Use TLS; implied by --tlsverify.</p></summary>
-        [Pure]
-        public static CliSettings ToggleTLS(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLS = !toolSettings.TLS;
-            return toolSettings;
-        }
-        #endregion
-        #region TLSVerify
-        /// <summary><p><em>Sets <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
-        [Pure]
-        public static CliSettings SetTLSVerify(this CliSettings toolSettings, bool? tlsverify)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = tlsverify;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
-        [Pure]
-        public static CliSettings ResetTLSVerify(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
-        [Pure]
-        public static CliSettings EnableTLSVerify(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
-        [Pure]
-        public static CliSettings DisableTLSVerify(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="CliSettings.TLSVerify"/>.</em></p><p>Use TLS and verify the remote.</p></summary>
-        [Pure]
-        public static CliSettings ToggleTLSVerify(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSVerify = !toolSettings.TLSVerify;
-            return toolSettings;
-        }
-        #endregion
-        #region TLSCaCert
-        /// <summary><p><em>Sets <see cref="CliSettings.TLSCaCert"/>.</em></p><p>Trust certs signed only by this CA (default ~/.docker/ca.pem).</p></summary>
-        [Pure]
-        public static CliSettings SetTLSCaCert(this CliSettings toolSettings, string tlscaCert)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCaCert = tlscaCert;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.TLSCaCert"/>.</em></p><p>Trust certs signed only by this CA (default ~/.docker/ca.pem).</p></summary>
-        [Pure]
-        public static CliSettings ResetTLSCaCert(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCaCert = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TLSCert
-        /// <summary><p><em>Sets <see cref="CliSettings.TLSCert"/>.</em></p><p>Path to TLS certificate file (default ~/.docker/cert.pem).</p></summary>
-        [Pure]
-        public static CliSettings SetTLSCert(this CliSettings toolSettings, string tlscert)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCert = tlscert;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.TLSCert"/>.</em></p><p>Path to TLS certificate file (default ~/.docker/cert.pem).</p></summary>
-        [Pure]
-        public static CliSettings ResetTLSCert(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSCert = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TLSKey
-        /// <summary><p><em>Sets <see cref="CliSettings.TLSKey"/>.</em></p><p>Path to TLS key file (default ~/.docker/key.pem).</p></summary>
-        [Pure]
-        public static CliSettings SetTLSKey(this CliSettings toolSettings, string tlskey)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSKey = tlskey;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="CliSettings.TLSKey"/>.</em></p><p>Path to TLS key file (default ~/.docker/key.pem).</p></summary>
-        [Pure]
-        public static CliSettings ResetTLSKey(this CliSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TLSKey = null;
-            return toolSettings;
-        }
-        #endregion
-    }
-    #endregion
     #region LogLevel
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class LogLevel : Enumeration
     {
         public static LogLevel debug = new LogLevel { Value = "debug" };
@@ -47489,6 +46757,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class ResolveImage : Enumeration
     {
         public static ResolveImage always = new ResolveImage { Value = "always" };
@@ -47500,6 +46769,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Availability : Enumeration
     {
         public static Availability active = new Availability { Value = "active" };
@@ -47511,6 +46781,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Role : Enumeration
     {
         public static Role worker = new Role { Value = "worker" };
@@ -47521,6 +46792,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class RestartCondition : Enumeration
     {
         public static RestartCondition none = new RestartCondition { Value = "none" };
@@ -47532,6 +46804,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class RollbackFailureAction : Enumeration
     {
         public static RollbackFailureAction pause = new RollbackFailureAction { Value = "pause" };
@@ -47542,6 +46815,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class RollbackOrder : Enumeration
     {
         public static RollbackOrder start_first = new RollbackOrder { Value = "start-first" };
@@ -47552,6 +46826,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class UpdateFailureAction : Enumeration
     {
         public static UpdateFailureAction pause = new UpdateFailureAction { Value = "pause" };
@@ -47563,6 +46838,7 @@ namespace Nuke.Docker
     /// <summary><p>Used within <see cref="DockerTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class UpdateOrder : Enumeration
     {
         public static UpdateOrder start_first = new UpdateOrder { Value = "start-first" };

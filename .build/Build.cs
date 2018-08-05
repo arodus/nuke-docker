@@ -44,7 +44,6 @@ class Build : NukeBuild
     string GenerationBaseDirectory => DockerProject.Directory / "Generated";
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
-
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
@@ -52,7 +51,7 @@ class Build : NukeBuild
     string SymbolSource => NuGet
         ? "https://nuget.smbsrc.net"
         : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
-
+        
     Target Clean => _ => _
         .Executes(() =>
         {
@@ -67,6 +66,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
+            
             DotNetRestore(s => DefaultDotNetRestore);
         });
 
@@ -106,7 +106,7 @@ class Build : NukeBuild
         .DependsOn(Clone)
         .Executes(() =>
         {
-            var reference = Git($"rev-parse --short {DockerDocGitBranch}", DefinitonRepositoryPath, redirectOutput: true).Single();
+            var reference = Git($"rev-parse --short {DockerDocGitBranch}", DefinitonRepositoryPath).Single().Text;
 
             var commandsToSkip = new[]
                                  {
@@ -168,7 +168,6 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
-        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
         .Executes(() =>
