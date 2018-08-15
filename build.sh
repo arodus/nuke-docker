@@ -19,16 +19,17 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-BUILD_PROJECT_FILE="$SCRIPT_DIR/.build/.build.csproj"
-TEMP_DIRECTORY="$SCRIPT_DIR/./.tmp"
+BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
+TEMP_DIRECTORY="$SCRIPT_DIR//.tmp"
 
-DOTNET_GLOBAL_FILE="$SCRIPT_DIR/./global.json"
+DOTNET_GLOBAL_FILE="$SCRIPT_DIR//global.json"
 DOTNET_INSTALL_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
 DOTNET_RELEASES_URL="https://raw.githubusercontent.com/dotnet/core/master/release-notes/releases.json"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export NUGET_XMLDOC_MODE="skip"
+
 # Workaround according to https://github.com/dotnet/sdk/issues/335#issuecomment-371444503
 export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.6.1-api/
 
