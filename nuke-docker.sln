@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{CC0913A7-3CF1-45E1-8226-71023733BE97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker.Generator", "src\Nuke.Docker.Generator\Nuke.Docker.Generator.csproj", "{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker", "src\Nuke.Doc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker.Generator.Tests", "tests\Nuke.Docker.Generator.Tests\Nuke.Docker.Generator.Tests.csproj", "{F4EE2620-D08B-446A-931D-CDAE51432496}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{8ACB496A-03F4-4399-A4C6-B04E006F78AF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{4BA0A754-43FC-4A1F-AB4F-162FAE8813E9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
@@ -27,8 +27,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CC0913A7-3CF1-45E1-8226-71023733BE97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC0913A7-3CF1-45E1-8226-71023733BE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
