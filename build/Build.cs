@@ -8,6 +8,7 @@ using Nuke.CodeGeneration;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.OpenCover;
@@ -43,11 +44,14 @@ class Build : NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
     [Solution] readonly Solution Solution;
 
+    [Parameter] readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
     [Parameter("Api key to push packages to NuGet.org.")] readonly string NuGetApiKey;
     [Parameter("Api key to access the GitHub.")] readonly string GitHubApiKey;
 
     Project DockerProject => Solution.GetProject(c_toolNamespace).NotNull();
 
+    AbsolutePath SourceDirectory => RootDirectory / "src";
+    AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath DefinitionRepositoryPath => TemporaryDirectory / "definition-repository";
     string SpecificationDirectory => DockerProject.Directory / "specifications";
     string GenerationBaseDirectory => DockerProject.Directory / "Generated";
@@ -72,14 +76,21 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            DotNetRestore(s => DefaultDotNetRestore);
+            DotNetRestore(s => s
+                .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
-            DotNetBuild(x => DefaultDotNetBuild.EnableNoRestore());
+            DotNetBuild(x => x
+                .SetProjectFile(Solution)
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion));
         });
 
     Target Test => _ => _
@@ -87,13 +98,23 @@ class Build : NukeBuild
         .Executes(() =>
         {
             var xUnitSettings = new Xunit2Settings()
-                .AddTargetAssemblies(GlobFiles(SolutionDirectory / "tests", $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
+                .AddTargetAssemblies(GlobFiles(Solution.Directory / "tests", $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml")
                 .SetFramework("net461");
 
             if (IsWin)
             {
-                OpenCover(s => DefaultOpenCover
+                OpenCover(s => s
+                    .SetRegistration(RegistrationType.User)
+                    .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
+                    .SetFilters(
+                        "+[*]*",
+                        "-[xunit.*]*",
+                        "-[FluentAssertions.*]*")
+                    .SetExcludeByAttributes(
+                        "*.Explicit*",
+                        "*.Ignore*",
+                        "System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute")
                     .SetOutput(OutputDirectory / "coverage.xml")
                     .SetTargetSettings(xUnitSettings));
             }
@@ -143,8 +164,15 @@ class Build : NukeBuild
         .DependsOn(Generate, Clean)
         .Executes(() =>
         {
-            DotNetRestore(s => DefaultDotNetRestore.SetProjectFile(DockerProject));
-            DotNetBuild(s => DefaultDotNetBuild.SetProjectFile(DockerProject).EnableNoRestore());
+            DotNetRestore(s => s
+                .SetProjectFile(DockerProject));
+            DotNetBuild(s => s
+                .SetProjectFile(DockerProject)
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion));
         });
 
     Target Pack => _ => _
@@ -157,10 +185,12 @@ class Build : NukeBuild
                 .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                 .JoinNewLine();
 
-            DotNetPack(s => DefaultDotNetPack
+            DotNetPack(s => s
                 .SetProject(DockerProject)
                 .EnableNoBuild()
-                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .EnableIncludeSymbols()
+                .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
         });
