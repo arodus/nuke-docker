@@ -1,9 +1,5 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: 0.6.0 [CommitSha: 5a428f0d].
-// Generated from https://github.com/nuke-build/docker/blob/master/src/Nuke.Docker/specifications/Docker.json.
+// Generated from https://github.com/nuke-build/docker/blob/master/src/Nuke.Docker/specifications/Docker.json
+// Generated with Nuke.CodeGeneration, Version: 0.11.1 [CommitSha: d6d33eea]
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Docker
     public static partial class DockerTasks
     {
         /// <summary><p>Path to the Docker executable.</p></summary>
-        public static string DockerPath => ToolPathResolver.GetPathExecutable("docker");
+        public static string DockerPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("DOCKER_EXE") ??
+            ToolPathResolver.GetPathExecutable("docker");
         /// <summary><p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p></summary>
         public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -1417,9 +1415,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("attach")
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--no-stdin={value}", NoStdin)
-              .Add("--sig-proxy={value}", SigProxy)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--no-stdin", NoStdin)
+              .Add("--sig-proxy", SigProxy)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -1509,37 +1507,37 @@ namespace Nuke.Docker
         {
             arguments
               .Add("build")
-              .Add("--add-host={value}", AddHost)
-              .Add("--build-arg={value}", BuildArg)
-              .Add("--cache-from={value}", CacheFrom)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--compress={value}", Compress)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--file={value}", File)
-              .Add("--force-rm={value}", ForceRm)
-              .Add("--iidfile={value}", Iidfile)
-              .Add("--isolation={value}", Isolation)
-              .Add("--label={value}", Label)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--network={value}", Network)
-              .Add("--no-cache={value}", NoCache)
-              .Add("--platform={value}", Platform)
-              .Add("--pull={value}", Pull)
-              .Add("--quiet={value}", Quiet)
-              .Add("--rm={value}", Rm)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--squash={value}", Squash)
-              .Add("--stream={value}", Stream)
-              .Add("--tag={value}", Tag)
-              .Add("--target={value}", Target)
-              .Add("--ulimit={value}", Ulimit)
+              .Add("--add-host {value}", AddHost)
+              .Add("--build-arg {value}", BuildArg)
+              .Add("--cache-from {value}", CacheFrom)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--compress", Compress)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--file {value}", File)
+              .Add("--force-rm", ForceRm)
+              .Add("--iidfile {value}", Iidfile)
+              .Add("--isolation {value}", Isolation)
+              .Add("--label {value}", Label)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--network {value}", Network)
+              .Add("--no-cache", NoCache)
+              .Add("--platform {value}", Platform)
+              .Add("--pull", Pull)
+              .Add("--quiet", Quiet)
+              .Add("--rm", Rm)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--squash", Squash)
+              .Add("--stream", Stream)
+              .Add("--tag {value}", Tag)
+              .Add("--target {value}", Target)
+              .Add("--ulimit {value}", Ulimit)
               .Add("{value}", Path)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -1585,8 +1583,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("checkpoint create")
-              .Add("--checkpoint-dir={value}", CheckpointDir)
-              .Add("--leave-running={value}", LeaveRunning)
+              .Add("--checkpoint-dir {value}", CheckpointDir)
+              .Add("--leave-running", LeaveRunning)
               .Add("{value}", Container)
               .Add("{value}", Checkpoint)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -1611,7 +1609,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("checkpoint ls")
-              .Add("--checkpoint-dir={value}", CheckpointDir)
+              .Add("--checkpoint-dir {value}", CheckpointDir)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -1637,7 +1635,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("checkpoint rm")
-              .Add("--checkpoint-dir={value}", CheckpointDir)
+              .Add("--checkpoint-dir {value}", CheckpointDir)
               .Add("{value}", Container)
               .Add("{value}", Checkpoint)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -1671,10 +1669,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("commit")
-              .Add("--author={value}", Author)
-              .Add("--change={value}", Change)
-              .Add("--message={value}", Message)
-              .Add("--pause={value}", Pause)
+              .Add("--author {value}", Author)
+              .Add("--change {value}", Change)
+              .Add("--message {value}", Message)
+              .Add("--pause", Pause)
               .Add("{value}", Container)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -1722,8 +1720,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("config create")
-              .Add("--label={value}", Label)
-              .Add("--template-driver={value}", TemplateDriver)
+              .Add("--label {value}", Label)
+              .Add("--template-driver {value}", TemplateDriver)
               .Add("{value}", Config)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -1751,8 +1749,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("config inspect")
-              .Add("--format={value}", Format)
-              .Add("--pretty={value}", Pretty)
+              .Add("--format {value}", Format)
+              .Add("--pretty", Pretty)
               .Add("{value}", Configs, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -1778,9 +1776,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("config ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -1847,9 +1845,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container attach")
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--no-stdin={value}", NoStdin)
-              .Add("--sig-proxy={value}", SigProxy)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--no-stdin", NoStdin)
+              .Add("--sig-proxy", SigProxy)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -1882,10 +1880,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container commit")
-              .Add("--author={value}", Author)
-              .Add("--change={value}", Change)
-              .Add("--message={value}", Message)
-              .Add("--pause={value}", Pause)
+              .Add("--author {value}", Author)
+              .Add("--change {value}", Change)
+              .Add("--message {value}", Message)
+              .Add("--pause", Pause)
               .Add("{value}", Container)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -2138,102 +2136,102 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container create")
-              .Add("--add-host={value}", AddHost)
-              .Add("--attach={value}", Attach)
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--blkio-weight-device={value}", BlkioWeightDevice)
-              .Add("--cap-add={value}", CapAdd)
-              .Add("--cap-drop={value}", CapDrop)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--cidfile={value}", Cidfile)
-              .Add("--cpu-count={value}", CpuCount)
-              .Add("--cpu-percent={value}", CpuPercent)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--device={value}", Device)
-              .Add("--device-cgroup-rule={value}", DeviceCgroupRule)
-              .Add("--device-read-bps={value}", DeviceReadBps)
-              .Add("--device-read-iops={value}", DeviceReadIops)
-              .Add("--device-write-bps={value}", DeviceWriteBps)
-              .Add("--device-write-iops={value}", DeviceWriteIops)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--dns={value}", Dns)
-              .Add("--dns-opt={value}", DnsOpt)
-              .Add("--dns-option={value}", DnsOption)
-              .Add("--dns-search={value}", DnsSearch)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env={value}", Env)
-              .Add("--env-file={value}", EnvFile)
-              .Add("--expose={value}", Expose)
-              .Add("--group-add={value}", GroupAdd)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--help={value}", Help)
-              .Add("--hostname={value}", Hostname)
-              .Add("--init={value}", Init)
-              .Add("--interactive={value}", Interactive)
-              .Add("--io-maxbandwidth={value}", IoMaxbandwidth)
-              .Add("--io-maxiops={value}", IoMaxiops)
-              .Add("--ip={value}", Ip)
-              .Add("--ip6={value}", Ip6)
-              .Add("--ipc={value}", Ipc)
-              .Add("--isolation={value}", Isolation)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--label={value}", Label)
-              .Add("--label-file={value}", LabelFile)
-              .Add("--link={value}", Link)
-              .Add("--link-local-ip={value}", LinkLocalIp)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mac-address={value}", MacAddress)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--memory-swappiness={value}", MemorySwappiness)
-              .Add("--mount={value}", Mount)
-              .Add("--name={value}", Name)
-              .Add("--net={value}", Net)
-              .Add("--net-alias={value}", NetAlias)
-              .Add("--network={value}", Network)
-              .Add("--network-alias={value}", NetworkAlias)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--oom-kill-disable={value}", OomKillDisable)
-              .Add("--oom-score-adj={value}", OomScoreAdj)
-              .Add("--pid={value}", Pid)
-              .Add("--pids-limit={value}", PidsLimit)
-              .Add("--platform={value}", Platform)
-              .Add("--privileged={value}", Privileged)
-              .Add("--publish={value}", Publish)
-              .Add("--publish-all={value}", PublishAll)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--restart={value}", Restart)
-              .Add("--rm={value}", Rm)
-              .Add("--runtime={value}", Runtime)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--stop-timeout={value}", StopTimeout)
-              .Add("--storage-opt={value}", StorageOpt)
-              .Add("--sysctl={value}", Sysctl, "{key}:{value}")
-              .Add("--tmpfs={value}", Tmpfs)
-              .Add("--tty={value}", Tty)
-              .Add("--ulimit={value}", Ulimit)
-              .Add("--user={value}", User)
-              .Add("--userns={value}", Userns)
-              .Add("--uts={value}", Uts)
-              .Add("--volume={value}", Volume)
-              .Add("--volume-driver={value}", VolumeDriver)
-              .Add("--volumes-from={value}", VolumesFrom)
-              .Add("--workdir={value}", Workdir)
+              .Add("--add-host {value}", AddHost)
+              .Add("--attach {value}", Attach)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--blkio-weight-device {value}", BlkioWeightDevice)
+              .Add("--cap-add {value}", CapAdd)
+              .Add("--cap-drop {value}", CapDrop)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--cidfile {value}", Cidfile)
+              .Add("--cpu-count {value}", CpuCount)
+              .Add("--cpu-percent {value}", CpuPercent)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--device {value}", Device)
+              .Add("--device-cgroup-rule {value}", DeviceCgroupRule)
+              .Add("--device-read-bps {value}", DeviceReadBps)
+              .Add("--device-read-iops {value}", DeviceReadIops)
+              .Add("--device-write-bps {value}", DeviceWriteBps)
+              .Add("--device-write-iops {value}", DeviceWriteIops)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--dns {value}", Dns)
+              .Add("--dns-opt {value}", DnsOpt)
+              .Add("--dns-option {value}", DnsOption)
+              .Add("--dns-search {value}", DnsSearch)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env {value}", Env)
+              .Add("--env-file {value}", EnvFile)
+              .Add("--expose {value}", Expose)
+              .Add("--group-add {value}", GroupAdd)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--help", Help)
+              .Add("--hostname {value}", Hostname)
+              .Add("--init", Init)
+              .Add("--interactive", Interactive)
+              .Add("--io-maxbandwidth {value}", IoMaxbandwidth)
+              .Add("--io-maxiops {value}", IoMaxiops)
+              .Add("--ip {value}", Ip)
+              .Add("--ip6 {value}", Ip6)
+              .Add("--ipc {value}", Ipc)
+              .Add("--isolation {value}", Isolation)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--label {value}", Label)
+              .Add("--label-file {value}", LabelFile)
+              .Add("--link {value}", Link)
+              .Add("--link-local-ip {value}", LinkLocalIp)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mac-address {value}", MacAddress)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--memory-swappiness {value}", MemorySwappiness)
+              .Add("--mount {value}", Mount)
+              .Add("--name {value}", Name)
+              .Add("--net {value}", Net)
+              .Add("--net-alias {value}", NetAlias)
+              .Add("--network {value}", Network)
+              .Add("--network-alias {value}", NetworkAlias)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--oom-kill-disable", OomKillDisable)
+              .Add("--oom-score-adj {value}", OomScoreAdj)
+              .Add("--pid {value}", Pid)
+              .Add("--pids-limit {value}", PidsLimit)
+              .Add("--platform {value}", Platform)
+              .Add("--privileged", Privileged)
+              .Add("--publish {value}", Publish)
+              .Add("--publish-all", PublishAll)
+              .Add("--read-only", ReadOnly)
+              .Add("--restart {value}", Restart)
+              .Add("--rm", Rm)
+              .Add("--runtime {value}", Runtime)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--stop-timeout {value}", StopTimeout)
+              .Add("--storage-opt {value}", StorageOpt)
+              .Add("--sysctl {value}", Sysctl, "{key}:{value}")
+              .Add("--tmpfs {value}", Tmpfs)
+              .Add("--tty", Tty)
+              .Add("--ulimit {value}", Ulimit)
+              .Add("--user {value}", User)
+              .Add("--userns {value}", Userns)
+              .Add("--uts {value}", Uts)
+              .Add("--volume {value}", Volume)
+              .Add("--volume-driver {value}", VolumeDriver)
+              .Add("--volumes-from {value}", VolumesFrom)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -2300,14 +2298,14 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container exec")
-              .Add("--detach={value}", Detach)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--env={value}", Env)
-              .Add("--interactive={value}", Interactive)
-              .Add("--privileged={value}", Privileged)
-              .Add("--tty={value}", Tty)
-              .Add("--user={value}", User)
-              .Add("--workdir={value}", Workdir)
+              .Add("--detach", Detach)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--env {value}", Env)
+              .Add("--interactive", Interactive)
+              .Add("--privileged", Privileged)
+              .Add("--tty", Tty)
+              .Add("--user {value}", User)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Container)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -2333,7 +2331,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container export")
-              .Add("--output={value}", Output)
+              .Add("--output {value}", Output)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2360,8 +2358,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container inspect")
-              .Add("--format={value}", Format)
-              .Add("--size={value}", Size)
+              .Add("--format {value}", Format)
+              .Add("--size", Size)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2386,7 +2384,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container kill")
-              .Add("--signal={value}", Signal)
+              .Add("--signal {value}", Signal)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2420,12 +2418,12 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container logs")
-              .Add("--details={value}", Details)
-              .Add("--follow={value}", Follow)
-              .Add("--since={value}", Since)
-              .Add("--tail={value}", Tail)
-              .Add("--timestamps={value}", Timestamps)
-              .Add("--until={value}", Until)
+              .Add("--details", Details)
+              .Add("--follow", Follow)
+              .Add("--since {value}", Since)
+              .Add("--tail {value}", Tail)
+              .Add("--timestamps", Timestamps)
+              .Add("--until {value}", Until)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2461,14 +2459,14 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container ls")
-              .Add("--all={value}", All)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--last={value}", Last)
-              .Add("--latest={value}", Latest)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
-              .Add("--size={value}", Size)
+              .Add("--all", All)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--last {value}", Last)
+              .Add("--latest", Latest)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
+              .Add("--size", Size)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -2537,8 +2535,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container prune")
-              .Add("--filter={value}", Filter)
-              .Add("--force={value}", Force)
+              .Add("--filter {value}", Filter)
+              .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -2586,7 +2584,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container restart")
-              .Add("--time={value}", Time)
+              .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2615,9 +2613,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container rm")
-              .Add("--force={value}", Force)
-              .Add("--link={value}", Link)
-              .Add("--volumes={value}", Volumes)
+              .Add("--force", Force)
+              .Add("--link", Link)
+              .Add("--volumes", Volumes)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -2875,105 +2873,105 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container run")
-              .Add("--add-host={value}", AddHost)
-              .Add("--attach={value}", Attach)
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--blkio-weight-device={value}", BlkioWeightDevice)
-              .Add("--cap-add={value}", CapAdd)
-              .Add("--cap-drop={value}", CapDrop)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--cidfile={value}", Cidfile)
-              .Add("--cpu-count={value}", CpuCount)
-              .Add("--cpu-percent={value}", CpuPercent)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--detach={value}", Detach)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--device={value}", Device)
-              .Add("--device-cgroup-rule={value}", DeviceCgroupRule)
-              .Add("--device-read-bps={value}", DeviceReadBps)
-              .Add("--device-read-iops={value}", DeviceReadIops)
-              .Add("--device-write-bps={value}", DeviceWriteBps)
-              .Add("--device-write-iops={value}", DeviceWriteIops)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--dns={value}", Dns)
-              .Add("--dns-opt={value}", DnsOpt)
-              .Add("--dns-option={value}", DnsOption)
-              .Add("--dns-search={value}", DnsSearch)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env={value}", Env)
-              .Add("--env-file={value}", EnvFile)
-              .Add("--expose={value}", Expose)
-              .Add("--group-add={value}", GroupAdd)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--help={value}", Help)
-              .Add("--hostname={value}", Hostname)
-              .Add("--init={value}", Init)
-              .Add("--interactive={value}", Interactive)
-              .Add("--io-maxbandwidth={value}", IoMaxbandwidth)
-              .Add("--io-maxiops={value}", IoMaxiops)
-              .Add("--ip={value}", Ip)
-              .Add("--ip6={value}", Ip6)
-              .Add("--ipc={value}", Ipc)
-              .Add("--isolation={value}", Isolation)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--label={value}", Label)
-              .Add("--label-file={value}", LabelFile)
-              .Add("--link={value}", Link)
-              .Add("--link-local-ip={value}", LinkLocalIp)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mac-address={value}", MacAddress)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--memory-swappiness={value}", MemorySwappiness)
-              .Add("--mount={value}", Mount)
-              .Add("--name={value}", Name)
-              .Add("--net={value}", Net)
-              .Add("--net-alias={value}", NetAlias)
-              .Add("--network={value}", Network)
-              .Add("--network-alias={value}", NetworkAlias)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--oom-kill-disable={value}", OomKillDisable)
-              .Add("--oom-score-adj={value}", OomScoreAdj)
-              .Add("--pid={value}", Pid)
-              .Add("--pids-limit={value}", PidsLimit)
-              .Add("--platform={value}", Platform)
-              .Add("--privileged={value}", Privileged)
-              .Add("--publish={value}", Publish)
-              .Add("--publish-all={value}", PublishAll)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--restart={value}", Restart)
-              .Add("--rm={value}", Rm)
-              .Add("--runtime={value}", Runtime)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--sig-proxy={value}", SigProxy)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--stop-timeout={value}", StopTimeout)
-              .Add("--storage-opt={value}", StorageOpt)
-              .Add("--sysctl={value}", Sysctl, "{key}:{value}")
-              .Add("--tmpfs={value}", Tmpfs)
-              .Add("--tty={value}", Tty)
-              .Add("--ulimit={value}", Ulimit)
-              .Add("--user={value}", User)
-              .Add("--userns={value}", Userns)
-              .Add("--uts={value}", Uts)
-              .Add("--volume={value}", Volume)
-              .Add("--volume-driver={value}", VolumeDriver)
-              .Add("--volumes-from={value}", VolumesFrom)
-              .Add("--workdir={value}", Workdir)
+              .Add("--add-host {value}", AddHost)
+              .Add("--attach {value}", Attach)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--blkio-weight-device {value}", BlkioWeightDevice)
+              .Add("--cap-add {value}", CapAdd)
+              .Add("--cap-drop {value}", CapDrop)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--cidfile {value}", Cidfile)
+              .Add("--cpu-count {value}", CpuCount)
+              .Add("--cpu-percent {value}", CpuPercent)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--detach", Detach)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--device {value}", Device)
+              .Add("--device-cgroup-rule {value}", DeviceCgroupRule)
+              .Add("--device-read-bps {value}", DeviceReadBps)
+              .Add("--device-read-iops {value}", DeviceReadIops)
+              .Add("--device-write-bps {value}", DeviceWriteBps)
+              .Add("--device-write-iops {value}", DeviceWriteIops)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--dns {value}", Dns)
+              .Add("--dns-opt {value}", DnsOpt)
+              .Add("--dns-option {value}", DnsOption)
+              .Add("--dns-search {value}", DnsSearch)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env {value}", Env)
+              .Add("--env-file {value}", EnvFile)
+              .Add("--expose {value}", Expose)
+              .Add("--group-add {value}", GroupAdd)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--help", Help)
+              .Add("--hostname {value}", Hostname)
+              .Add("--init", Init)
+              .Add("--interactive", Interactive)
+              .Add("--io-maxbandwidth {value}", IoMaxbandwidth)
+              .Add("--io-maxiops {value}", IoMaxiops)
+              .Add("--ip {value}", Ip)
+              .Add("--ip6 {value}", Ip6)
+              .Add("--ipc {value}", Ipc)
+              .Add("--isolation {value}", Isolation)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--label {value}", Label)
+              .Add("--label-file {value}", LabelFile)
+              .Add("--link {value}", Link)
+              .Add("--link-local-ip {value}", LinkLocalIp)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mac-address {value}", MacAddress)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--memory-swappiness {value}", MemorySwappiness)
+              .Add("--mount {value}", Mount)
+              .Add("--name {value}", Name)
+              .Add("--net {value}", Net)
+              .Add("--net-alias {value}", NetAlias)
+              .Add("--network {value}", Network)
+              .Add("--network-alias {value}", NetworkAlias)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--oom-kill-disable", OomKillDisable)
+              .Add("--oom-score-adj {value}", OomScoreAdj)
+              .Add("--pid {value}", Pid)
+              .Add("--pids-limit {value}", PidsLimit)
+              .Add("--platform {value}", Platform)
+              .Add("--privileged", Privileged)
+              .Add("--publish {value}", Publish)
+              .Add("--publish-all", PublishAll)
+              .Add("--read-only", ReadOnly)
+              .Add("--restart {value}", Restart)
+              .Add("--rm", Rm)
+              .Add("--runtime {value}", Runtime)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--sig-proxy", SigProxy)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--stop-timeout {value}", StopTimeout)
+              .Add("--storage-opt {value}", StorageOpt)
+              .Add("--sysctl {value}", Sysctl, "{key}:{value}")
+              .Add("--tmpfs {value}", Tmpfs)
+              .Add("--tty", Tty)
+              .Add("--ulimit {value}", Ulimit)
+              .Add("--user {value}", User)
+              .Add("--userns {value}", Userns)
+              .Add("--uts {value}", Uts)
+              .Add("--volume {value}", Volume)
+              .Add("--volume-driver {value}", VolumeDriver)
+              .Add("--volumes-from {value}", VolumesFrom)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -3008,11 +3006,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container start")
-              .Add("--attach={value}", Attach)
-              .Add("--checkpoint={value}", Checkpoint)
-              .Add("--checkpoint-dir={value}", CheckpointDir)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--interactive={value}", Interactive)
+              .Add("--attach", Attach)
+              .Add("--checkpoint {value}", Checkpoint)
+              .Add("--checkpoint-dir {value}", CheckpointDir)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--interactive", Interactive)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3043,10 +3041,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container stats")
-              .Add("--all={value}", All)
-              .Add("--format={value}", Format)
-              .Add("--no-stream={value}", NoStream)
-              .Add("--no-trunc={value}", NoTrunc)
+              .Add("--all", All)
+              .Add("--format {value}", Format)
+              .Add("--no-stream", NoStream)
+              .Add("--no-trunc", NoTrunc)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3071,7 +3069,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container stop")
-              .Add("--time={value}", Time)
+              .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3168,20 +3166,20 @@ namespace Nuke.Docker
         {
             arguments
               .Add("container update")
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--restart={value}", Restart)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--restart {value}", Restart)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3455,102 +3453,102 @@ namespace Nuke.Docker
         {
             arguments
               .Add("create")
-              .Add("--add-host={value}", AddHost)
-              .Add("--attach={value}", Attach)
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--blkio-weight-device={value}", BlkioWeightDevice)
-              .Add("--cap-add={value}", CapAdd)
-              .Add("--cap-drop={value}", CapDrop)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--cidfile={value}", Cidfile)
-              .Add("--cpu-count={value}", CpuCount)
-              .Add("--cpu-percent={value}", CpuPercent)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--device={value}", Device)
-              .Add("--device-cgroup-rule={value}", DeviceCgroupRule)
-              .Add("--device-read-bps={value}", DeviceReadBps)
-              .Add("--device-read-iops={value}", DeviceReadIops)
-              .Add("--device-write-bps={value}", DeviceWriteBps)
-              .Add("--device-write-iops={value}", DeviceWriteIops)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--dns={value}", Dns)
-              .Add("--dns-opt={value}", DnsOpt)
-              .Add("--dns-option={value}", DnsOption)
-              .Add("--dns-search={value}", DnsSearch)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env={value}", Env)
-              .Add("--env-file={value}", EnvFile)
-              .Add("--expose={value}", Expose)
-              .Add("--group-add={value}", GroupAdd)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--help={value}", Help)
-              .Add("--hostname={value}", Hostname)
-              .Add("--init={value}", Init)
-              .Add("--interactive={value}", Interactive)
-              .Add("--io-maxbandwidth={value}", IoMaxbandwidth)
-              .Add("--io-maxiops={value}", IoMaxiops)
-              .Add("--ip={value}", Ip)
-              .Add("--ip6={value}", Ip6)
-              .Add("--ipc={value}", Ipc)
-              .Add("--isolation={value}", Isolation)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--label={value}", Label)
-              .Add("--label-file={value}", LabelFile)
-              .Add("--link={value}", Link)
-              .Add("--link-local-ip={value}", LinkLocalIp)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mac-address={value}", MacAddress)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--memory-swappiness={value}", MemorySwappiness)
-              .Add("--mount={value}", Mount)
-              .Add("--name={value}", Name)
-              .Add("--net={value}", Net)
-              .Add("--net-alias={value}", NetAlias)
-              .Add("--network={value}", Network)
-              .Add("--network-alias={value}", NetworkAlias)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--oom-kill-disable={value}", OomKillDisable)
-              .Add("--oom-score-adj={value}", OomScoreAdj)
-              .Add("--pid={value}", Pid)
-              .Add("--pids-limit={value}", PidsLimit)
-              .Add("--platform={value}", Platform)
-              .Add("--privileged={value}", Privileged)
-              .Add("--publish={value}", Publish)
-              .Add("--publish-all={value}", PublishAll)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--restart={value}", Restart)
-              .Add("--rm={value}", Rm)
-              .Add("--runtime={value}", Runtime)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--stop-timeout={value}", StopTimeout)
-              .Add("--storage-opt={value}", StorageOpt)
-              .Add("--sysctl={value}", Sysctl, "{key}:{value}")
-              .Add("--tmpfs={value}", Tmpfs)
-              .Add("--tty={value}", Tty)
-              .Add("--ulimit={value}", Ulimit)
-              .Add("--user={value}", User)
-              .Add("--userns={value}", Userns)
-              .Add("--uts={value}", Uts)
-              .Add("--volume={value}", Volume)
-              .Add("--volume-driver={value}", VolumeDriver)
-              .Add("--volumes-from={value}", VolumesFrom)
-              .Add("--workdir={value}", Workdir)
+              .Add("--add-host {value}", AddHost)
+              .Add("--attach {value}", Attach)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--blkio-weight-device {value}", BlkioWeightDevice)
+              .Add("--cap-add {value}", CapAdd)
+              .Add("--cap-drop {value}", CapDrop)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--cidfile {value}", Cidfile)
+              .Add("--cpu-count {value}", CpuCount)
+              .Add("--cpu-percent {value}", CpuPercent)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--device {value}", Device)
+              .Add("--device-cgroup-rule {value}", DeviceCgroupRule)
+              .Add("--device-read-bps {value}", DeviceReadBps)
+              .Add("--device-read-iops {value}", DeviceReadIops)
+              .Add("--device-write-bps {value}", DeviceWriteBps)
+              .Add("--device-write-iops {value}", DeviceWriteIops)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--dns {value}", Dns)
+              .Add("--dns-opt {value}", DnsOpt)
+              .Add("--dns-option {value}", DnsOption)
+              .Add("--dns-search {value}", DnsSearch)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env {value}", Env)
+              .Add("--env-file {value}", EnvFile)
+              .Add("--expose {value}", Expose)
+              .Add("--group-add {value}", GroupAdd)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--help", Help)
+              .Add("--hostname {value}", Hostname)
+              .Add("--init", Init)
+              .Add("--interactive", Interactive)
+              .Add("--io-maxbandwidth {value}", IoMaxbandwidth)
+              .Add("--io-maxiops {value}", IoMaxiops)
+              .Add("--ip {value}", Ip)
+              .Add("--ip6 {value}", Ip6)
+              .Add("--ipc {value}", Ipc)
+              .Add("--isolation {value}", Isolation)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--label {value}", Label)
+              .Add("--label-file {value}", LabelFile)
+              .Add("--link {value}", Link)
+              .Add("--link-local-ip {value}", LinkLocalIp)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mac-address {value}", MacAddress)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--memory-swappiness {value}", MemorySwappiness)
+              .Add("--mount {value}", Mount)
+              .Add("--name {value}", Name)
+              .Add("--net {value}", Net)
+              .Add("--net-alias {value}", NetAlias)
+              .Add("--network {value}", Network)
+              .Add("--network-alias {value}", NetworkAlias)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--oom-kill-disable", OomKillDisable)
+              .Add("--oom-score-adj {value}", OomScoreAdj)
+              .Add("--pid {value}", Pid)
+              .Add("--pids-limit {value}", PidsLimit)
+              .Add("--platform {value}", Platform)
+              .Add("--privileged", Privileged)
+              .Add("--publish {value}", Publish)
+              .Add("--publish-all", PublishAll)
+              .Add("--read-only", ReadOnly)
+              .Add("--restart {value}", Restart)
+              .Add("--rm", Rm)
+              .Add("--runtime {value}", Runtime)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--stop-timeout {value}", StopTimeout)
+              .Add("--storage-opt {value}", StorageOpt)
+              .Add("--sysctl {value}", Sysctl, "{key}:{value}")
+              .Add("--tmpfs {value}", Tmpfs)
+              .Add("--tty", Tty)
+              .Add("--ulimit {value}", Ulimit)
+              .Add("--user {value}", User)
+              .Add("--userns {value}", Userns)
+              .Add("--uts {value}", Uts)
+              .Add("--volume {value}", Volume)
+              .Add("--volume-driver {value}", VolumeDriver)
+              .Add("--volumes-from {value}", VolumesFrom)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -3585,11 +3583,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("deploy")
-              .Add("--bundle-file={value}", BundleFile)
-              .Add("--compose-file={value}", ComposeFile)
-              .Add("--prune={value}", Prune)
-              .Add("--resolve-image={value}", ResolveImage)
-              .Add("--with-registry-auth={value}", WithRegistryAuth)
+              .Add("--bundle-file {value}", BundleFile)
+              .Add("--compose-file {value}", ComposeFile)
+              .Add("--prune", Prune)
+              .Add("--resolve-image {value}", ResolveImage)
+              .Add("--with-registry-auth", WithRegistryAuth)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3638,10 +3636,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("events")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--since={value}", Since)
-              .Add("--until={value}", Until)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--since {value}", Since)
+              .Add("--until {value}", Until)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -3684,14 +3682,14 @@ namespace Nuke.Docker
         {
             arguments
               .Add("exec")
-              .Add("--detach={value}", Detach)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--env={value}", Env)
-              .Add("--interactive={value}", Interactive)
-              .Add("--privileged={value}", Privileged)
-              .Add("--tty={value}", Tty)
-              .Add("--user={value}", User)
-              .Add("--workdir={value}", Workdir)
+              .Add("--detach", Detach)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--env {value}", Env)
+              .Add("--interactive", Interactive)
+              .Add("--privileged", Privileged)
+              .Add("--tty", Tty)
+              .Add("--user {value}", User)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Container)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -3717,7 +3715,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("export")
-              .Add("--output={value}", Output)
+              .Add("--output {value}", Output)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3747,10 +3745,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("history")
-              .Add("--format={value}", Format)
-              .Add("--human={value}", Human)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--format {value}", Format)
+              .Add("--human", Human)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3802,12 +3800,12 @@ namespace Nuke.Docker
         {
             arguments
               .Add("images")
-              .Add("--all={value}", All)
-              .Add("--digests={value}", Digests)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--all", All)
+              .Add("--digests", Digests)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3897,37 +3895,37 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image build")
-              .Add("--add-host={value}", AddHost)
-              .Add("--build-arg={value}", BuildArg)
-              .Add("--cache-from={value}", CacheFrom)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--compress={value}", Compress)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--file={value}", File)
-              .Add("--force-rm={value}", ForceRm)
-              .Add("--iidfile={value}", Iidfile)
-              .Add("--isolation={value}", Isolation)
-              .Add("--label={value}", Label)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--network={value}", Network)
-              .Add("--no-cache={value}", NoCache)
-              .Add("--platform={value}", Platform)
-              .Add("--pull={value}", Pull)
-              .Add("--quiet={value}", Quiet)
-              .Add("--rm={value}", Rm)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--squash={value}", Squash)
-              .Add("--stream={value}", Stream)
-              .Add("--tag={value}", Tag)
-              .Add("--target={value}", Target)
-              .Add("--ulimit={value}", Ulimit)
+              .Add("--add-host {value}", AddHost)
+              .Add("--build-arg {value}", BuildArg)
+              .Add("--cache-from {value}", CacheFrom)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--compress", Compress)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--file {value}", File)
+              .Add("--force-rm", ForceRm)
+              .Add("--iidfile {value}", Iidfile)
+              .Add("--isolation {value}", Isolation)
+              .Add("--label {value}", Label)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--network {value}", Network)
+              .Add("--no-cache", NoCache)
+              .Add("--platform {value}", Platform)
+              .Add("--pull", Pull)
+              .Add("--quiet", Quiet)
+              .Add("--rm", Rm)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--squash", Squash)
+              .Add("--stream", Stream)
+              .Add("--tag {value}", Tag)
+              .Add("--target {value}", Target)
+              .Add("--ulimit {value}", Ulimit)
               .Add("{value}", Path)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3957,10 +3955,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image history")
-              .Add("--format={value}", Format)
-              .Add("--human={value}", Human)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--format {value}", Format)
+              .Add("--human", Human)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -3989,8 +3987,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image import")
-              .Add("--change={value}", Change)
-              .Add("--message={value}", Message)
+              .Add("--change {value}", Change)
+              .Add("--message {value}", Message)
               .Add("{value}", File)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4016,7 +4014,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image inspect")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4040,8 +4038,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image load")
-              .Add("--input={value}", Input)
-              .Add("--quiet={value}", Quiet)
+              .Add("--input {value}", Input)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4074,12 +4072,12 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image ls")
-              .Add("--all={value}", All)
-              .Add("--digests={value}", Digests)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--all", All)
+              .Add("--digests", Digests)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4105,9 +4103,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image prune")
-              .Add("--all={value}", All)
-              .Add("--filter={value}", Filter)
-              .Add("--force={value}", Force)
+              .Add("--all", All)
+              .Add("--filter {value}", Filter)
+              .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4134,9 +4132,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image pull")
-              .Add("--all-tags={value}", AllTags)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--platform={value}", Platform)
+              .Add("--all-tags", AllTags)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--platform {value}", Platform)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4160,7 +4158,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image push")
-              .Add("--disable-content-trust={value}", DisableContentTrust)
+              .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4187,8 +4185,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image rm")
-              .Add("--force={value}", Force)
-              .Add("--no-prune={value}", NoPrune)
+              .Add("--force", Force)
+              .Add("--no-prune", NoPrune)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4213,7 +4211,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("image save")
-              .Add("--output={value}", Output)
+              .Add("--output {value}", Output)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4266,8 +4264,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("import")
-              .Add("--change={value}", Change)
-              .Add("--message={value}", Message)
+              .Add("--change {value}", Change)
+              .Add("--message {value}", Message)
               .Add("{value}", File)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4290,7 +4288,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("info")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4318,9 +4316,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("inspect")
-              .Add("--format={value}", Format)
-              .Add("--size={value}", Size)
-              .Add("--type={value}", Type)
+              .Add("--format {value}", Format)
+              .Add("--size", Size)
+              .Add("--type {value}", Type)
               .Add("{value}", Names, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4345,7 +4343,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("kill")
-              .Add("--signal={value}", Signal)
+              .Add("--signal {value}", Signal)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4369,8 +4367,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("load")
-              .Add("--input={value}", Input)
-              .Add("--quiet={value}", Quiet)
+              .Add("--input {value}", Input)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4397,9 +4395,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("login")
-              .Add("--password={value}", Password)
-              .Add("--password-stdin={value}", PasswordStdin)
-              .Add("--username={value}", Username)
+              .Add("--password {value}", Password)
+              .Add("--password-stdin", PasswordStdin)
+              .Add("--username {value}", Username)
               .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4454,12 +4452,12 @@ namespace Nuke.Docker
         {
             arguments
               .Add("logs")
-              .Add("--details={value}", Details)
-              .Add("--follow={value}", Follow)
-              .Add("--since={value}", Since)
-              .Add("--tail={value}", Tail)
-              .Add("--timestamps={value}", Timestamps)
-              .Add("--until={value}", Until)
+              .Add("--details", Details)
+              .Add("--follow", Follow)
+              .Add("--since {value}", Since)
+              .Add("--tail {value}", Tail)
+              .Add("--timestamps", Timestamps)
+              .Add("--until {value}", Until)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4513,10 +4511,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("manifest annotate")
-              .Add("--arch={value}", Arch)
-              .Add("--os={value}", Os)
-              .Add("--os-features={value}", OsFeatures)
-              .Add("--variant={value}", Variant)
+              .Add("--arch {value}", Arch)
+              .Add("--os {value}", Os)
+              .Add("--os-features {value}", OsFeatures)
+              .Add("--variant {value}", Variant)
               .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4570,8 +4568,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("manifest inspect")
-              .Add("--insecure={value}", Insecure)
-              .Add("--verbose={value}", Verbose)
+              .Add("--insecure", Insecure)
+              .Add("--verbose", Verbose)
               .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4598,8 +4596,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("manifest push")
-              .Add("--insecure={value}", Insecure)
-              .Add("--purge={value}", Purge)
+              .Add("--insecure", Insecure)
+              .Add("--purge", Purge)
               .Add("{value}", ManifestList)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4654,11 +4652,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network connect")
-              .Add("--alias={value}", Alias)
-              .Add("--ip={value}", Ip)
-              .Add("--ip6={value}", Ip6)
-              .Add("--link={value}", Link)
-              .Add("--link-local-ip={value}", LinkLocalIp)
+              .Add("--alias {value}", Alias)
+              .Add("--ip {value}", Ip)
+              .Add("--ip6 {value}", Ip6)
+              .Add("--link {value}", Link)
+              .Add("--link-local-ip {value}", LinkLocalIp)
               .Add("{value}", Network)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4720,22 +4718,22 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network create")
-              .Add("--attachable={value}", Attachable)
-              .Add("--aux-address={value}", AuxAddress, "{key}:{value}")
-              .Add("--config-from={value}", ConfigFrom)
-              .Add("--config-only={value}", ConfigOnly)
-              .Add("--driver={value}", Driver)
-              .Add("--gateway={value}", Gateway)
-              .Add("--ingress={value}", Ingress)
-              .Add("--internal={value}", Internal)
-              .Add("--ip-range={value}", IpRange)
-              .Add("--ipam-driver={value}", IpamDriver)
-              .Add("--ipam-opt={value}", IpamOpt, "{key}:{value}")
-              .Add("--ipv6={value}", Ipv6)
-              .Add("--label={value}", Label)
-              .Add("--opt={value}", Opt, "{key}:{value}")
-              .Add("--scope={value}", Scope)
-              .Add("--subnet={value}", Subnet)
+              .Add("--attachable", Attachable)
+              .Add("--aux-address {value}", AuxAddress, "{key}:{value}")
+              .Add("--config-from {value}", ConfigFrom)
+              .Add("--config-only", ConfigOnly)
+              .Add("--driver {value}", Driver)
+              .Add("--gateway {value}", Gateway)
+              .Add("--ingress", Ingress)
+              .Add("--internal", Internal)
+              .Add("--ip-range {value}", IpRange)
+              .Add("--ipam-driver {value}", IpamDriver)
+              .Add("--ipam-opt {value}", IpamOpt, "{key}:{value}")
+              .Add("--ipv6", Ipv6)
+              .Add("--label {value}", Label)
+              .Add("--opt {value}", Opt, "{key}:{value}")
+              .Add("--scope {value}", Scope)
+              .Add("--subnet {value}", Subnet)
               .Add("{value}", Network)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4761,7 +4759,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network disconnect")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Network)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -4789,8 +4787,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network inspect")
-              .Add("--format={value}", Format)
-              .Add("--verbose={value}", Verbose)
+              .Add("--format {value}", Format)
+              .Add("--verbose", Verbose)
               .Add("{value}", Networks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4818,10 +4816,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4844,8 +4842,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("network prune")
-              .Add("--filter={value}", Filter)
-              .Add("--force={value}", Force)
+              .Add("--filter {value}", Filter)
+              .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -4933,8 +4931,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("node inspect")
-              .Add("--format={value}", Format)
-              .Add("--pretty={value}", Pretty)
+              .Add("--format {value}", Format)
+              .Add("--pretty", Pretty)
               .Add("{value}", Selves, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -4960,9 +4958,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("node ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5016,11 +5014,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("node ps")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-resolve={value}", NoResolve)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-resolve", NoResolve)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5045,7 +5043,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("node rm")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5077,10 +5075,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("node update")
-              .Add("--availability={value}", Availability)
-              .Add("--label-add={value}", LabelAdd)
-              .Add("--label-rm={value}", LabelRm)
-              .Add("--role={value}", Role)
+              .Add("--availability {value}", Availability)
+              .Add("--label-add {value}", LabelAdd)
+              .Add("--label-rm {value}", LabelRm)
+              .Add("--role {value}", Role)
               .Add("{value}", Node)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5146,7 +5144,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin create")
-              .Add("--compress={value}", Compress)
+              .Add("--compress", Compress)
               .Add("{value}", Plugin)
               .Add("{value}", PluginDataDir)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -5171,7 +5169,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin disable")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5195,7 +5193,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin enable")
-              .Add("--timeout={value}", Timeout)
+              .Add("--timeout {value}", Timeout)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5220,7 +5218,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin inspect")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", Plugins, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5253,10 +5251,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin install")
-              .Add("--alias={value}", Alias)
-              .Add("--disable={value}", Disable)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--grant-all-permissions={value}", GrantAllPermissions)
+              .Add("--alias {value}", Alias)
+              .Add("--disable", Disable)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--grant-all-permissions", GrantAllPermissions)
               .Add("{value}", Plugin)
               .Add("{value}", KeyValues, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -5285,10 +5283,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5311,7 +5309,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin push")
-              .Add("--disable-content-trust={value}", DisableContentTrust)
+              .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5336,7 +5334,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin rm")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Plugins, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5391,9 +5389,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("plugin upgrade")
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--grant-all-permissions={value}", GrantAllPermissions)
-              .Add("--skip-remote-check={value}", SkipRemoteCheck)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--grant-all-permissions", GrantAllPermissions)
+              .Add("--skip-remote-check", SkipRemoteCheck)
               .Add("{value}", Plugin)
               .Add("{value}", Remote)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -5454,14 +5452,14 @@ namespace Nuke.Docker
         {
             arguments
               .Add("ps")
-              .Add("--all={value}", All)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--last={value}", Last)
-              .Add("--latest={value}", Latest)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
-              .Add("--size={value}", Size)
+              .Add("--all", All)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--last {value}", Last)
+              .Add("--latest", Latest)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
+              .Add("--size", Size)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -5488,9 +5486,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("pull")
-              .Add("--all-tags={value}", AllTags)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--platform={value}", Platform)
+              .Add("--all-tags", AllTags)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--platform {value}", Platform)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5514,7 +5512,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("push")
-              .Add("--disable-content-trust={value}", DisableContentTrust)
+              .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5563,7 +5561,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("restart")
-              .Add("--time={value}", Time)
+              .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5592,9 +5590,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("rm")
-              .Add("--force={value}", Force)
-              .Add("--link={value}", Link)
-              .Add("--volumes={value}", Volumes)
+              .Add("--force", Force)
+              .Add("--link", Link)
+              .Add("--volumes", Volumes)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5621,8 +5619,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("rmi")
-              .Add("--force={value}", Force)
-              .Add("--no-prune={value}", NoPrune)
+              .Add("--force", Force)
+              .Add("--no-prune", NoPrune)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -5880,105 +5878,105 @@ namespace Nuke.Docker
         {
             arguments
               .Add("run")
-              .Add("--add-host={value}", AddHost)
-              .Add("--attach={value}", Attach)
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--blkio-weight-device={value}", BlkioWeightDevice)
-              .Add("--cap-add={value}", CapAdd)
-              .Add("--cap-drop={value}", CapDrop)
-              .Add("--cgroup-parent={value}", CgroupParent)
-              .Add("--cidfile={value}", Cidfile)
-              .Add("--cpu-count={value}", CpuCount)
-              .Add("--cpu-percent={value}", CpuPercent)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--detach={value}", Detach)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--device={value}", Device)
-              .Add("--device-cgroup-rule={value}", DeviceCgroupRule)
-              .Add("--device-read-bps={value}", DeviceReadBps)
-              .Add("--device-read-iops={value}", DeviceReadIops)
-              .Add("--device-write-bps={value}", DeviceWriteBps)
-              .Add("--device-write-iops={value}", DeviceWriteIops)
-              .Add("--disable-content-trust={value}", DisableContentTrust)
-              .Add("--dns={value}", Dns)
-              .Add("--dns-opt={value}", DnsOpt)
-              .Add("--dns-option={value}", DnsOption)
-              .Add("--dns-search={value}", DnsSearch)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env={value}", Env)
-              .Add("--env-file={value}", EnvFile)
-              .Add("--expose={value}", Expose)
-              .Add("--group-add={value}", GroupAdd)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--help={value}", Help)
-              .Add("--hostname={value}", Hostname)
-              .Add("--init={value}", Init)
-              .Add("--interactive={value}", Interactive)
-              .Add("--io-maxbandwidth={value}", IoMaxbandwidth)
-              .Add("--io-maxiops={value}", IoMaxiops)
-              .Add("--ip={value}", Ip)
-              .Add("--ip6={value}", Ip6)
-              .Add("--ipc={value}", Ipc)
-              .Add("--isolation={value}", Isolation)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--label={value}", Label)
-              .Add("--label-file={value}", LabelFile)
-              .Add("--link={value}", Link)
-              .Add("--link-local-ip={value}", LinkLocalIp)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mac-address={value}", MacAddress)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--memory-swappiness={value}", MemorySwappiness)
-              .Add("--mount={value}", Mount)
-              .Add("--name={value}", Name)
-              .Add("--net={value}", Net)
-              .Add("--net-alias={value}", NetAlias)
-              .Add("--network={value}", Network)
-              .Add("--network-alias={value}", NetworkAlias)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--oom-kill-disable={value}", OomKillDisable)
-              .Add("--oom-score-adj={value}", OomScoreAdj)
-              .Add("--pid={value}", Pid)
-              .Add("--pids-limit={value}", PidsLimit)
-              .Add("--platform={value}", Platform)
-              .Add("--privileged={value}", Privileged)
-              .Add("--publish={value}", Publish)
-              .Add("--publish-all={value}", PublishAll)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--restart={value}", Restart)
-              .Add("--rm={value}", Rm)
-              .Add("--runtime={value}", Runtime)
-              .Add("--security-opt={value}", SecurityOpt)
-              .Add("--shm-size={value}", ShmSize)
-              .Add("--sig-proxy={value}", SigProxy)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--stop-timeout={value}", StopTimeout)
-              .Add("--storage-opt={value}", StorageOpt)
-              .Add("--sysctl={value}", Sysctl, "{key}:{value}")
-              .Add("--tmpfs={value}", Tmpfs)
-              .Add("--tty={value}", Tty)
-              .Add("--ulimit={value}", Ulimit)
-              .Add("--user={value}", User)
-              .Add("--userns={value}", Userns)
-              .Add("--uts={value}", Uts)
-              .Add("--volume={value}", Volume)
-              .Add("--volume-driver={value}", VolumeDriver)
-              .Add("--volumes-from={value}", VolumesFrom)
-              .Add("--workdir={value}", Workdir)
+              .Add("--add-host {value}", AddHost)
+              .Add("--attach {value}", Attach)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--blkio-weight-device {value}", BlkioWeightDevice)
+              .Add("--cap-add {value}", CapAdd)
+              .Add("--cap-drop {value}", CapDrop)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--cidfile {value}", Cidfile)
+              .Add("--cpu-count {value}", CpuCount)
+              .Add("--cpu-percent {value}", CpuPercent)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--detach", Detach)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--device {value}", Device)
+              .Add("--device-cgroup-rule {value}", DeviceCgroupRule)
+              .Add("--device-read-bps {value}", DeviceReadBps)
+              .Add("--device-read-iops {value}", DeviceReadIops)
+              .Add("--device-write-bps {value}", DeviceWriteBps)
+              .Add("--device-write-iops {value}", DeviceWriteIops)
+              .Add("--disable-content-trust", DisableContentTrust)
+              .Add("--dns {value}", Dns)
+              .Add("--dns-opt {value}", DnsOpt)
+              .Add("--dns-option {value}", DnsOption)
+              .Add("--dns-search {value}", DnsSearch)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env {value}", Env)
+              .Add("--env-file {value}", EnvFile)
+              .Add("--expose {value}", Expose)
+              .Add("--group-add {value}", GroupAdd)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--help", Help)
+              .Add("--hostname {value}", Hostname)
+              .Add("--init", Init)
+              .Add("--interactive", Interactive)
+              .Add("--io-maxbandwidth {value}", IoMaxbandwidth)
+              .Add("--io-maxiops {value}", IoMaxiops)
+              .Add("--ip {value}", Ip)
+              .Add("--ip6 {value}", Ip6)
+              .Add("--ipc {value}", Ipc)
+              .Add("--isolation {value}", Isolation)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--label {value}", Label)
+              .Add("--label-file {value}", LabelFile)
+              .Add("--link {value}", Link)
+              .Add("--link-local-ip {value}", LinkLocalIp)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mac-address {value}", MacAddress)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--memory-swappiness {value}", MemorySwappiness)
+              .Add("--mount {value}", Mount)
+              .Add("--name {value}", Name)
+              .Add("--net {value}", Net)
+              .Add("--net-alias {value}", NetAlias)
+              .Add("--network {value}", Network)
+              .Add("--network-alias {value}", NetworkAlias)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--oom-kill-disable", OomKillDisable)
+              .Add("--oom-score-adj {value}", OomScoreAdj)
+              .Add("--pid {value}", Pid)
+              .Add("--pids-limit {value}", PidsLimit)
+              .Add("--platform {value}", Platform)
+              .Add("--privileged", Privileged)
+              .Add("--publish {value}", Publish)
+              .Add("--publish-all", PublishAll)
+              .Add("--read-only", ReadOnly)
+              .Add("--restart {value}", Restart)
+              .Add("--rm", Rm)
+              .Add("--runtime {value}", Runtime)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--sig-proxy", SigProxy)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--stop-timeout {value}", StopTimeout)
+              .Add("--storage-opt {value}", StorageOpt)
+              .Add("--sysctl {value}", Sysctl, "{key}:{value}")
+              .Add("--tmpfs {value}", Tmpfs)
+              .Add("--tty", Tty)
+              .Add("--ulimit {value}", Ulimit)
+              .Add("--user {value}", User)
+              .Add("--userns {value}", Userns)
+              .Add("--uts {value}", Uts)
+              .Add("--volume {value}", Volume)
+              .Add("--volume-driver {value}", VolumeDriver)
+              .Add("--volumes-from {value}", VolumesFrom)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -6005,7 +6003,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("save")
-              .Add("--output={value}", Output)
+              .Add("--output {value}", Output)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6039,12 +6037,12 @@ namespace Nuke.Docker
         {
             arguments
               .Add("search")
-              .Add("--automated={value}", Automated)
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--limit={value}", Limit)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--stars={value}", Stars)
+              .Add("--automated", Automated)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--limit {value}", Limit)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--stars {value}", Stars)
               .Add("{value}", Term)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6093,9 +6091,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("secret create")
-              .Add("--driver={value}", Driver)
-              .Add("--label={value}", Label)
-              .Add("--template-driver={value}", TemplateDriver)
+              .Add("--driver {value}", Driver)
+              .Add("--label {value}", Label)
+              .Add("--template-driver {value}", TemplateDriver)
               .Add("{value}", Secret)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -6123,8 +6121,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("secret inspect")
-              .Add("--format={value}", Format)
-              .Add("--pretty={value}", Pretty)
+              .Add("--format {value}", Format)
+              .Add("--pretty", Pretty)
               .Add("{value}", Secrets, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6150,9 +6148,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("secret ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -6356,69 +6354,69 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service create")
-              .Add("--config={value}", Config)
-              .Add("--constraint={value}", Constraint)
-              .Add("--container-label={value}", ContainerLabel)
-              .Add("--credential-spec={value}", CredentialSpec)
-              .Add("--detach={value}", Detach)
-              .Add("--dns={value}", Dns)
-              .Add("--dns-option={value}", DnsOption)
-              .Add("--dns-search={value}", DnsSearch)
-              .Add("--endpoint-mode={value}", EndpointMode)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env={value}", Env)
-              .Add("--env-file={value}", EnvFile)
-              .Add("--generic-resource={value}", GenericResource)
-              .Add("--group={value}", Group)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--host={value}", Host)
-              .Add("--hostname={value}", Hostname)
-              .Add("--isolation={value}", Isolation)
-              .Add("--label={value}", Label)
-              .Add("--limit-cpu={value}", LimitCpu)
-              .Add("--limit-memory={value}", LimitMemory)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mode={value}", Mode)
-              .Add("--mount={value}", Mount)
-              .Add("--name={value}", Name)
-              .Add("--network={value}", Network)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--no-resolve-image={value}", NoResolveImage)
-              .Add("--placement-pref={value}", PlacementPref)
-              .Add("--publish={value}", Publish)
-              .Add("--quiet={value}", Quiet)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--replicas={value}", Replicas)
-              .Add("--reserve-cpu={value}", ReserveCpu)
-              .Add("--reserve-memory={value}", ReserveMemory)
-              .Add("--restart-condition={value}", RestartCondition)
-              .Add("--restart-delay={value}", RestartDelay)
-              .Add("--restart-max-attempts={value}", RestartMaxAttempts)
-              .Add("--restart-window={value}", RestartWindow)
-              .Add("--rollback-delay={value}", RollbackDelay)
-              .Add("--rollback-failure-action={value}", RollbackFailureAction)
-              .Add("--rollback-max-failure-ratio={value}", RollbackMaxFailureRatio)
-              .Add("--rollback-monitor={value}", RollbackMonitor)
-              .Add("--rollback-order={value}", RollbackOrder)
-              .Add("--rollback-parallelism={value}", RollbackParallelism)
-              .Add("--secret={value}", Secret)
-              .Add("--stop-grace-period={value}", StopGracePeriod)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--tty={value}", Tty)
-              .Add("--update-delay={value}", UpdateDelay)
-              .Add("--update-failure-action={value}", UpdateFailureAction)
-              .Add("--update-max-failure-ratio={value}", UpdateMaxFailureRatio)
-              .Add("--update-monitor={value}", UpdateMonitor)
-              .Add("--update-order={value}", UpdateOrder)
-              .Add("--update-parallelism={value}", UpdateParallelism)
-              .Add("--user={value}", User)
-              .Add("--with-registry-auth={value}", WithRegistryAuth)
-              .Add("--workdir={value}", Workdir)
+              .Add("--config {value}", Config)
+              .Add("--constraint {value}", Constraint)
+              .Add("--container-label {value}", ContainerLabel)
+              .Add("--credential-spec {value}", CredentialSpec)
+              .Add("--detach", Detach)
+              .Add("--dns {value}", Dns)
+              .Add("--dns-option {value}", DnsOption)
+              .Add("--dns-search {value}", DnsSearch)
+              .Add("--endpoint-mode {value}", EndpointMode)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env {value}", Env)
+              .Add("--env-file {value}", EnvFile)
+              .Add("--generic-resource {value}", GenericResource)
+              .Add("--group {value}", Group)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--host {value}", Host)
+              .Add("--hostname {value}", Hostname)
+              .Add("--isolation {value}", Isolation)
+              .Add("--label {value}", Label)
+              .Add("--limit-cpu {value}", LimitCpu)
+              .Add("--limit-memory {value}", LimitMemory)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mode {value}", Mode)
+              .Add("--mount {value}", Mount)
+              .Add("--name {value}", Name)
+              .Add("--network {value}", Network)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--no-resolve-image", NoResolveImage)
+              .Add("--placement-pref {value}", PlacementPref)
+              .Add("--publish {value}", Publish)
+              .Add("--quiet", Quiet)
+              .Add("--read-only", ReadOnly)
+              .Add("--replicas {value}", Replicas)
+              .Add("--reserve-cpu {value}", ReserveCpu)
+              .Add("--reserve-memory {value}", ReserveMemory)
+              .Add("--restart-condition {value}", RestartCondition)
+              .Add("--restart-delay {value}", RestartDelay)
+              .Add("--restart-max-attempts {value}", RestartMaxAttempts)
+              .Add("--restart-window {value}", RestartWindow)
+              .Add("--rollback-delay {value}", RollbackDelay)
+              .Add("--rollback-failure-action {value}", RollbackFailureAction)
+              .Add("--rollback-max-failure-ratio {value}", RollbackMaxFailureRatio)
+              .Add("--rollback-monitor {value}", RollbackMonitor)
+              .Add("--rollback-order {value}", RollbackOrder)
+              .Add("--rollback-parallelism {value}", RollbackParallelism)
+              .Add("--secret {value}", Secret)
+              .Add("--stop-grace-period {value}", StopGracePeriod)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--tty", Tty)
+              .Add("--update-delay {value}", UpdateDelay)
+              .Add("--update-failure-action {value}", UpdateFailureAction)
+              .Add("--update-max-failure-ratio {value}", UpdateMaxFailureRatio)
+              .Add("--update-monitor {value}", UpdateMonitor)
+              .Add("--update-order {value}", UpdateOrder)
+              .Add("--update-parallelism {value}", UpdateParallelism)
+              .Add("--user {value}", User)
+              .Add("--with-registry-auth", WithRegistryAuth)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Image)
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
@@ -6447,8 +6445,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service inspect")
-              .Add("--format={value}", Format)
-              .Add("--pretty={value}", Pretty)
+              .Add("--format {value}", Format)
+              .Add("--pretty", Pretty)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6488,15 +6486,15 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service logs")
-              .Add("--details={value}", Details)
-              .Add("--follow={value}", Follow)
-              .Add("--no-resolve={value}", NoResolve)
-              .Add("--no-task-ids={value}", NoTaskIds)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--raw={value}", Raw)
-              .Add("--since={value}", Since)
-              .Add("--tail={value}", Tail)
-              .Add("--timestamps={value}", Timestamps)
+              .Add("--details", Details)
+              .Add("--follow", Follow)
+              .Add("--no-resolve", NoResolve)
+              .Add("--no-task-ids", NoTaskIds)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--raw", Raw)
+              .Add("--since {value}", Since)
+              .Add("--tail {value}", Tail)
+              .Add("--timestamps", Timestamps)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6522,9 +6520,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -6556,11 +6554,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service ps")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-resolve={value}", NoResolve)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-resolve", NoResolve)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6608,8 +6606,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service rollback")
-              .Add("--detach={value}", Detach)
-              .Add("--quiet={value}", Quiet)
+              .Add("--detach", Detach)
+              .Add("--quiet", Quiet)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6838,86 +6836,86 @@ namespace Nuke.Docker
         {
             arguments
               .Add("service update")
-              .Add("--args={value}", Args)
-              .Add("--config-add={value}", ConfigAdd)
-              .Add("--config-rm={value}", ConfigRm)
-              .Add("--constraint-add={value}", ConstraintAdd)
-              .Add("--constraint-rm={value}", ConstraintRm)
-              .Add("--container-label-add={value}", ContainerLabelAdd)
-              .Add("--container-label-rm={value}", ContainerLabelRm)
-              .Add("--credential-spec={value}", CredentialSpec)
-              .Add("--detach={value}", Detach)
-              .Add("--dns-add={value}", DnsAdd)
-              .Add("--dns-option-add={value}", DnsOptionAdd)
-              .Add("--dns-option-rm={value}", DnsOptionRm)
-              .Add("--dns-rm={value}", DnsRm)
-              .Add("--dns-search-add={value}", DnsSearchAdd)
-              .Add("--dns-search-rm={value}", DnsSearchRm)
-              .Add("--endpoint-mode={value}", EndpointMode)
-              .Add("--entrypoint={value}", Entrypoint)
-              .Add("--env-add={value}", EnvAdd)
-              .Add("--env-rm={value}", EnvRm)
-              .Add("--force={value}", Force)
-              .Add("--generic-resource-add={value}", GenericResourceAdd)
-              .Add("--generic-resource-rm={value}", GenericResourceRm)
-              .Add("--group-add={value}", GroupAdd)
-              .Add("--group-rm={value}", GroupRm)
-              .Add("--health-cmd={value}", HealthCmd)
-              .Add("--health-interval={value}", HealthInterval)
-              .Add("--health-retries={value}", HealthRetries)
-              .Add("--health-start-period={value}", HealthStartPeriod)
-              .Add("--health-timeout={value}", HealthTimeout)
-              .Add("--host-add={value}", HostAdd)
-              .Add("--host-rm={value}", HostRm)
-              .Add("--hostname={value}", Hostname)
-              .Add("--image={value}", Image)
-              .Add("--isolation={value}", Isolation)
-              .Add("--label-add={value}", LabelAdd)
-              .Add("--label-rm={value}", LabelRm)
-              .Add("--limit-cpu={value}", LimitCpu)
-              .Add("--limit-memory={value}", LimitMemory)
-              .Add("--log-driver={value}", LogDriver)
-              .Add("--log-opt={value}", LogOpt)
-              .Add("--mount-add={value}", MountAdd)
-              .Add("--mount-rm={value}", MountRm)
-              .Add("--network-add={value}", NetworkAdd)
-              .Add("--network-rm={value}", NetworkRm)
-              .Add("--no-healthcheck={value}", NoHealthcheck)
-              .Add("--no-resolve-image={value}", NoResolveImage)
-              .Add("--placement-pref-add={value}", PlacementPrefAdd)
-              .Add("--placement-pref-rm={value}", PlacementPrefRm)
-              .Add("--publish-add={value}", PublishAdd)
-              .Add("--publish-rm={value}", PublishRm)
-              .Add("--quiet={value}", Quiet)
-              .Add("--read-only={value}", ReadOnly)
-              .Add("--replicas={value}", Replicas)
-              .Add("--reserve-cpu={value}", ReserveCpu)
-              .Add("--reserve-memory={value}", ReserveMemory)
-              .Add("--restart-condition={value}", RestartCondition)
-              .Add("--restart-delay={value}", RestartDelay)
-              .Add("--restart-max-attempts={value}", RestartMaxAttempts)
-              .Add("--restart-window={value}", RestartWindow)
-              .Add("--rollback={value}", Rollback)
-              .Add("--rollback-delay={value}", RollbackDelay)
-              .Add("--rollback-failure-action={value}", RollbackFailureAction)
-              .Add("--rollback-max-failure-ratio={value}", RollbackMaxFailureRatio)
-              .Add("--rollback-monitor={value}", RollbackMonitor)
-              .Add("--rollback-order={value}", RollbackOrder)
-              .Add("--rollback-parallelism={value}", RollbackParallelism)
-              .Add("--secret-add={value}", SecretAdd)
-              .Add("--secret-rm={value}", SecretRm)
-              .Add("--stop-grace-period={value}", StopGracePeriod)
-              .Add("--stop-signal={value}", StopSignal)
-              .Add("--tty={value}", Tty)
-              .Add("--update-delay={value}", UpdateDelay)
-              .Add("--update-failure-action={value}", UpdateFailureAction)
-              .Add("--update-max-failure-ratio={value}", UpdateMaxFailureRatio)
-              .Add("--update-monitor={value}", UpdateMonitor)
-              .Add("--update-order={value}", UpdateOrder)
-              .Add("--update-parallelism={value}", UpdateParallelism)
-              .Add("--user={value}", User)
-              .Add("--with-registry-auth={value}", WithRegistryAuth)
-              .Add("--workdir={value}", Workdir)
+              .Add("--args {value}", Args)
+              .Add("--config-add {value}", ConfigAdd)
+              .Add("--config-rm {value}", ConfigRm)
+              .Add("--constraint-add {value}", ConstraintAdd)
+              .Add("--constraint-rm {value}", ConstraintRm)
+              .Add("--container-label-add {value}", ContainerLabelAdd)
+              .Add("--container-label-rm {value}", ContainerLabelRm)
+              .Add("--credential-spec {value}", CredentialSpec)
+              .Add("--detach", Detach)
+              .Add("--dns-add {value}", DnsAdd)
+              .Add("--dns-option-add {value}", DnsOptionAdd)
+              .Add("--dns-option-rm {value}", DnsOptionRm)
+              .Add("--dns-rm {value}", DnsRm)
+              .Add("--dns-search-add {value}", DnsSearchAdd)
+              .Add("--dns-search-rm {value}", DnsSearchRm)
+              .Add("--endpoint-mode {value}", EndpointMode)
+              .Add("--entrypoint {value}", Entrypoint)
+              .Add("--env-add {value}", EnvAdd)
+              .Add("--env-rm {value}", EnvRm)
+              .Add("--force", Force)
+              .Add("--generic-resource-add {value}", GenericResourceAdd)
+              .Add("--generic-resource-rm {value}", GenericResourceRm)
+              .Add("--group-add {value}", GroupAdd)
+              .Add("--group-rm {value}", GroupRm)
+              .Add("--health-cmd {value}", HealthCmd)
+              .Add("--health-interval {value}", HealthInterval)
+              .Add("--health-retries {value}", HealthRetries)
+              .Add("--health-start-period {value}", HealthStartPeriod)
+              .Add("--health-timeout {value}", HealthTimeout)
+              .Add("--host-add {value}", HostAdd)
+              .Add("--host-rm {value}", HostRm)
+              .Add("--hostname {value}", Hostname)
+              .Add("--image {value}", Image)
+              .Add("--isolation {value}", Isolation)
+              .Add("--label-add {value}", LabelAdd)
+              .Add("--label-rm {value}", LabelRm)
+              .Add("--limit-cpu {value}", LimitCpu)
+              .Add("--limit-memory {value}", LimitMemory)
+              .Add("--log-driver {value}", LogDriver)
+              .Add("--log-opt {value}", LogOpt)
+              .Add("--mount-add {value}", MountAdd)
+              .Add("--mount-rm {value}", MountRm)
+              .Add("--network-add {value}", NetworkAdd)
+              .Add("--network-rm {value}", NetworkRm)
+              .Add("--no-healthcheck", NoHealthcheck)
+              .Add("--no-resolve-image", NoResolveImage)
+              .Add("--placement-pref-add {value}", PlacementPrefAdd)
+              .Add("--placement-pref-rm {value}", PlacementPrefRm)
+              .Add("--publish-add {value}", PublishAdd)
+              .Add("--publish-rm {value}", PublishRm)
+              .Add("--quiet", Quiet)
+              .Add("--read-only", ReadOnly)
+              .Add("--replicas {value}", Replicas)
+              .Add("--reserve-cpu {value}", ReserveCpu)
+              .Add("--reserve-memory {value}", ReserveMemory)
+              .Add("--restart-condition {value}", RestartCondition)
+              .Add("--restart-delay {value}", RestartDelay)
+              .Add("--restart-max-attempts {value}", RestartMaxAttempts)
+              .Add("--restart-window {value}", RestartWindow)
+              .Add("--rollback", Rollback)
+              .Add("--rollback-delay {value}", RollbackDelay)
+              .Add("--rollback-failure-action {value}", RollbackFailureAction)
+              .Add("--rollback-max-failure-ratio {value}", RollbackMaxFailureRatio)
+              .Add("--rollback-monitor {value}", RollbackMonitor)
+              .Add("--rollback-order {value}", RollbackOrder)
+              .Add("--rollback-parallelism {value}", RollbackParallelism)
+              .Add("--secret-add {value}", SecretAdd)
+              .Add("--secret-rm {value}", SecretRm)
+              .Add("--stop-grace-period {value}", StopGracePeriod)
+              .Add("--stop-signal {value}", StopSignal)
+              .Add("--tty", Tty)
+              .Add("--update-delay {value}", UpdateDelay)
+              .Add("--update-failure-action {value}", UpdateFailureAction)
+              .Add("--update-max-failure-ratio {value}", UpdateMaxFailureRatio)
+              .Add("--update-monitor {value}", UpdateMonitor)
+              .Add("--update-order {value}", UpdateOrder)
+              .Add("--update-parallelism {value}", UpdateParallelism)
+              .Add("--user {value}", User)
+              .Add("--with-registry-auth", WithRegistryAuth)
+              .Add("--workdir {value}", Workdir)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -6968,11 +6966,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("stack deploy")
-              .Add("--bundle-file={value}", BundleFile)
-              .Add("--compose-file={value}", ComposeFile)
-              .Add("--prune={value}", Prune)
-              .Add("--resolve-image={value}", ResolveImage)
-              .Add("--with-registry-auth={value}", WithRegistryAuth)
+              .Add("--bundle-file {value}", BundleFile)
+              .Add("--compose-file {value}", ComposeFile)
+              .Add("--prune", Prune)
+              .Add("--resolve-image {value}", ResolveImage)
+              .Add("--with-registry-auth", WithRegistryAuth)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7022,11 +7020,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("stack ps")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--no-resolve={value}", NoResolve)
-              .Add("--no-trunc={value}", NoTrunc)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--no-resolve", NoResolve)
+              .Add("--no-trunc", NoTrunc)
+              .Add("--quiet", Quiet)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7076,9 +7074,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("stack services")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7111,11 +7109,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("start")
-              .Add("--attach={value}", Attach)
-              .Add("--checkpoint={value}", Checkpoint)
-              .Add("--checkpoint-dir={value}", CheckpointDir)
-              .Add("--detach-keys={value}", DetachKeys)
-              .Add("--interactive={value}", Interactive)
+              .Add("--attach", Attach)
+              .Add("--checkpoint {value}", Checkpoint)
+              .Add("--checkpoint-dir {value}", CheckpointDir)
+              .Add("--detach-keys {value}", DetachKeys)
+              .Add("--interactive", Interactive)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7146,10 +7144,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("stats")
-              .Add("--all={value}", All)
-              .Add("--format={value}", Format)
-              .Add("--no-stream={value}", NoStream)
-              .Add("--no-trunc={value}", NoTrunc)
+              .Add("--all", All)
+              .Add("--format {value}", Format)
+              .Add("--no-stream", NoStream)
+              .Add("--no-trunc", NoTrunc)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7174,7 +7172,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("stop")
-              .Add("--time={value}", Time)
+              .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7226,13 +7224,13 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm ca")
-              .Add("--ca-cert={value}", CaCert)
-              .Add("--ca-key={value}", CaKey)
-              .Add("--cert-expiry={value}", CertExpiry)
-              .Add("--detach={value}", Detach)
-              .Add("--external-ca={value}", ExternalCa)
-              .Add("--quiet={value}", Quiet)
-              .Add("--rotate={value}", Rotate)
+              .Add("--ca-cert {value}", CaCert)
+              .Add("--ca-key {value}", CaKey)
+              .Add("--cert-expiry {value}", CertExpiry)
+              .Add("--detach", Detach)
+              .Add("--external-ca {value}", ExternalCa)
+              .Add("--quiet", Quiet)
+              .Add("--rotate", Rotate)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7275,18 +7273,18 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm init")
-              .Add("--advertise-addr={value}", AdvertiseAddr)
-              .Add("--autolock={value}", Autolock)
-              .Add("--availability={value}", Availability)
-              .Add("--cert-expiry={value}", CertExpiry)
-              .Add("--data-path-addr={value}", DataPathAddr)
-              .Add("--dispatcher-heartbeat={value}", DispatcherHeartbeat)
-              .Add("--external-ca={value}", ExternalCa)
-              .Add("--force-new-cluster={value}", ForceNewCluster)
-              .Add("--listen-addr={value}", ListenAddr)
-              .Add("--max-snapshots={value}", MaxSnapshots)
-              .Add("--snapshot-interval={value}", SnapshotInterval)
-              .Add("--task-history-limit={value}", TaskHistoryLimit)
+              .Add("--advertise-addr {value}", AdvertiseAddr)
+              .Add("--autolock", Autolock)
+              .Add("--availability {value}", Availability)
+              .Add("--cert-expiry {value}", CertExpiry)
+              .Add("--data-path-addr {value}", DataPathAddr)
+              .Add("--dispatcher-heartbeat {value}", DispatcherHeartbeat)
+              .Add("--external-ca {value}", ExternalCa)
+              .Add("--force-new-cluster", ForceNewCluster)
+              .Add("--listen-addr {value}", ListenAddr)
+              .Add("--max-snapshots {value}", MaxSnapshots)
+              .Add("--snapshot-interval {value}", SnapshotInterval)
+              .Add("--task-history-limit {value}", TaskHistoryLimit)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7311,8 +7309,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm join-token")
-              .Add("--quiet={value}", Quiet)
-              .Add("--rotate={value}", Rotate)
+              .Add("--quiet", Quiet)
+              .Add("--rotate", Rotate)
               .Add("{value}", Worker)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7342,11 +7340,11 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm join HOST:PORT")
-              .Add("--advertise-addr={value}", AdvertiseAddr)
-              .Add("--availability={value}", Availability)
-              .Add("--data-path-addr={value}", DataPathAddr)
-              .Add("--listen-addr={value}", ListenAddr)
-              .Add("--token={value}", Token)
+              .Add("--advertise-addr {value}", AdvertiseAddr)
+              .Add("--availability {value}", Availability)
+              .Add("--data-path-addr {value}", DataPathAddr)
+              .Add("--listen-addr {value}", ListenAddr)
+              .Add("--token {value}", Token)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7367,7 +7365,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm leave")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7390,8 +7388,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm unlock-key")
-              .Add("--quiet={value}", Quiet)
-              .Add("--rotate={value}", Rotate)
+              .Add("--quiet", Quiet)
+              .Add("--rotate", Rotate)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7442,13 +7440,13 @@ namespace Nuke.Docker
         {
             arguments
               .Add("swarm update")
-              .Add("--autolock={value}", Autolock)
-              .Add("--cert-expiry={value}", CertExpiry)
-              .Add("--dispatcher-heartbeat={value}", DispatcherHeartbeat)
-              .Add("--external-ca={value}", ExternalCa)
-              .Add("--max-snapshots={value}", MaxSnapshots)
-              .Add("--snapshot-interval={value}", SnapshotInterval)
-              .Add("--task-history-limit={value}", TaskHistoryLimit)
+              .Add("--autolock", Autolock)
+              .Add("--cert-expiry {value}", CertExpiry)
+              .Add("--dispatcher-heartbeat {value}", DispatcherHeartbeat)
+              .Add("--external-ca {value}", ExternalCa)
+              .Add("--max-snapshots {value}", MaxSnapshots)
+              .Add("--snapshot-interval {value}", SnapshotInterval)
+              .Add("--task-history-limit {value}", TaskHistoryLimit)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7489,8 +7487,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("system df")
-              .Add("--format={value}", Format)
-              .Add("--verbose={value}", Verbose)
+              .Add("--format {value}", Format)
+              .Add("--verbose", Verbose)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7517,10 +7515,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("system events")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--since={value}", Since)
-              .Add("--until={value}", Until)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--since {value}", Since)
+              .Add("--until {value}", Until)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7541,7 +7539,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("system info")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7568,10 +7566,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("system prune")
-              .Add("--all={value}", All)
-              .Add("--filter={value}", Filter)
-              .Add("--force={value}", Force)
-              .Add("--volumes={value}", Volumes)
+              .Add("--all", All)
+              .Add("--filter {value}", Filter)
+              .Add("--force", Force)
+              .Add("--volumes", Volumes)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7721,7 +7719,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("trust key load")
-              .Add("--name={value}", Name)
+              .Add("--name {value}", Name)
               .Add("{value}", Keyfile)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7745,7 +7743,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("trust revoke")
-              .Add("--yes={value}", Yes)
+              .Add("--yes", Yes)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7836,7 +7834,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("trust signer remove")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Name)
               .Add("{value}", Repositories, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -7910,20 +7908,20 @@ namespace Nuke.Docker
         {
             arguments
               .Add("update")
-              .Add("--blkio-weight={value}", BlkioWeight)
-              .Add("--cpu-period={value}", CpuPeriod)
-              .Add("--cpu-quota={value}", CpuQuota)
-              .Add("--cpu-rt-period={value}", CpuRtPeriod)
-              .Add("--cpu-rt-runtime={value}", CpuRtRuntime)
-              .Add("--cpu-shares={value}", CpuShares)
-              .Add("--cpus={value}", Cpus)
-              .Add("--cpuset-cpus={value}", CpusetCpus)
-              .Add("--cpuset-mems={value}", CpusetMems)
-              .Add("--kernel-memory={value}", KernelMemory)
-              .Add("--memory={value}", Memory)
-              .Add("--memory-reservation={value}", MemoryReservation)
-              .Add("--memory-swap={value}", MemorySwap)
-              .Add("--restart={value}", Restart)
+              .Add("--blkio-weight {value}", BlkioWeight)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-rt-period {value}", CpuRtPeriod)
+              .Add("--cpu-rt-runtime {value}", CpuRtRuntime)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpus {value}", Cpus)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--kernel-memory {value}", KernelMemory)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-reservation {value}", MemoryReservation)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--restart {value}", Restart)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -7945,7 +7943,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("version")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -7997,10 +7995,10 @@ namespace Nuke.Docker
         {
             arguments
               .Add("volume create")
-              .Add("--driver={value}", Driver)
-              .Add("--label={value}", Label)
-              .Add("--name={value}", Name)
-              .Add("--opt={value}", Opt, "{key}:{value}")
+              .Add("--driver {value}", Driver)
+              .Add("--label {value}", Label)
+              .Add("--name {value}", Name)
+              .Add("--opt {value}", Opt, "{key}:{value}")
               .Add("{value}", Volume)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8025,7 +8023,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("volume inspect")
-              .Add("--format={value}", Format)
+              .Add("--format {value}", Format)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8051,9 +8049,9 @@ namespace Nuke.Docker
         {
             arguments
               .Add("volume ls")
-              .Add("--filter={value}", Filter)
-              .Add("--format={value}", Format)
-              .Add("--quiet={value}", Quiet)
+              .Add("--filter {value}", Filter)
+              .Add("--format {value}", Format)
+              .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8076,8 +8074,8 @@ namespace Nuke.Docker
         {
             arguments
               .Add("volume prune")
-              .Add("--filter={value}", Filter)
-              .Add("--force={value}", Force)
+              .Add("--filter {value}", Filter)
+              .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
@@ -8101,7 +8099,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("volume rm")
-              .Add("--force={value}", Force)
+              .Add("--force", Force)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
             return base.ConfigureArguments(arguments);
@@ -8156,7 +8154,7 @@ namespace Nuke.Docker
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(Config), "Directory.Exists(Config)");
+            ControlFlow.Assert(Directory.Exists(Config), $"Directory.Exists(Config) [Config = {Config}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

@@ -20,9 +20,8 @@ namespace Nuke.Docker.Generator
             var tool = DefinitionParser.GenerateTool(definitions);
 
             Directory.CreateDirectory(settings.OutputFolder);
-            tool.DefinitionFile = PathConstruction.Combine(settings.OutputFolder, "Docker.json");
-            ToolSerializer.Save(tool);
-           
+            ToolSerializer.Save(tool, PathConstruction.Combine(settings.OutputFolder, "Docker.json"));
+
             Console.WriteLine();
             Console.WriteLine("Generation finished.");
             Console.WriteLine($"Created Tasks: {tool.Tasks.Count}");

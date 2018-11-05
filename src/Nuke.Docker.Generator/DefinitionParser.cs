@@ -137,6 +137,7 @@ namespace Nuke.Docker.Generator
             else
                 property.Type = GetNukeType(argument);
 
+            if (property.Type == "bool") property.Format = $"--{argument.Name}";
             settingsClass.Properties.Add(property);
         }
 
@@ -151,12 +152,7 @@ namespace Nuke.Docker.Generator
                        {
                            Name = "Docker",
                            PathExecutable = "docker",
-                           License = new[]
-                                     {
-                                         $"Copyright Sebastian Karasek, Matthias Koch {DateTime.Now.Year}.",
-                                         "Distributed under the MIT License.",
-                                         "https://github.com/nuke-build/docker/blob/master/LICENSE"
-                                     },
+
                            References = references,
                            Help =
                                "Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.",
@@ -265,10 +261,10 @@ namespace Nuke.Docker.Generator
             switch (argument.ValueType)
             {
                 case "string":
-                    return argument.ValueType;
                 case "bool":
                 case "int":
                 case "float":
+                    return argument.ValueType;
                 case "decimal":
                     return argument.ValueType + "?";
                 case "int64":
