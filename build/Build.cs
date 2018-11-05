@@ -167,7 +167,8 @@ class Build : NukeBuild
 
             DotNetPack(s => s
                 .SetProject(DockerProject)
-                .EnableNoBuild()
+                .SetOutputDirectory(OutputDirectory)
+                .SetConfiguration(Configuration)
                 .EnableNoRestore()
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
