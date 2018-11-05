@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.2.1] / 2018-11-05
 - Fixed seperator between argument names and values.
 ## [0.2.0] / 2018-08-05
 - Changed minmum required Nuke version to 0.6.
@@ -14,7 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added documetation.
 - Support for Docker v18.03.0
 
-[vNext]: https://github.com/nuke-build/docker/compare/0.2.0...HEAD
+[vNext]: https://github.com/nuke-build/docker/compare/0.2.1...HEAD
+[0.2.1]: https://github.com/nuke-build/docker/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nuke-build/docker/compare/0.1.10...0.2.0
 [0.1.10]: https://github.com/nuke-build/docker/compare/0.1.7...0.1.10
 [0.1.7]: https://github.com/nuke-build/docker/tree/0.1.7
