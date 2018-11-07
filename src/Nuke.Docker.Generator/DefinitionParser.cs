@@ -111,6 +111,8 @@ namespace Nuke.Docker.Generator
 
         private void AddProperty(DataClass settingsClass, ArgumentDefinition argument)
         {
+            //Todo improve
+            if(argument.Name == "password-stdin") return;
             var propertyName = argument.Name.ToPascalCase(separator: '-');
             var enumerations = GetEnumerationTypes(argument);
             var isEnumeration = enumerations.Any();
@@ -138,6 +140,7 @@ namespace Nuke.Docker.Generator
                 property.Type = GetNukeType(argument);
 
             if (property.Type == "bool") property.Format = $"--{argument.Name}";
+            if (property.Name == "Password") property.Secret = true;
             settingsClass.Properties.Add(property);
         }
 

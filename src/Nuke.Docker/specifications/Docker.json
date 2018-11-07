@@ -4245,13 +4245,8 @@
             "name": "Password",
             "type": "string",
             "format": "--password {value}",
+            "secret": true,
             "help": "Password."
-          },
-          {
-            "name": "PasswordStdin",
-            "type": "bool",
-            "format": "--password-stdin",
-            "help": "Take the password from stdin."
           },
           {
             "name": "Username",

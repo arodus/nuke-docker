@@ -4385,8 +4385,6 @@ namespace Nuke.Docker
         public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
         /// <summary><p>Password.</p></summary>
         public virtual string Password { get; internal set; }
-        /// <summary><p>Take the password from stdin.</p></summary>
-        public virtual bool? PasswordStdin { get; internal set; }
         /// <summary><p>Username.</p></summary>
         public virtual string Username { get; internal set; }
         /// <summary><p>[SERVER]</p></summary>
@@ -4395,8 +4393,7 @@ namespace Nuke.Docker
         {
             arguments
               .Add("login")
-              .Add("--password {value}", Password)
-              .Add("--password-stdin", PasswordStdin)
+              .Add("--password {value}", Password, secret: true)
               .Add("--username {value}", Username)
               .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -27566,48 +27563,6 @@ namespace Nuke.Docker
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
-            return toolSettings;
-        }
-        #endregion
-        #region PasswordStdin
-        /// <summary><p><em>Sets <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin.</p></summary>
-        [Pure]
-        public static DockerLoginSettings SetPasswordStdin(this DockerLoginSettings toolSettings, bool? passwordStdin)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = passwordStdin;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin.</p></summary>
-        [Pure]
-        public static DockerLoginSettings ResetPasswordStdin(this DockerLoginSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin.</p></summary>
-        [Pure]
-        public static DockerLoginSettings EnablePasswordStdin(this DockerLoginSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin.</p></summary>
-        [Pure]
-        public static DockerLoginSettings DisablePasswordStdin(this DockerLoginSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DockerLoginSettings.PasswordStdin"/>.</em></p><p>Take the password from stdin.</p></summary>
-        [Pure]
-        public static DockerLoginSettings TogglePasswordStdin(this DockerLoginSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PasswordStdin = !toolSettings.PasswordStdin;
             return toolSettings;
         }
         #endregion
