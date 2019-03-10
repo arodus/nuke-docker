@@ -8744,7 +8744,6 @@
         {
           "name": "Config",
           "type": "string",
-          "assertion": "Directory",
           "format": "--config {value}",
           "help": "Location of client config files (default ~/.docker)."
         },

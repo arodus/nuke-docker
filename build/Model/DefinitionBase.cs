@@ -10,7 +10,7 @@ using YamlDotNet.Serialization;
 namespace Nuke.Docker.Generator.Model
 {
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-    internal abstract class DefinitionBase
+    abstract class DefinitionBase
     {
         [YamlMember(Alias = "deprecated")] public bool Deprecated { get; set; }
         [YamlMember(Alias = "experimental")] public bool Experimental { get; set; }

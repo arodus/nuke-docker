@@ -13,26 +13,26 @@ using Nuke.Docker.Generator.Utility;
 
 namespace Nuke.Docker.Generator
 {
-    internal class DefinitionParser
+    class DefinitionParser
     {
-        private readonly List<CommandDefinition> _commandDefinitions;
-        private readonly Dictionary<string, List<string>> _enumerations = new Dictionary<string, List<string>>();
-        private readonly Tool _tool;
+        readonly List<CommandDefinition> _commandDefinitions;
+        readonly Dictionary<string, List<string>> _enumerations = new Dictionary<string, List<string>>();
+        readonly Tool _tool;
 
-        private DefinitionParser(List<CommandDefinition> commandDefinitions)
+        DefinitionParser(List<CommandDefinition> commandDefinitions)
         {
             _commandDefinitions = commandDefinitions;
             _tool = CreateTool(_commandDefinitions.Select(x => x.ReferenceUrl).ToList());
         }
 
-        private Tool Generate()
+        Tool Generate()
         {
             GenerateTasks();
             GenerateEnumerations();
             return _tool;
         }
 
-        private void GenerateEnumerations()
+        void GenerateEnumerations()
         {
             foreach (var enumeration in _enumerations)
             {
@@ -44,7 +44,7 @@ namespace Nuke.Docker.Generator
             }
         }
 
-        private void GenerateTasks()
+        void GenerateTasks()
         {
             foreach (var definition in _commandDefinitions)
             {
@@ -74,7 +74,7 @@ namespace Nuke.Docker.Generator
             }
         }
 
-        private void AddProperties(DataClass settingsClass, CommandDefinition definition, out string definiteArgument)
+        void AddProperties(DataClass settingsClass, CommandDefinition definition, out string definiteArgument)
         {
             var usageParams = UsageParser.Parse(definition.Usage);
             definiteArgument = string.Empty;
@@ -109,10 +109,12 @@ namespace Nuke.Docker.Generator
             definiteArgument = definiteArgument.Trim();
         }
 
-        private void AddProperty(DataClass settingsClass, ArgumentDefinition argument)
+        void AddProperty(DataClass settingsClass, ArgumentDefinition argument)
         {
             //Todo improve
-            if(argument.Name == "password-stdin") return;
+            if(argument.Name == "password-stdin")
+                return;
+            
             var propertyName = argument.Name.ToPascalCase(separator: '-');
             var enumerations = GetEnumerationTypes(argument);
             var isEnumeration = enumerations.Any();
@@ -124,13 +126,18 @@ namespace Nuke.Docker.Generator
                                DataClass = settingsClass,
                                Format = $"--{argument.Name} {{value}}"
                            };
+            
             if (isEnumeration)
             {
-                if (!_enumerations.ContainsKey(propertyName)) _enumerations.Add(propertyName, enumerations);
+                if (!_enumerations.ContainsKey(propertyName))
+                    _enumerations.Add(propertyName, enumerations);
+                
                 property.Type = property.Name;
             }
             else if (new[] { "list,stringSlice" }.Contains(argument.ValueType))
+            {
                 property.Type = "List<string>";
+            }
             else if (argument.ValueType == "map")
             {
                 property.Type = GetNukeType(argument);
@@ -139,8 +146,12 @@ namespace Nuke.Docker.Generator
             else
                 property.Type = GetNukeType(argument);
 
-            if (property.Type == "bool") property.Format = $"--{argument.Name}";
-            if (property.Name == "Password") property.Secret = true;
+            if (property.Type == "bool")
+                property.Format = $"--{argument.Name}";
+            
+            if (property.Name == "Password")
+                property.Secret = true;
+            
             settingsClass.Properties.Add(property);
         }
 
@@ -149,7 +160,7 @@ namespace Nuke.Docker.Generator
             return new DefinitionParser(definitions).Generate();
         }
 
-        private static Tool CreateTool(List<string> references)
+        static Tool CreateTool(List<string> references)
         {
             var tool = new Tool
                        {
@@ -201,7 +212,6 @@ namespace Nuke.Docker.Generator
                                                             Type = "string",
                                                             Help = "Location of client config files (default ~/.docker).",
                                                             Format = "--config {value}",
-                                                            Assertion = AssertionType.Directory
                                                         },
                                                         new Property
                                                         {
@@ -252,13 +262,13 @@ namespace Nuke.Docker.Generator
             return tool;
         }
 
-        private static string GetPostfix(CommandDefinition command)
+        static string GetPostfix(CommandDefinition command)
         {
             var postfix = command.Command.Replace("docker", string.Empty).Trim();
             return postfix.ToPascalCase(separator: ' ').ToPascalCase(separator: '-');
         }
 
-        private static string GetNukeType(ArgumentDefinition argument)
+        static string GetNukeType(ArgumentDefinition argument)
         {
             //Todo improve
             switch (argument.ValueType)
@@ -303,7 +313,7 @@ namespace Nuke.Docker.Generator
             }
         }
 
-        private static List<string> GetEnumerationTypes(ArgumentDefinition argument)
+        static List<string> GetEnumerationTypes(ArgumentDefinition argument)
         {
             var regex = new Regex("\\((\"[\\w+-]+\"(?:\\|\"[\\w+-]+\")+)\\)");
             var match = regex.Match(argument.Description);
@@ -312,15 +322,19 @@ namespace Nuke.Docker.Generator
                 : match.Groups[groupnum: 1].Value.Split(separator: '|').Select(x => x.Trim(trimChars: '"')).ToList();
         }
 
-        private static string GetPositionalArgumentHelp(UsageParameter usageParameter, CommandDefinition commandDefinition)
+        static string GetPositionalArgumentHelp(UsageParameter usageParameter, CommandDefinition commandDefinition)
         {
-            if (commandDefinition.Command == "docker secret create" && usageParameter.RawValue == "[file|-]")
+            if (commandDefinition.Command == "docker secret create" &&
+                usageParameter.RawValue == "[file|-]")
                 return "Path to file to create the secret from.";
 
-            if (commandDefinition.Command == "docker config create" && usageParameter.RawValue == "[file|-]")
+            if (commandDefinition.Command == "docker config create" &&
+                usageParameter.RawValue == "[file|-]")
                 return "Path to file to create the config from.";
 
-            if (usageParameter.RawValue == "PATH|URL|-") return "Path or url where the build context is located.";
+            if (usageParameter.RawValue == "PATH|URL|-")
+                return "Path or url where the build context is located.";
+            
             return usageParameter.RawValue.RemoveNewLines();
         }
     }

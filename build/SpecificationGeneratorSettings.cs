@@ -12,6 +12,6 @@ namespace Nuke.Docker.Generator
         public string OutputFolder { get; set; }
         public string Reference { get; set; } = "master";
         public string[] CommandsToSkip { get; set; }
-        public string DefinitonFolder { get; set; }
+        public string DefinitionFolder { get; set; }
     }
 }

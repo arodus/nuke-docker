@@ -11,7 +11,7 @@ using YamlDotNet.Serialization;
 namespace Nuke.Docker.Generator.Model
 {
     [UsedImplicitly]
-    internal class CommandDefinition : DefinitionBase
+    class CommandDefinition : DefinitionBase
     {
         [YamlMember(Alias = "command")] public string Command { get; set; }
         [YamlMember(Alias = "aliases")] public string Alias { get; set; }
@@ -22,6 +22,7 @@ namespace Nuke.Docker.Generator.Model
         [YamlMember(Alias = "pname")] public string ParentName { get; set; }
 
         [YamlMember(Alias = "plink")] public string ParentLink { get; set; }
+        [YamlMember(Alias = "os_type")] public string OsType { get; set; }
         [YamlMember(Alias = "examples")] public string Examples { get; set; }
 
         [YamlMember(Alias = "options")]

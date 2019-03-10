@@ -4,11 +4,12 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace Nuke.Docker.Generator.Utility
 {
-    internal static class StringUtils
+    static class StringUtils
     {
         [Pure]
         [CanBeNull]

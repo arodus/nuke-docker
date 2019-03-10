@@ -35,16 +35,16 @@ namespace Nuke.Docker.Generator
                 if (match.Success)
                 {
                     usage.IsDictionary = true;
-                    if (!value.StartsWith("[") && parameters.Length > i + 1
-                                               && parameters[i + 1]
-                                               == $"[{match.Groups[groupnum: 1].Value}={match.Groups[groupnum: 2].Value}...]") i++;
+                    if (!value.StartsWith("[") &&
+                        parameters.Length > i + 1 &&
+                        parameters[i + 1] == $"[{match.Groups[groupnum: 1].Value}={match.Groups[groupnum: 2].Value}...]")
+                        i++;
                 }
-
                 else if (value.StartsWith("[") && value.EndsWith("...]"))
                     usage.IsList = true;
-                else if (parameters.Length > i + 1 && (parameters[i + 1] == $"[{value}...]"
-                                                       || value.Contains(value: '|')
-                                                       && parameters[i + 1] == $"[{value.Split(separator: '|').Last()}...]"))
+                else if (parameters.Length > i + 1 &&
+                         (parameters[i + 1] == $"[{value}...]" ||
+                          value.Contains(value: '|') && parameters[i + 1] == $"[{value.Split(separator: '|').Last()}...]"))
                 {
                     usage.IsList = true;
                     i++;

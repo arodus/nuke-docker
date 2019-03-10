@@ -1,284 +1,188 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/docker/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Nuke.CodeGeneration;
+using System.Threading.Tasks;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.OpenCover;
-using Nuke.Common.Tools.Xunit;
-using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Docker.Generator;
 using Nuke.GitHub;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
-using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.Tools.Xunit.XunitTasks;
-using static Nuke.Common.Tools.Git.GitTasks;
+using Octokit;
+using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.GitHub.GitHubTasks;
 
-class Build : NukeBuild
+// ReSharper disable HeapView.DelegateAllocation
+
+partial class Build : NukeBuild
 {
-    const string c_addonRepoOwner = "nuke-build";
-    const string c_addonRepoName = "docker";
-    const string c_addonName = "Docker";
-    const string c_toolNamespace = "Nuke.Docker";
-
-    const string c_regenerationRepoOwner = "docker";
-    const string c_regenerationRepoName = "docker.github.io";
-    const string c_regenerationRepoBranch = "master";
-
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
-    [Solution] readonly Solution Solution;
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
-    [Parameter("Api key to push packages to NuGet.org.")] readonly string NuGetApiKey;
-    [Parameter("Api key to access the GitHub.")] readonly string GitHubApiKey;
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
+    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
+
+    [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
+    [Parameter] readonly string GitHubToken;
+
+    [Solution] readonly Solution Solution;
+    [GitRepository] readonly GitRepository GitRepository;
+    // [GitVersion] readonly GitVersion GitVersion;
+
+    [Parameter] readonly string SemanticVersion;
+
     AbsolutePath SourceDirectory => RootDirectory / "src";
-    AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
-
-    Project DockerProject => Solution.GetProject(c_toolNamespace).NotNull();
-
-    AbsolutePath DefinitionRepositoryPath => TemporaryDirectory / "definition-repository";
-    string SpecificationDirectory => DockerProject.Directory / "specifications";
-    string GenerationBaseDirectory => DockerProject.Directory / "Generated";
-    string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
     Target Clean => _ => _
         .Executes(() =>
         {
-            DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
             EnsureCleanDirectory(OutputDirectory);
         });
 
-    Target CleanGeneratedFiles => _ => _
+    IEnumerable<string> SpecificationFiles => GlobFiles(SourceDirectory, "*/*.json");
+
+    Target Generate => _ => _
+        .OnlyWhenDynamic(() => SpecificationFiles.Any())
         .Executes(() =>
         {
-            DeleteDirectory(GenerationBaseDirectory);
-            DeleteDirectory(SpecificationDirectory);
-            DeleteDirectory(DefinitionRepositoryPath);
+            string GetNamespace(string specificationFile)
+                => Solution.Projects.Single(x => IsDescendantPath(x.Directory, specificationFile)).Name;
+
+            GenerateCode(
+                SpecificationFiles.ToList(),
+                outputFileProvider: x => x.DefaultOutputFile,
+                namespaceProvider: x => GetNamespace(x.SpecificationFile),
+                sourceFileProvider: x => GitRepository.GetGitHubBrowseUrl(x.SpecificationFile));
         });
 
     Target Restore => _ => _
-        .DependsOn(Clean)
+        .After(Clean)
         .Executes(() =>
         {
-            DotNetRestore(s =>  s.SetProjectFile(Solution));
+            DotNetRestore(s => s
+                .SetProjectFile(Solution)
+                .SetProperty("ReplacePackageReferences", false));
         });
 
     Target Compile => _ => _
-        .DependsOn(Restore)
+        .DependsOn(Restore, Generate)
         .Executes(() =>
         {
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
+                .EnableNoRestore()
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .EnableNoRestore());
+                .SetProperty("ReplacePackageReferences", false));
         });
+
+    IEnumerable<Nuke.Common.ProjectModel.Project> TestProjects => Solution.GetProjects("*.Tests");
 
     Target Test => _ => _
         .DependsOn(Compile)
+        .OnlyWhenDynamic(() => TestProjects.Any())
         .Executes(() =>
         {
-            var xUnitSettings = new Xunit2Settings()
-                .AddTargetAssemblies(GlobFiles(Solution.Directory / "tests", $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
-                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml")
-                .SetFramework("net461");
-         
-                Xunit2(s => xUnitSettings);
-        });
-
-    Target Clone => _ => _
-        .DependsOn(CleanGeneratedFiles)
-        .Executes(() =>
-        {
-            Git(
-                $"clone https://github.com/{c_regenerationRepoOwner}/{c_regenerationRepoName}.git -b {c_regenerationRepoBranch} --single-branch --depth 1 {DefinitionRepositoryPath}");
-        });
-
-    Target GenerateSpecifications => _ => _
-        .DependsOn(Clone)
-        .Executes(() =>
-        {
-            var reference = Git($"rev-parse --short {c_regenerationRepoBranch}", DefinitionRepositoryPath).Single().Text;
-            var commandsToSkip = new[]
-                                 {
-                                     "docker_container_cp",
-                                     "docker_cp"
-                                 };
-
-            var generatorSettings = new SpecificationGeneratorSettings
-                                    {
-                                        CommandsToSkip = commandsToSkip,
-                                        OutputFolder = SpecificationDirectory,
-                                        Reference = reference,
-                                        DefinitonFolder = DefinitionRepositoryPath / "_data" / "engine-cli"
-                                    };
-
-            SpecificationGenerator.GenerateSpecifications(generatorSettings);
-        });
-
-    Target Generate => _ => _
-        .After(GenerateSpecifications)
-        .Executes(() =>
-        {
-            CodeGenerator.GenerateCode(SpecificationDirectory, GenerationBaseDirectory, baseNamespace: c_toolNamespace,
-                gitRepository: GitRepository.SetBranch("master"));
-        });
-
-    Target CompilePlugin => _ => _
-        .DependsOn(Generate, Clean)
-        .Executes(() =>
-        {
-            DotNetRestore(s => s.SetProjectFile(DockerProject));
-            DotNetBuild(s => s.SetProjectFile(DockerProject)
+            DotNetTest(s => s
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .EnableNoRestore());
+                .EnableNoBuild()
+                .SetLogger("trx")
+                .SetResultsDirectory(OutputDirectory)
+                .CombineWith(
+                    TestProjects, (cs, v) => cs
+                        .SetProjectFile(v)));
+        });
+
+    string ChangelogFile => RootDirectory / "CHANGELOG.md";
+
+    IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
+
+    Target Changelog => _ => _
+        .After(Test)
+        .Before(Pack)
+        .OnlyWhenDynamic(() =>
+            GitRepository.IsOnMasterBranch() ||
+            GitRepository.IsOnReleaseBranch() ||
+            GitRepository.IsOnHotfixBranch())
+        .Executes(() =>
+        {
+            FinalizeChangelog(ChangelogFile, SemanticVersion, GitRepository);
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for v{SemanticVersion}\"");
         });
 
     Target Pack => _ => _
-        .DependsOn(CompilePlugin)
+        .DependsOn(Compile)
         .Executes(() =>
         {
-            var releaseNotes = ExtractChangelogSectionNotes(ChangelogFile)
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C"))
-                .Concat(string.Empty)
-                .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
-                .JoinNewLine();
-
             DotNetPack(s => s
-                .SetProject(DockerProject)
-                .SetOutputDirectory(OutputDirectory)
+                .SetProject(Solution)
+                .EnableNoBuild()
                 .SetConfiguration(Configuration)
-                .EnableNoRestore()
-                .SetVersion(GitVersion.NuGetVersionV2)
-                .SetPackageReleaseNotes(releaseNotes));
+                .EnableIncludeSymbols()
+                .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg)
+                .SetOutputDirectory(OutputDirectory)
+                .SetVersion(SemanticVersion)
+                .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
         });
 
-    Target Push => _ => _
+    Target Publish => _ => _
+        .DependsOn(Changelog)
         .DependsOn(Pack)
-        .Requires(() => NuGetApiKey)
+        .Requires(() => SemanticVersion)
+        .Requires(() => ApiKey)
         .Requires(() => GitHasCleanWorkingCopy())
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))
-        .Requires(() => IsReleaseBranch || IsMasterBranch)
-        .Executes(() =>
-        {
-            GlobFiles(OutputDirectory, "*.nupkg")
-                .Where(x => !x.EndsWith(".symbols.nupkg")).NotEmpty()
-                .ForEach(x => DotNetNuGetPush(s => s
-                    .SetTargetPath(x)
-                    .SetSource("https://api.nuget.org/v3/index.json")
-                    .SetSymbolSource("https://nuget.smbsrc.net/")
-                    .SetApiKey(NuGetApiKey)));
-        });
-
-    Target PrepareRelease => _ => _
-        .Before(CompilePlugin)
-        .DependsOn(Changelog, Clean)
-        .Executes(() =>
-        {
-            var releaseBranch = IsReleaseBranch ? GitRepository.Branch : $"release/v{GitVersion.MajorMinorPatch}";
-            var isMasterBranch = IsMasterBranch;
-            var pushMaster = false;
-            if (!isMasterBranch && !IsReleaseBranch) Git($"checkout -b {releaseBranch}");
-
-            if (!GitHasCleanWorkingCopy())
-            {
-                Git($"add {ChangelogFile}");
-                Git($"commit -m \"Finalize v{GitVersion.MajorMinorPatch}\"");
-                pushMaster = true;
-            }
-
-            if (!isMasterBranch)
-            {
-                Git("checkout master");
-                Git($"merge --no-ff --no-edit {releaseBranch}");
-                Git($"branch -D {releaseBranch}");
-                pushMaster = true;
-            }
-
-            if (IsReleaseBranch) Git($"push origin --delete {releaseBranch}");
-            if (pushMaster) Git("push origin master");
-        });
-
-    Target Release => _ => _
-        .Requires(() => GitHubApiKey)
-        .DependsOn(Push)
-        .After(PrepareRelease)
+        .Requires(() => Configuration.Equals(Configuration.Release))
         .Executes(async () =>
         {
-            var releaseNotes = new[]
-                               {
-                                   $"- [NuGet](https://www.nuget.org/packages/{c_toolNamespace}/{GitVersion.SemVer})",
-                                   $"- [Changelog](https://github.com/{c_addonRepoOwner}/{c_addonRepoName}/blob/{GitVersion.MajorMinorPatch}/CHANGELOG.md)"
-                               };
+            DotNetNuGetPush(s => s
+                    .SetSource(Source)
+                    .SetSymbolSource(SymbolSource)
+                    .SetApiKey(ApiKey)
+                    .CombineWith(
+                        OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
+                            .SetTargetPath(v)),
+                degreeOfParallelism: 5,
+                completeOnFailure: true);
 
-            await PublishRelease(x => x
-                .SetToken(GitHubApiKey)
-                .SetArtifactPaths(GlobFiles(OutputDirectory, "*.nupkg").ToArray())
-                .SetRepositoryName(c_addonRepoName)
-                .SetRepositoryOwner(c_addonRepoOwner)
-                .SetCommitSha("master")
-                .SetName($"NUKE {c_addonName} v{GitVersion.MajorMinorPatch}")
-                .SetTag($"{GitVersion.MajorMinorPatch}")
-                .SetReleaseNotes(releaseNotes.Join("\n"))
-            );
+            Git($"tag {SemanticVersion}");
+            Git($"push origin {GitRepository.Branch} {SemanticVersion}");
+
+            return;
+
+            await PublishRelease(s => s
+                .SetToken(GitHubToken)
+                .SetRepositoryOwner(GitRepository.GetGitHubOwner())
+                .SetRepositoryName(GitRepository.GetGitHubName())
+                .SetCommitSha(GitRepository.Branch)
+                .SetTag($"{SemanticVersion}")
+                .SetName($"v{SemanticVersion}")
+                .SetReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
         });
 
-    Target Changelog => _ => _
-        .OnlyWhen(ShouldUpdateChangelog)
-        .Executes(() =>
-        {
-            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
-        });
+    bool GitHubMilestoneClosed(bool mustExist) => GetMilestone().Result?.State.Value == ItemState.Closed;
 
-    bool ShouldUpdateChangelog()
+    async Task<Milestone> GetMilestone()
     {
-        bool TryGetChangelogSectionNotes(string tag, out string[] sectionNotes)
-        {
-            sectionNotes = new string[0];
-            try
-            {
-                sectionNotes = ExtractChangelogSectionNotes(ChangelogFile, tag).ToArray();
-                return sectionNotes.Length > 0;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        var nextSectionAvailable = TryGetChangelogSectionNotes("vNext", out _);
-        var semVerSectionAvailable = TryGetChangelogSectionNotes(GitVersion.MajorMinorPatch, out _);
-        if (semVerSectionAvailable)
-        {
-            ControlFlow.Assert(!nextSectionAvailable, $"{GitVersion.MajorMinorPatch} is already in changelog.");
-            return false;
-        }
-
-        return nextSectionAvailable;
+        var client = new GitHubClient(new ProductHeaderValue(nameof(NukeBuild))) { Credentials = new Credentials(GitHubToken) };
+        var milestones = await client.Issue.Milestone.GetAllForRepository(
+            GitRepository.GetGitHubOwner(),
+            GitRepository.GetGitHubName());
+        return milestones.FirstOrDefault(x => x.Title == $"v{SemanticVersion}");
     }
-
-    bool IsReleaseBranch => GitRepository.Branch.NotNull().StartsWith("release/");
-
-    bool IsMasterBranch => GitRepository.Branch == "master";
 }

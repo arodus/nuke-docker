@@ -11,9 +11,9 @@ using YamlDotNet.Serialization;
 
 namespace Nuke.Docker.Generator
 {
-    internal static class DefinitionFetcher
+    static class DefinitionFetcher
     {
-        private const string c_referenceUrl = "https://raw.githubusercontent.com/docker/docker.github.io/{0}/_data/engine-cli/{1}";
+        const string c_referenceUrl = "https://raw.githubusercontent.com/docker/docker.github.io/{0}/_data/engine-cli/{1}";
 
         public static List<CommandDefinition> GetCommandDefinitionsFromFolder(
             string path,
@@ -32,11 +32,12 @@ namespace Nuke.Docker.Generator
             return definitions;
         }
 
-        private static CommandDefinition ParseDefinition(string definitionYaml, string reference, string fileName)
+        static CommandDefinition ParseDefinition(string definitionYaml, string reference, string fileName)
         {
-            var definiton = new Deserializer().Deserialize<CommandDefinition>(definitionYaml);
-            definiton.ReferenceUrl = string.Format(c_referenceUrl, reference, fileName);
-            return definiton;
+            var deserializer = new Deserializer();
+            var definition = deserializer.Deserialize<CommandDefinition>(definitionYaml);
+            definition.ReferenceUrl = string.Format(c_referenceUrl, reference, fileName);
+            return definition;
         }
     }
 }

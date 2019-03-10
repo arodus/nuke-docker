@@ -2,23 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <IsPackable>False</IsPackable>
+    <IsPackable>false</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
+    <ReplacePackageReferences>false</ReplacePackageReferences>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.11.1" />
-    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0012" />
-    <PackageReference Include="Nuke.GitHub" Version="1.3.4" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="xunit.runner.console" Version="2.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\src\Nuke.Docker.Generator\Nuke.Docker.Generator.csproj" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.*" />
+    <PackageReference Include="Nuke.GitHub" Version="*" />
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-53" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +25,7 @@
     <None Include="..\.nuke" />
     <None Include="..\global.json" Condition="Exists('..\global.json')" />
     <None Include="..\nuget.config" Condition="Exists('..\nuget.config')" />
+    <None Include="..\azure-pipelines.yml" Condition="Exists('..\azure-pipelines.yml')" />
     <None Include="..\Jenkinsfile" Condition="Exists('..\Jenkinsfile')" />
     <None Include="..\appveyor.yml" Condition="Exists('..\appveyor.yml')" />
     <None Include="..\.travis.yml" Condition="Exists('..\.travis.yml')" />

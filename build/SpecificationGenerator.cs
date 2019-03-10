@@ -16,7 +16,7 @@ namespace Nuke.Docker.Generator
         {
             Console.WriteLine("Generating docker specifications...");
             var definitions =
-                DefinitionFetcher.GetCommandDefinitionsFromFolder(settings.DefinitonFolder, settings.Reference, settings.CommandsToSkip);
+                DefinitionFetcher.GetCommandDefinitionsFromFolder(settings.DefinitionFolder, settings.Reference, settings.CommandsToSkip);
             var tool = DefinitionParser.GenerateTool(definitions);
 
             Directory.CreateDirectory(settings.OutputFolder);

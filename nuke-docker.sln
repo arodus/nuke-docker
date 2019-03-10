@@ -1,23 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2005
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{E0382D16-DBDD-45FF-97B9-782A8F6A65AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker.Generator", "src\Nuke.Docker.Generator\Nuke.Docker.Generator.csproj", "{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker", "src\Nuke.Docker\Nuke.Docker.csproj", "{B956850B-E0CF-4963-A32E-1ACA4931CEE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker", "src\Nuke.Docker\Nuke.Docker.csproj", "{EFA0675E-B0B7-4674-9E5B-40E34A3B206B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker.Tests", "src\Nuke.Docker.Tests\Nuke.Docker.Tests.csproj", "{DE5B0746-D33D-4B87-8F0E-853F8884E7AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Docker.Generator.Tests", "tests\Nuke.Docker.Generator.Tests\Nuke.Docker.Generator.Tests.csproj", "{F4EE2620-D08B-446A-931D-CDAE51432496}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{4BA0A754-43FC-4A1F-AB4F-162FAE8813E9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{7019BFCE-0941-43F1-BB7A-8331F6DF652C}"
 	ProjectSection(SolutionItems) = preProject
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
 		CHANGELOG.md = CHANGELOG.md
-		LICENSE = LICENSE
-		nuke-docker.sln.DotSettings = nuke-docker.sln.DotSettings
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -27,23 +21,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFC82A92-CB93-49A5-88B6-09B7E5439CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF5C6967-F4B5-44B2-9A92-03C2269D2DEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFA0675E-B0B7-4674-9E5B-40E34A3B206B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFA0675E-B0B7-4674-9E5B-40E34A3B206B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4EE2620-D08B-446A-931D-CDAE51432496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4EE2620-D08B-446A-931D-CDAE51432496}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4EE2620-D08B-446A-931D-CDAE51432496}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4EE2620-D08B-446A-931D-CDAE51432496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0382D16-DBDD-45FF-97B9-782A8F6A65AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0382D16-DBDD-45FF-97B9-782A8F6A65AA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B956850B-E0CF-4963-A32E-1ACA4931CEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B956850B-E0CF-4963-A32E-1ACA4931CEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B956850B-E0CF-4963-A32E-1ACA4931CEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B956850B-E0CF-4963-A32E-1ACA4931CEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5B0746-D33D-4B87-8F0E-853F8884E7AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5B0746-D33D-4B87-8F0E-853F8884E7AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5B0746-D33D-4B87-8F0E-853F8884E7AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5B0746-D33D-4B87-8F0E-853F8884E7AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FA5C517C-9D92-485C-9796-5BC75DEF1ADC}
+		SolutionGuid = {A2C37D4D-74E1-443B-999B-505B8C6694C9}
 	EndGlobalSection
 EndGlobal
