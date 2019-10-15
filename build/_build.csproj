@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.*" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="*" />
     <PackageReference Include="Nuke.GitHub" Version="*" />
     <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-53" />
     <PackageReference Include="xunit.runner.console" Version="2.4.0" />

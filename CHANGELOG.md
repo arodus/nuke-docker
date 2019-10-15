@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.4.0] / 2019-10-15
+- Update for Nuke.Common 0.20
 ## [0.3.0] / 2019-03-22
 - Updated supported Nuke.Common version
 
@@ -26,11 +28,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added documentation
 - Support for Docker v18.03.0
 
-[vNext]: https://github.com/nuke-build/docker/compare/0.3.0...HEAD
-[0.3.0]: https://github.com/nuke-build/docker/compare/0.2.2...0.3.0
-[0.2.2]: https://github.com/nuke-build/docker/compare/0.2.1...0.2.2
-[0.2.1]: https://github.com/nuke-build/docker/compare/0.2.0...0.2.1
-[0.2.0]: https://github.com/nuke-build/docker/compare/0.1.10...0.2.0
-[0.1.10]: https://github.com/nuke-build/docker/compare/0.1.7...0.1.10
-[0.1.7]: https://github.com/nuke-build/docker/tree/0.1.7
+[vNext]: https://github.com/nuke-build/nuke-docker/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/nuke-build/nuke-docker/compare/0.3.0...0.4.0
+[0.3.0]: https://github.com/nuke-build/nuke-docker/compare/0.2.2...0.3.0
+[0.2.2]: https://github.com/nuke-build/nuke-docker/compare/0.2.1...0.2.2
+[0.2.1]: https://github.com/nuke-build/nuke-docker/compare/0.2.0...0.2.1
+[0.2.0]: https://github.com/nuke-build/nuke-docker/compare/0.1.10...0.2.0
+[0.1.10]: https://github.com/nuke-build/nuke-docker/compare/0.1.7...0.1.10
+[0.1.7]: https://github.com/nuke-build/nuke-docker/tree/0.1.7
 
